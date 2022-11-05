@@ -4,10 +4,13 @@ namespace vector{
     class vector2 {
         public:
         vector2();
-        vector2( int x);
-        vector2(int x, int y);
+        vector2( float x);
+        vector2(float x, float y);
         private:
-        
+        float elements[2];
+    };
+    class vector3 {
+
     };
 }; // namespace name
 
