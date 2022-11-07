@@ -1,6 +1,5 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
-#include <process.h>
 
 void size_callback(GLFWwindow * window, int w, int h) {
 	glViewport(0,0,w,h);
