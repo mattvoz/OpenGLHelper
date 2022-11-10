@@ -1,16 +1,25 @@
 DIR := $(CURDIR)
-WINDOWSHEADER = $(CURDIR)/OpenGL_Libraries/Windows/GLFW/include
-WINDOWSLIB=$(CURDIR)/OpenGL_Libraries/Windows/GLFW
+CC=gcc
+
+WINDOWSHEADER = $(DIR)/OpenGL_Libraries/Windows/GLFW/include
+WINDOWSLIB=$(DIR)/OpenGL_Libraries/Windows/GLFW
+
+GLADHEADER= $(DIR)/OpenGL_Libraries/glad/include
+GLADLIB = $(DIR)/OpenGL_Libraries/glad
 
 #Windows mingW flags if compiling on windows use these
 CFLAGS = -I$(WINDOWSHEADER)
 WINFLAGS = -L$(WINDOWSLIB) -lglfw3 -lgdi32 -lopengl32
 
 #linux flags if compiling on linux try these
-LFLAGS = -lglfw -lGL
+CFLAGS=-I$(GLADHEADER)
+LINUXFLAGS = -L$(GLADLIB) -lglad -lglfw -lGL
 
 
-main: main.cpp
-	gcc main.cpp $(CFLAGS) $(LFLAGS) -o main.exe
+main: main.cpp glad.o
+	$(CC) main.cpp $(CFLAGS) $(LINUXFLAGS) -o main.exe
+
+glad.o:	$(GLADHEADER)/glad/glad.c
+	$(CC) $(GLADHEADER)/glad/glad.c -c
 clean:
 	rm	*.o 
