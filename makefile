@@ -16,10 +16,8 @@ CFLAGS=-I$(GLADHEADER)
 LINUXFLAGS = -L$(GLADLIB) -lglad -lglfw -lGL
 
 
-main: main.cpp glad.o
+main: main.cpp
 	$(CC) main.cpp $(CFLAGS) $(LINUXFLAGS) -o main.exe
 
-glad.o:	$(GLADHEADER)/glad/glad.c
-	$(CC) $(GLADHEADER)/glad/glad.c -c
 clean:
 	rm	*.o 
