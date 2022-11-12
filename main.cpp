@@ -32,9 +32,12 @@ int main(int argc, char** argv) {
 	float vertices[9] = { 0.2,-0.2,0.0,
 						0.0,.2,0,
 						-.2,-0.2,0};
-
-	GLuint vertexBuffer[9];
-	glGenBuffers(9, vertexBuffer);
+	int n = 9;
+	GLuint buffer;
+	glCreateBuffers(1,&buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferData(GL_ARRAY_BUFFER, 9, vertices,GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, NULL);
 
 	glViewport(0,0,500,500);
 	glfwSetFramebufferSizeCallback(window, size_callback);
