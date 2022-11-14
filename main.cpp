@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <GL/gl.h>
+extern "C" {
+	#include "helpers.h"
+}
 
 
 void size_callback(GLFWwindow * window, int w, int h) {
@@ -33,11 +36,34 @@ int main(int argc, char** argv) {
 						0.0,.2,0,
 						-.2,-0.2,0};
 	int n = 9;
-	GLuint buffer;
-	glCreateBuffers(1,&buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, 9, vertices,GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, NULL);
+
+	GLuint buffer = makeBuffer(9, vertices);
+
+	char * vertexShaderSource = "#version 330 core\n"
+    "layout (location = 0) in vec3 aPos;\n"
+    "void main()\n"
+    "{\n"
+    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "}\0";
+
+	char * fragmentShaderSource = " #version 330 core\n"
+	"out vec4 FragColor;\n"
+	"void main()\n"
+	"{\n"
+    	"FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+	"}\0";
+
+	unsigned int vertexShader = createShader( vertexShaderSource, 0);
+	unsigned int fragmentShader = createShader( fragmentShaderSource, 1);
+
+	unsigned int shaderProgram;
+	shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 
 	glViewport(0,0,500,500);
 	glfwSetFramebufferSizeCallback(window, size_callback);
