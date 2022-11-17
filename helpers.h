@@ -6,6 +6,8 @@ GLuint makeBuffer( int, void *);
 
 unsigned int createShader( char *, char );
 
+unsigned int createShaderProgram( void **, int );
+
 
 
 #endif

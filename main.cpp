@@ -12,6 +12,10 @@ void size_callback(GLFWwindow * window, int w, int h) {
 	glViewport(0,0,w,h);
 }
 
+void draw( unsigned int vertexShader, unsigned int fragmentShader, void ** buffers, int bufferCount) {
+
+}
+
 int main(int argc, char** argv) {
 	GLFWwindow * window;
 
@@ -32,9 +36,10 @@ int main(int argc, char** argv) {
 		return -1;
 	}
 
-	float vertices[9] = { 0.2,-0.2,0.0,
-						0.0,.2,0,
-						-.2,-0.2,0};
+	float vertices[9] =  {-0.5f, -0.5f, 0.0f,
+     0.5f, -0.5f, 0.0f,
+     0.0f,  0.5f, 0.0f
+	};
 	int n = 9;
 
 	GLuint buffer = makeBuffer(9, vertices);
@@ -56,21 +61,27 @@ int main(int argc, char** argv) {
 	unsigned int vertexShader = createShader( vertexShaderSource, 0);
 	unsigned int fragmentShader = createShader( fragmentShaderSource, 1);
 
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
+	printf(" buffer %d\n", buffer);
 
+	void * arr[] = { &vertexShader, &fragmentShader};
+	unsigned int shaderProgram = createShaderProgram(arr, 2);
+
+	glBindVertexArray(buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+
+	glUseProgram(shaderProgram);
+	glBindVertexArray(buffer);
 
 	glViewport(0,0,500,500);
 	glfwSetFramebufferSizeCallback(window, size_callback);
 	glClearColor(0,0,255,1);
 	while(!glfwWindowShouldClose(window)) {
-    	glfwSwapBuffers(window);
 		glClear(GL_COLOR_BUFFER_BIT);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+    	glfwSwapBuffers(window);
     	glfwPollEvents();    
 	}
 
