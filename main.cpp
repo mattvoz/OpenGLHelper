@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
 		return -1;
 	};
 
-	window = glfwCreateWindow(500,500, "Hello World", NULL,NULL);
+	window = glfwCreateWindow(1920,1080, "Hello World", NULL,NULL);
 
 	if( !window ) {
 		glfwTerminate();
@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
 	glUseProgram(shaderProgram);
 	glBindVertexArray(buffer);
 
-	glViewport(0,0,500,500);
+	glViewport(0,0,1920,1080);
 	glfwSetFramebufferSizeCallback(window, size_callback);
 	glClearColor(0,0,255,1);
 	while(!glfwWindowShouldClose(window)) {
