@@ -16,7 +16,7 @@ ifeq ($(OS),Windows_NT)
 
 else
 #linux flags if compiling on linux try these
-	LIBS = LINUXFLAGS = -L$(GLADLIB) -lglad -lglfw -lGL
+	LIBS = -L$(GLADLIB) -lglad -lglfw -lGL
 endif
 
 executable:	main.o	helpers.o
