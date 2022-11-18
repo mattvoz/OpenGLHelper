@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
 
 	printf(" buffer %d\n", buffer);
 
-	void * arr[] = { &vertexShader, &fragmentShader};
+	unsigned int * arr[] = { &vertexShader, &fragmentShader};
 	unsigned int shaderProgram = createShaderProgram(arr, 2);
 
 	glBindVertexArray(buffer);

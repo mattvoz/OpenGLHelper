@@ -36,7 +36,7 @@ unsigned int createShader( char * shaderSource, char shaderType ) {
  * @param int shaderCount the amount of shaders you have.
  * 
 **/
-unsigned int createShaderProgram( void ** shaders, int shaderCount ) {
+unsigned int createShaderProgram( unsigned int ** shaders, int shaderCount ) {
 	unsigned int shaderProgram;
 	shaderProgram = glCreateProgram();
 	for(int i = 0; i < shaderCount; i++) {
