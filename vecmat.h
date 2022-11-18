@@ -1,6 +1,6 @@
 #ifndef __GL_VECTOR__
 #define __GL_VECOTR__
-namespace vector{
+namespace GLvector{
 	class vector2 {
 		public:
 			vector2();
@@ -8,8 +8,12 @@ namespace vector{
 			vector2(float x, float y);
 			void normalize();
 			void add( vector2 );
+			vector2 operator * ( const vector2 & );
+			vector2 dot( vector2 );
+			float length();
 			float x();
 			float y();
+			~ vector2();
 		private:
 			float x;
 			float y;
@@ -22,6 +26,9 @@ namespace vector{
 			vector3(float x, float y, float z);
 			void normalize();
 			void add(vector2);
+			vector3 operator *( const vector3 & vec );
+			float length();
+			~vector3();
 			float x();
 			float y();
 			float z();
@@ -39,6 +46,12 @@ namespace vector{
 			vector4(float x, float y, float z, float a);
 			void normalize();
 			vector4  operator *( const vector4 & vec);
+			vector4 dot( vector4 );
+			float x();
+			float y();
+			float z();
+			float a();
+			~vector4;
 		private:
 			float x;
 			float y;
