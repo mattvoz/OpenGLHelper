@@ -6,7 +6,7 @@ namespace GLVector{
 			vector2();
 			vector2( float x);
 			vector2(float x, float y);
-			void normalize();
+			vector2 normalize();
 			void add( vector2 );
 			vector2 operator * ( const vector2 & );
 			float dot( vector2 &);
@@ -24,7 +24,7 @@ namespace GLVector{
 			vector3(float x);
 			vector3(float x, float y);
 			vector3(float x, float y, float z);
-			void normalize();
+			vector3 normalize();
 			float length();
 			void add(vector2);
 			vector3 operator *( const vector3 & vec );

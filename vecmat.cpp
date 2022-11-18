@@ -1,4 +1,5 @@
 #include "vecmat.h"
+#include <math.h>
 
 using namespace GLVector;
 
@@ -37,4 +38,39 @@ float vector2::xVal() {
 
 float vector2::yVal(){
 	return y;
+}
+
+float vector2::length() {
+	return std::sqrt( ( x * x + y * y ) );
+}
+
+vector2 vector2::normalize() {
+	return vector2( x / this->length(), y / this->length() );
+}
+
+
+// Vector 3
+
+vector3::vector3() {
+	x = 1.0f;
+	y = 1.0f;
+	z = 1.0f;
+}
+
+vector3::vector3(float x) {
+	this->x = x;
+	y = 1.0f;
+	z = 1.0f;
+}
+
+vector3::vector3(float x, float y) {
+	this->x = x;
+	this->y = y;
+	z = 1.0f;
+}
+
+vector3::vector3(float x, float y, float z) {
+	this->x = x;
+	this->y = y;
+	this->z = z;
 }
