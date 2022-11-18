@@ -30,6 +30,27 @@ namespace vector{
 			float y;
 			float z;
 	};
+	class vector4 {
+		public:
+			vector4();
+			vector4(float x);
+			vector4(float x, float y);
+			vector4(float x, float y, float z);
+			vector4(float x, float y, float z, float a);
+			void normalize();
+			vector4  operator *( const vector4 & vec);
+		private:
+			float x;
+			float y;
+			float z;
+			float a;
+			friend class vector3;
+	};
 };
 	
+#endif
+
+#ifndef __GL_MATRIX__
+#define __GL_MATRIX__
+
 #endif

@@ -40,7 +40,6 @@ unsigned int createShaderProgram( unsigned int ** shaders, int shaderCount ) {
 	unsigned int shaderProgram;
 	shaderProgram = glCreateProgram();
 	for(int i = 0; i < shaderCount; i++) {
-		printf("Shader %d value is %d\n", i, * (GLuint*) shaders[i]);
 		glAttachShader(shaderProgram, *(GLuint*)shaders[i]);
 	}
 	glLinkProgram(shaderProgram);
