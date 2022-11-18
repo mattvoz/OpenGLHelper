@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
 
 	glViewport(0,0,1920,1080);
 	glfwSetFramebufferSizeCallback(window, size_callback);
-	glClearColor(0,0,255,1);
+	glClearColor(0,0,0,1);
 	while(!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
