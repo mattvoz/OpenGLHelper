@@ -1,5 +1,6 @@
 #include "vec.h"
 #include <cmath>
+#include <stdio.h>
 
 using namespace GLVector;
 
@@ -76,6 +77,14 @@ vector3::vector3(float x, float y, float z) {
 	this->z = z;
 }
 
+vector3 vector3::operator*( const vector3 & vec ) {
+	return vector3(this->x * vec.x, this->y * vec.y, this->z * vec.z);
+}
+
+vector3 vector3::crossProduct( const vector3 & vec ){
+	return vector3( this->y * vec.z - this->z * vec.y, this->z * vec.x - this->x * vec.z, this->x * vec.y - this->y * vec.x);
+}
+
 float vector3::xVal() {
 	return x;
 }
@@ -95,4 +104,8 @@ float vector3::length() {
 vector3 vector3::normalize() {
 	float length = this->length();
 	return vector3( x / length, y / length, z / length );
+}
+
+vector3::~vector3(){
+
 }

@@ -8,14 +8,20 @@ class mat4;
 namespace GLVector{
 	class vector2 {
 		public:
+			//Constructors Destructors
 			vector2();
 			vector2( float x);
 			vector2(float x, float y);
 			~ vector2();
+			
+			//Operators
+			vector2 operator * (const vector2 &);
+			vector2 operator * ( const mat2 & );
+			vector2 operator + (const vector2 &);
+			vector2 operator - (const vector2 &);
 
+			//Methods
 			vector2 normalize();
-			void add( vector2 & );
-			vector2 operator * ( const vector2 & );
 			float dot( vector2 &);
 			void scale( float );
 			float length();
@@ -25,20 +31,28 @@ namespace GLVector{
 			private:
 			float x;
 			float y;
-		};
-		class vector3 {
+	};
+	
+	class vector3 {
 		public:
-			//Constructors 
+			//Constructors Destructors
 			vector3();
-			vector3(float x);
-			vector3(float x, float y);
-			vector3(float x, float y, float z);
+			vector3(float);
+			vector3(float, float);
+			vector3(float, float, float);
+			vector3(vector2, float);
 			~ vector3();
 
+			//Operators
+			vector3 operator *( const vector3 & );
+			vector3 operator *( const mat3 & );
+			vector3 operator + ( const vector3 & );
+			vector3 operator - (const vector3 & );
+
+			//methods
 			vector3 normalize();
-			void add( vector3 & );
-			vector3 operator *( const vector3 & vec );
-			vector3 applyMatrix( mat3 & );
+			vector3 crossProduct( const vector3 &);
+			float dot( const vector3 &);
 			float scale( float );
 			float length();
 
@@ -49,36 +63,42 @@ namespace GLVector{
 			float x;
 			float y;
 			float z;
-		};
+	};
 
-		class vector4 {
+	class vector4 {
 		public:
-			//Constructors
+			//Constructors Destructors
 			vector4();
 			vector4(float x);
 			vector4(float x, float y);
 			vector4(float x, float y, float z);
-			vector4(float x, float y, float z, float a);
+			vector4(float x, float y, float z, float w);
+			vector4( vector3, float);
 			~vector4();
 
+			//Operators
+			vector4  operator *( const vector4 & );
+			vector4 operator * ( const mat4 & );
+			vector4 operator + ( const vector4 & );
+			vector4 operator - (const vector4 & );
+
 			//Methods
-			void normalize();
-			vector4  operator *( const vector4 & vec);
 			vector4 dot( vector4 & );
 			void applyMatrix( mat4& );
 			float scale( float );
 			float length();
+			vector4 lerp( vector4, float);
 
 			//getters
 			float xVal();
 			float yVal();
 			float zVal();
-			float aVal();
+			float wVal();
 		private:
 			float x;
 			float y;
 			float z;
-			float a;
+			float w;
 			friend class vector3;
 	};
 }
