@@ -17,6 +17,7 @@ namespace GLVector{
 			//Operators
 			vector2 operator * (const vector2 &);
 			vector2 operator * ( const mat2 & );
+			vector2 operator * (float);
 			vector2 operator + (const vector2 &);
 			vector2 operator - (const vector2 &);
 
@@ -46,6 +47,7 @@ namespace GLVector{
 			//Operators
 			vector3 operator *( const vector3 & );
 			vector3 operator *( const mat3 & );
+			vector3 operator *(float);
 			vector3 operator + ( const vector3 & );
 			vector3 operator - (const vector3 & );
 
@@ -53,7 +55,9 @@ namespace GLVector{
 			vector3 normalize();
 			vector3 crossProduct( const vector3 &);
 			float dot( const vector3 &);
-			float scale( float );
+			float scaleX( float );
+			float scaleY(float);
+			float scaleZ(float);
 			float length();
 
 			float xVal();
@@ -85,7 +89,9 @@ namespace GLVector{
 			//Methods
 			vector4 dot( vector4 & );
 			void applyMatrix( mat4& );
-			float scale( float );
+			float scaleX( float );
+			float scaleY(float);
+			float scaleZ(float);
 			float length();
 			vector4 lerp( vector4, float);
 

@@ -109,3 +109,41 @@ vector3 vector3::normalize() {
 vector3::~vector3(){
 
 }
+
+//VECTOR 4
+
+vector4::vector4() {
+	x = 0;
+	y = 0;
+	z = 0;
+	w = 0;
+}
+
+vector4::vector4(float x) {
+	this->x = x;
+	y = 0;
+	z = 0;
+	w = 0;
+}
+
+vector4::vector4(float x, float y) {
+	this->x = x;
+	this->y = y;
+	z = 0;
+	w = 0;
+}
+
+vector4::vector4(float x, float y, float z) {
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	w = 0;
+}
+
+vector4::vector4(float x, float y, float z, float w) {
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->w = w;
+}
+
