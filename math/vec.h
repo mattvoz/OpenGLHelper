@@ -83,15 +83,16 @@ namespace GLVector{
 			//Operators
 			vector4  operator *( const vector4 & );
 			vector4 operator * ( const mat4 & );
+			vector4 operator* (float);
 			vector4 operator + ( const vector4 & );
 			vector4 operator - (const vector4 & );
 
 			//Methods
 			vector4 dot( vector4 & );
 			void applyMatrix( mat4& );
-			float scaleX( float );
-			float scaleY(float);
-			float scaleZ(float);
+			void scaleX( float );
+			void scaleY(float);
+			void scaleZ(float);
 			float length();
 			vector4 lerp( vector4, float);
 

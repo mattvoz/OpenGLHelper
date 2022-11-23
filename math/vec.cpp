@@ -110,8 +110,9 @@ vector3::~vector3(){
 
 }
 
-//VECTOR 4
 
+
+//VECTOR 4
 vector4::vector4() {
 	x = 0;
 	y = 0;
@@ -147,3 +148,78 @@ vector4::vector4(float x, float y, float z, float w) {
 	this->w = w;
 }
 
+vector4 vector4::operator * ( const vector4 & vec) {
+	return vector4( x * vec.x, y * vec.y, z * vec.z, w * vec.w);
+}
+
+//TODO figure out how to use mat4 correctly
+vector4 vector4::operator*( const mat4 & ) {
+	float xNew = ( x + x );
+	return vector4();
+}
+
+vector4 vector4::operator * (float scalar) {
+	return vector4( x * scalar, y * scalar, z * scalar, w * scalar );
+}
+
+vector4 vector4::operator+( const vector4 & vec) {
+	return vector4( x + vec.x, y + vec.y, z + vec.z, w + vec.w);
+}
+
+vector4 vector4::operator-( const vector4 & vec) {
+	return vector4( x - vec.x, y - vec.y, z - vec.z, w - vec.w);
+}
+
+vector4 dot( vector4 & );
+void applyMatrix( mat4& );
+
+void vector4::scaleX( float scalar ) {
+	x *= scalar;
+}
+
+void vector4::scaleY(float scalar) {
+	y *= scalar;
+}
+
+void vector4::scaleZ(float scalar) {
+	z *= scalar;
+}
+
+float vector4::length() {
+	return std::sqrt(x * x + y * y + z * z + w * w);
+}
+
+float vector4::xVal() {
+	return x;
+}
+
+float vector4::yVal() {
+	return y;
+}
+
+float vector4::zVal() {
+	return z;
+}
+
+float vector4::wVal() {
+	return w;
+}
+
+vector4 vector4::lerp( vector4 destination, float percentTo) {
+	vector4 tmp = vector4(x, y, z, w);
+	return (tmp * (1-percentTo)) + destination * percentTo;
+}
+
+vector4::~vector4() {
+}
+
+int main() {
+	vector4 * one = new vector4(1,2,3);
+	vector4 two = vector4(4,5,6);
+
+	vector4 lerpd = one->lerp(two, .2);
+
+	one = &lerpd;
+
+	printf(" %f, %f, %f \n", one->xVal(), one->yVal(), one->zVal());
+}
