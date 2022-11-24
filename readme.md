@@ -4,3 +4,7 @@ This is an implementation of a couple useful helper functions for OpenGL
 ## Windows Compilation
 Must have MYSYS installed on your system and make enabled for Mingw other than that i try to provide all the extra required libraries if possible.
 
+
+## OpenGL 
+Column major arrays are stupid :) so my arrays are row major even if opengl is column major
+

@@ -45,17 +45,24 @@ int main(int argc, char** argv) {
 	GLuint buffer = makeBuffer(9, vertices);
 
 	char * vertexShaderSource = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
+    "attribute vec4 aPos;\n"
+	"uniform mat4 model;\n"
+	"uniform mat4 view;\n"
+	"uniform mat4 projection;\n"
+	"varying vec4 color;\n"
     "void main()\n"
     "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+	"	color = aPos;\n"
+    "   gl_Position = aPos;\n"
     "}\0";
 
 	char * fragmentShaderSource = " #version 330 core\n"
 	"out vec4 FragColor;\n"
+	"varying vec4 color;"
 	"void main()\n"
 	"{\n"
-    	"FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+    	"FragColor = color + 1.0;\n"
+		"FragColor.a = 1.0;\n"
 	"}\0";
 
 	unsigned int vertexShader = createShader( vertexShaderSource, 0);
