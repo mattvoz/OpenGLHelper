@@ -94,6 +94,7 @@ namespace GLVector{
 			void scaleY(float);
 			void scaleZ(float);
 			float length();
+			vector4 normalize();
 			vector4 lerp( vector4, float);
 
 			//getters

@@ -189,6 +189,11 @@ float vector4::length() {
 	return std::sqrt(x * x + y * y + z * z + w * w);
 }
 
+vector4 vector4::normalize() {
+	float length = this->length();
+	return vector4( x/length, y/length, z/length, w/length);
+}
+
 float vector4::xVal() {
 	return x;
 }
