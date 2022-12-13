@@ -37,6 +37,11 @@ namespace GLMatrix {
 			void transpose();
 			float * toArray();
 			float get(int, int);
+			void translation(float, float);
+			void rotation( int );
+			void scale(int , int);
+			void scale( float, float );
+			void makeIdentity();
 		private:
 			float values[9];
 
@@ -57,6 +62,11 @@ namespace GLMatrix {
 			void transpose();
 			float * toArray();
 			float get( int , int);
+			void translation(float, float, float);
+			void rotateX( int );
+			void rotateY( int );
+			void rotateZ( int );
+			void scale(int , int);
 		private:
 			float values[16];
 	};
