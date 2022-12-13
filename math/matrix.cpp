@@ -144,3 +144,33 @@ void matrix3::makeIdentity() {
         values[i] = 0;
     }
 }
+
+matrix4::matrix4() {
+    for(int i = 0 ; i < 16 ; i++) {
+        if(i == 0 || i == 5 || i == 10 || i == 15 ) {
+            values[i] = 1;
+        }
+        values[i] = 0;
+    }
+}
+
+matrix4::matrix4( float array[16] ) {
+    for(int i = 0 ; i < 16; i ++) {
+        values[i] = array[i];
+    }
+}
+
+matrix4::matrix4( float * array ) {
+    for(int i = 0; i < 16; i ++ ) {
+        values[i] = * array;
+        array++;
+    }
+}
+
+matrix4::~matrix4() {
+
+}
+
+matrix4 matrix4::operator*( const matrix4&) {
+
+}

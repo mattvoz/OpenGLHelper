@@ -6,5 +6,5 @@ Must have MYSYS installed on your system and make enabled for Mingw other than t
 
 
 ## OpenGL 
-Column major arrays are stupid :) BUT when constructing a matrix don't forget to put them in it :)
+Column major arrays are stupid :) BUT when constructing a matrix don't forget to put them in it since this is the openGL standard :)
 
