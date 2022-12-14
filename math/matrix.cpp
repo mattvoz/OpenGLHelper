@@ -79,14 +79,14 @@ matrix3::~matrix3() {
 matrix3 matrix3::operator*(matrix3 & mat) {
     float values[9] = {
         values[0] * mat.get(0,0) + values[3] * mat.get(1,0) + values[6] * mat.get(2,0),
-        values[0] * mat.get(0,1) + values[3] * mat.get(1,1) + values[6] * mat.get(1,1),
-        values[0] * mat.get(0,2) + values[3] * mat.get(1,2) + values[6] * mat.get(2,2),
+        values[3] * mat.get(0,1) + values[3] * mat.get(1,1) + values[6] * mat.get(1,1),
+        values[6] * mat.get(0,2) + values[3] * mat.get(1,2) + values[6] * mat.get(2,2),
         values[1] * mat.get(0,0) + values[4] * mat.get(1,0) + values[7] * mat.get(2,0),
-        values[1] * mat.get(0,1) + values[4] * mat.get(1,1) + values[7] * mat.get(2,1),
-        values[1] * mat.get(0,2) + values[4] * mat.get(1,2) + values[7] * mat.get(2,2),
+        values[4] * mat.get(0,1) + values[4] * mat.get(1,1) + values[7] * mat.get(2,1),
+        values[7] * mat.get(0,2) + values[4] * mat.get(1,2) + values[7] * mat.get(2,2),
         values[2] * mat.get(0,0) + values[5] * mat.get(1,0) + values[8] * mat.get(2,0),
-        values[2] * mat.get(0,1) + values[5] * mat.get(1,1) + values[8] * mat.get(2,1),
-        values[2] * mat.get(0,2) + values[5] * mat.get(1,2) + values[8] * mat.get(2,2),
+        values[5] * mat.get(0,1) + values[5] * mat.get(1,1) + values[8] * mat.get(2,1),
+        values[8] * mat.get(0,2) + values[5] * mat.get(1,2) + values[8] * mat.get(2,2),
     };
 
     return matrix3(values);
@@ -171,6 +171,13 @@ matrix4::~matrix4() {
 
 }
 
-matrix4 matrix4::operator*( const matrix4&) {
+matrix4 matrix4::operator*( matrix4& operand) {
+    float tmp[16];
+    tmp[0] = (values[0] * operand.get(0,0) ) + ( values[4] * operand.get(1,0) ) + ( values[8] * operand.get(2,0) ) + ( values[12] * operand.get(3,0) );
+    tmp[4] = (values[0] * operand.get(0,0) ) + ( values[4] * operand.get(1,0) ) + ( values[8] * operand.get(2,0) ) + ( values[12] * operand.get(2,0) );
+}
 
+//Zero indexed get
+float matrix4::get( int row, int column) {
+    return values[row * 4 + column];
 }

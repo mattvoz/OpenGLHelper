@@ -55,7 +55,7 @@ namespace GLMatrix {
 			~matrix4();
 
 		//Operators
-			matrix4 operator * (const matrix4 & );
+			matrix4 operator * ( matrix4 & );
 
 		
 		//Methods
