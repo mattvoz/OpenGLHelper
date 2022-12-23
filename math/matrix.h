@@ -1,5 +1,5 @@
-#ifndef __GL_matrixRIX__
-#define __GL_matrixRIX__
+#ifndef __GL_MATRIX__
+#define __GL_MATRIX__
 
 class vec2;
 class vec3;
@@ -8,7 +8,6 @@ namespace GLMatrix {
 	class matrix2 {
 		public:
 			matrix2();
-			matrix2( float [4]);
 			matrix2( float *);
 			matrix2( float, float, float, float);
 			~matrix2();
@@ -26,12 +25,12 @@ namespace GLMatrix {
 	class matrix3 {
 		public:
 			matrix3();
-			matrix3( float[9] );
 			matrix3( float * );
 			~matrix3();
 
 		//Operators
 			matrix3 operator * (matrix3 &);
+			vec3 operator * (vec3 &);
 
 		//Methods
 			void transpose();
@@ -50,13 +49,12 @@ namespace GLMatrix {
 	class matrix4 {
 		public:
 			matrix4();
-			matrix4(float[16]);
 			matrix4( float * );
 			~matrix4();
 
 		//Operators
 			matrix4 operator * ( matrix4 & );
-
+			vec4 operator * (vec4 &);
 		
 		//Methods
 			void transpose();

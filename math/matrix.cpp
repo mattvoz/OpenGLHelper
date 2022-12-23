@@ -12,13 +12,6 @@ matrix2::matrix2() {
     this->values[3] = 1;
 }
 
-matrix2::matrix2( float values[4] ) {
-    this->values[0] = values[0];
-    this->values[2] = values[1];
-    this->values[1] = values[2];
-    this->values[3] = values[3];
-}
-
 matrix2::matrix2( float * values) {
     for(int i = 0; i < 4 ; i++) {
         this->values[i] = values[i];
@@ -61,12 +54,6 @@ matrix3::matrix3() {
     }
 }
 
-matrix3::matrix3(float values[9]) {
-    for(int i = 0; i < 9; i++) {
-        this->values[i] = values[i];
-    }
-}
-
 matrix3::matrix3(float * values) {
     for(int i = 0; i < 9; i++) {
         this->values[i] = values[i];
@@ -92,9 +79,34 @@ matrix3 matrix3::operator*(matrix3 & mat) {
     return matrix3(values);
 }
 
-// Zero indexed get
+vec3 matrix3::operator*(vec3 & operand) {
+    float x = this->values[0] * operand.xVal() + this->values[3] * operand.yVal() + this->values[6] * operand.zVal();
+    float y = this->values[1] * operand.xVal() + this->values[4] * operand.yVal() + this->values[7] * operand.zVal();
+    float z = this->values[2] * operand.xVal() + this->values[5] * operand.yVal() + this->values[8] * operand.zVal();
+
+    return vec3(x,y,z);
+}
+
+void matrix3::transpose() {
+    float tmp[9];
+
+    for(int i = 0; i < 9; i++) {
+        tmp[i] = this->values[i];
+    }
+
+    this->values[0] = tmp[0];
+    this->values[1] = tmp[3];
+    this->values[2] = tmp[6];
+    this->values[3] = tmp[1];
+    this->values[4] = tmp[4];
+    this->values[5] = tmp[7];
+    this->values[6] = tmp[2];
+    this->values[7] = tmp[5];
+    this->values[8] = tmp[8];
+}
+
 float matrix3::get( int row, int column) {
-    return values[row * 3 + column];
+    return values[ row + column * 3];
 }
 
 void matrix3::translation(float x, float y) {
@@ -129,12 +141,6 @@ void matrix3::scale(float x, float y) {
     values[4] = y;
 }
 
-void matrix3::scale(float scalarX, float scalarY) {
-    this->makeIdentity();
-    
-
-}
-
 void matrix3::makeIdentity() {
     for(int i = 0; i < 9 ; i++) {
         if( i == 0 || i == 4 || i == 8) {
@@ -154,12 +160,6 @@ matrix4::matrix4() {
     }
 }
 
-matrix4::matrix4( float array[16] ) {
-    for(int i = 0 ; i < 16; i ++) {
-        values[i] = array[i];
-    }
-}
-
 matrix4::matrix4( float * array ) {
     for(int i = 0; i < 16; i ++ ) {
         values[i] = * array;
@@ -171,13 +171,67 @@ matrix4::~matrix4() {
 
 }
 
-matrix4 matrix4::operator*( matrix4& operand) {
+matrix4 matrix4::operator* ( matrix4& operand) {
     float tmp[16];
-    tmp[0] = (values[0] * operand.get(0,0) ) + ( values[4] * operand.get(1,0) ) + ( values[8] * operand.get(2,0) ) + ( values[12] * operand.get(3,0) );
-    tmp[4] = (values[0] * operand.get(0,0) ) + ( values[4] * operand.get(1,0) ) + ( values[8] * operand.get(2,0) ) + ( values[12] * operand.get(2,0) );
+    tmp[0] = ( values[0] * operand.get(0,0) ) + ( values[4] * operand.get(1,0) ) + ( values[8] * operand.get(2,0) ) + ( values[12] * operand.get(3,0) );
+    tmp[4] = ( values[0] * operand.get(0,1) ) + ( values[4] * operand.get(1,1) ) + ( values[8] * operand.get(2,1) ) + ( values[12] * operand.get(3,1) );
+    tmp[8] = ( values[0] * operand.get(0,2) ) + ( values[4] * operand.get(1,2) ) + ( values[8] * operand.get(2,2) ) + ( values[12] * operand.get(3,2) );
+    tmp[12] = ( values[0] * operand.get(0,3) ) + ( values[4] * operand.get(1,3) ) + ( values[8] * operand.get(2,3) ) + ( values[12] * operand.get(3,3) );
+
+    tmp[1] = ( values[1] * operand.get(0,0) ) + ( values[5] * operand.get(1,0) ) + ( values[9] * operand.get(2,0) ) + ( values[13] * operand.get(3,0) );
+    tmp[5] = ( values[1] * operand.get(0,1) ) + ( values[5] * operand.get(1,1) ) + ( values[9] * operand.get(2,1) ) + ( values[13] * operand.get(3,1) );
+    tmp[9] = ( values[1] * operand.get(0,2) ) + ( values[5] * operand.get(1,2) ) + ( values[9] * operand.get(2,2) ) + ( values[13] * operand.get(3,2) );
+    tmp[13] = ( values[1] * operand.get(0,3) ) + ( values[5] * operand.get(1,3) ) + ( values[9] * operand.get(2,3) ) + ( values[13] * operand.get(3,3) );
+
+    tmp[2] = (values[2] * operand.get(0,0) ) + ( values[6] * operand.get(1,0) ) + ( values[10] * operand.get(2,0) ) + ( values[14] * operand.get(3,0) );
+    tmp[6] = ( values[2] * operand.get(0,1) ) + ( values[6] * operand.get(1,1) ) + ( values[10] * operand.get(2,1) ) + ( values[14] * operand.get(3,1) );
+    tmp[10] = ( values[2] * operand.get(0,2) ) + ( values[6] * operand.get(1,2) ) + ( values[10] * operand.get(2,2) ) + ( values[14] * operand.get(3,2) );
+    tmp[14] = ( values[2] * operand.get(0,3) ) + ( values[6] * operand.get(1,3) ) + ( values[10] * operand.get(2,3) ) + ( values[14] * operand.get(3,3) );
+
+    tmp[3] = (values[3] * operand.get(0,0) ) + ( values[7] * operand.get(1,0) ) + ( values[11] * operand.get(2,0) ) + ( values[15] * operand.get(3,0) );
+    tmp[7] = ( values[3] * operand.get(0,1) ) + ( values[7] * operand.get(1,1) ) + ( values[11] * operand.get(2,1) ) + ( values[15] * operand.get(3,1) );
+    tmp[11] = ( values[3] * operand.get(0,2) ) + ( values[7] * operand.get(1,2) ) + ( values[11] * operand.get(2,2) ) + ( values[15] * operand.get(3,2) );
+    tmp[15] = ( values[3] * operand.get(0,3) ) + ( values[7] * operand.get(1,3) ) + ( values[11] * operand.get(2,3) ) + ( values[15] * operand.get(3,3) );
+
+    return matrix4(tmp);
+
+}
+
+vec4 matrix4::operator* (vec4 & operand) {
+    float x = operand.xVal() * this->values[0] + operand.yVal() * this->values[4] + operand.zVal() * this->values[8] + operand.wVal() * this-values[12];
+    float y = operand.xVal() * this->values[1] + operand.yVal() * this->values[5] + operand.zVal() * this->values[9] + operand.wVal() * this-values[13];
+    float z = operand.xVal() * this->values[2] + operand.yVal() * this->values[6] + operand.zVal() * this->values[10] + operand.wVal() * this-values[14];
+    float w = operand.xVal() * this->values[3] + operand.yVal() * this->values[7] + operand.zVal() * this->values[11] + operand.wVal() * this-values[15];
+
+    return vec4(x,y,z,w);
+
+}
+
+void matrix4::transpose() {
+    float tmp[16];
+    for(int i = 0; i < 16; i++) {
+        tmp[i] = this->values[i];
+    }
+
+    this->values[0] = tmp[0];
+    this->values[1] = tmp[4];
+    this->values[2] = tmp[8];
+    this->values[3] = tmp[12];
+    this->values[4] = tmp[1];
+    this->values[5] = tmp[5];
+    this->values[6] = tmp[9];
+    this->values[7] = tmp[13];
+    this->values[8] = tmp[2];
+    this->values[9] = tmp[6];
+    this->values[10] = tmp[10];
+    this->values[11] = tmp[14];
+    this->values[12] = tmp[3];
+    this->values[13] = tmp[7];
+    this->values[14] = tmp[11];
+    this->values[15] = tmp[15];
 }
 
 //Zero indexed get
 float matrix4::get( int row, int column) {
-    return values[row * 4 + column];
+    return values[row + column * 4];
 }
