@@ -1,13 +1,13 @@
 CC = g++
 
-library:	vec.o	mat.o
-	ar rvs vec.o mat.o
+library:	vector.o	matrix.o
+	ar rvs glMath.a vector.o	vector.cpp	matrix.o	matrix.cpp
 
-mat.o: mat.cpp mat.h
-	$(CC) matrix.cpp
+matrix.o: matrix.cpp matrix.h vector.h
+	$(CC) matrix.cpp -c
 
-vec.o: vec.cpp
-	$(CC) vec.cpp matrix.h -c
+vector.o: vector.cpp
+	$(CC) vector.cpp -c
 
 clean:
 	rm *.o

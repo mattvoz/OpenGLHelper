@@ -1,4 +1,4 @@
-#include "vec.h"
+#include "vector.h"
 #include <cmath>
 #include <stdio.h>
 

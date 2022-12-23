@@ -1,5 +1,5 @@
+#include "vector.h"
 #include "matrix.h"
-#include "vec.h"
 #include <math.h>
 #include <stdio.h>
 
@@ -79,12 +79,12 @@ matrix3 matrix3::operator*(matrix3 & mat) {
     return matrix3(values);
 }
 
-vec3 matrix3::operator*(vec3 & operand) {
+GLVector::vector3 matrix3::operator*(GLVector::vector3 & operand) {
     float x = this->values[0] * operand.xVal() + this->values[3] * operand.yVal() + this->values[6] * operand.zVal();
     float y = this->values[1] * operand.xVal() + this->values[4] * operand.yVal() + this->values[7] * operand.zVal();
     float z = this->values[2] * operand.xVal() + this->values[5] * operand.yVal() + this->values[8] * operand.zVal();
 
-    return vec3(x,y,z);
+    return GLVector::vector3(x,y,z);
 }
 
 void matrix3::transpose() {
@@ -197,13 +197,13 @@ matrix4 matrix4::operator* ( matrix4& operand) {
 
 }
 
-vec4 matrix4::operator* (vec4 & operand) {
-    float x = operand.xVal() * this->values[0] + operand.yVal() * this->values[4] + operand.zVal() * this->values[8] + operand.wVal() * this-values[12];
-    float y = operand.xVal() * this->values[1] + operand.yVal() * this->values[5] + operand.zVal() * this->values[9] + operand.wVal() * this-values[13];
-    float z = operand.xVal() * this->values[2] + operand.yVal() * this->values[6] + operand.zVal() * this->values[10] + operand.wVal() * this-values[14];
-    float w = operand.xVal() * this->values[3] + operand.yVal() * this->values[7] + operand.zVal() * this->values[11] + operand.wVal() * this-values[15];
+GLVector::vector4 matrix4::operator* (GLVector::vector4 & operand) {
+    float x = operand.xVal() * this->values[0] + operand.yVal() * this->values[4] + operand.zVal() * this->values[8] + operand.wVal() * this->values[12];
+    float y = operand.xVal() * this->values[1] + operand.yVal() * this->values[5] + operand.zVal() * this->values[9] + operand.wVal() * this->values[13];
+    float z = operand.xVal() * this->values[2] + operand.yVal() * this->values[6] + operand.zVal() * this->values[10] + operand.wVal() * this->values[14];
+    float w = operand.xVal() * this->values[3] + operand.yVal() * this->values[7] + operand.zVal() * this->values[11] + operand.wVal() * this->values[15];
 
-    return vec4(x,y,z,w);
+    return GLVector::vector4(x,y,z,w);
 
 }
 

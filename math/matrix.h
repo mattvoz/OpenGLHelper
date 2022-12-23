@@ -1,9 +1,13 @@
 #ifndef __GL_MATRIX__
 #define __GL_MATRIX__
 
-class vec2;
-class vec3;
-class vec4;
+
+namespace GLVector{
+	class vector2;
+	class vector3;
+	class vector4;
+}
+
 namespace GLMatrix {
 	class matrix2 {
 		public:
@@ -30,7 +34,7 @@ namespace GLMatrix {
 
 		//Operators
 			matrix3 operator * (matrix3 &);
-			vec3 operator * (vec3 &);
+			GLVector::vector3 operator * (GLVector::vector3 &);
 
 		//Methods
 			void transpose();
@@ -54,7 +58,7 @@ namespace GLMatrix {
 
 		//Operators
 			matrix4 operator * ( matrix4 & );
-			vec4 operator * (vec4 &);
+			GLVector::vector4 operator * (GLVector::vector4 &);
 		
 		//Methods
 			void transpose();
