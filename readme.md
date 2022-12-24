@@ -1,10 +1,15 @@
 ## Project
-This is an implementation of a couple useful helper functions for OpenGL
+- This is an implementation of a couple useful helper functions for OpenGL. This project takes inspiration from THREE.js found at https://threejs.org/
+- uses libraries from 
+- GLAD: https://glad.dav1d.de/
+- glfw3: https://www.glfw.org/
 
 ## Windows Compilation
-Must have MYSYS installed on your system and make enabled for Mingw other than that i try to provide all the extra required libraries if possible.
+- For compilation on windows I used chocolatey to get make, gcc, and g++ on my system to compile all this from the command line / git bash.
+
+- chocolatey can be found here: https://chocolatey.org/
 
 
 ## OpenGL 
-Column major arrays are stupid :) BUT when constructing a matrix don't forget to put them in it since this is the openGL standard :)
+- While i dislike column major arrays it's the opengl standard so all math operations in this project use column major systems to do matrix operations.
 
