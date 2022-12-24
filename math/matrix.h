@@ -62,13 +62,14 @@ namespace GLMatrix {
 		
 		//Methods
 			void transpose();
-			float * toArray();
 			float get( int , int);
+			float * toArray();
 			void translation(float, float, float);
 			void rotateX( int );
 			void rotateY( int );
 			void rotateZ( int );
-			void scale(int , int);
+			void scale( int, int, int );
+			void print();
 		private:
 			float values[16];
 	};

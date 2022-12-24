@@ -155,6 +155,7 @@ matrix4::matrix4() {
     for(int i = 0 ; i < 16 ; i++) {
         if(i == 0 || i == 5 || i == 10 || i == 15 ) {
             values[i] = 1;
+            continue;
         }
         values[i] = 0;
     }
@@ -162,8 +163,7 @@ matrix4::matrix4() {
 
 matrix4::matrix4( float * array ) {
     for(int i = 0; i < 16; i ++ ) {
-        values[i] = * array;
-        array++;
+        values[i] = array[i];
     }
 }
 
@@ -234,4 +234,46 @@ void matrix4::transpose() {
 //Zero indexed get
 float matrix4::get( int row, int column) {
     return values[row + column * 4];
+}
+
+/**
+ * Returns an array copy of whats' in the object on heap don't forget to free once finished.
+*/
+float * matrix4::toArray() {
+    float * tmp = new float[16];
+    for(int i = 0; i < 16; i ++) {
+        tmp[i] = this->values[i];
+    }
+
+    return tmp;
+}
+
+void matrix4::translation( float x, float y, float z ) {
+
+}
+void matrix4::rotateX( int degree ){
+
+}
+void matrix4::rotateY( int degree ) {
+
+}
+
+void matrix4::rotateZ( int degree ) {
+
+}
+void matrix4::scale( int x, int y, int z ) {
+
+}
+
+void matrix4::print() {
+    for(int i = 0; i < 16; i++){
+        printf( "%f ", this->values[i]);
+    }
+    printf("\n");
+    for(int i = 0; i < 4; i ++) {
+        for(int j = 0; j < 4; j++) {
+            printf(" %f", this->get(i,j));
+        }
+        printf("\n");
+    }
 }

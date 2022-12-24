@@ -217,14 +217,3 @@ vector4 vector4::lerp( vector4 destination, float percentTo) {
 
 vector4::~vector4() {
 }
-
-int main() {
-	vector4 * one = new vector4(1,2,3);
-	vector4 two = vector4(4,5,6);
-
-	vector4 lerpd = one->lerp(two, .2);
-
-	one = &lerpd;
-
-	printf(" %f, %f, %f \n", one->xVal(), one->yVal(), one->zVal());
-}
