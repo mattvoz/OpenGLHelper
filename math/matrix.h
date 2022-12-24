@@ -64,6 +64,7 @@ namespace GLMatrix {
 			void transpose();
 			float get( int , int);
 			float * toArray();
+			void makeIdentity();
 			void translation(float, float, float);
 			void rotateX( int );
 			void rotateY( int );

@@ -248,21 +248,68 @@ float * matrix4::toArray() {
     return tmp;
 }
 
-void matrix4::translation( float x, float y, float z ) {
-
+void matrix4::makeIdentity(){
+    for(int i = 0 ; i < 16 ; i++) {
+        if(i == 0 || i == 5 || i == 10 || i == 15 ) {
+            values[i] = 1;
+            continue;
+        }
+        values[i] = 0;
+    }
 }
-void matrix4::rotateX( int degree ){
 
+void matrix4::translation( float x, float y, float z ) {
+    this->values[12] += x;
+    this->values[13] += y;
+    this->values[14] += z;
+}
+
+void matrix4::rotateX( int degree ){
+    float radians = (M_PI * degree) / 180;
+    float cosTheta = cos(radians);
+    float sinTheta = sin(radians);
+
+    this->makeIdentity();
+
+    this->values[5] = cosTheta;
+    this->values[6] = sinTheta;
+
+    this->values[9] = -sinTheta;
+    this->values[10] = cosTheta;
 }
 void matrix4::rotateY( int degree ) {
+    float radians = (M_PI * degree) / 180;
+    float cosTheta = cos(radians);
+    float sinTheta = sin(radians);
 
+    this->values[0] = cosTheta;
+    this->values[2] = -sinTheta;
+
+    this->makeIdentity();
+
+    this->values[8] = sinTheta;
+    this->values[11] = cosTheta;
 }
 
 void matrix4::rotateZ( int degree ) {
+    float radians = (M_PI * degree) / 180;
+    float cosTheta = cos(radians);
+    float sinTheta = sin(radians);
+
+    this->values[0] = cosTheta;
+    this->values[1] = sinTheta;
+    this->values[4] = -sinTheta;
+    this->values[5] = cosTheta;
+
 
 }
-void matrix4::scale( int x, int y, int z ) {
 
+void matrix4::scale( int x, int y, int z ) {
+    this->makeIdentity();
+
+    this->values[0] = x;
+    this->values[5] = y;
+    this->values[10] = z;
 }
 
 void matrix4::print() {
