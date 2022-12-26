@@ -3,6 +3,12 @@
 #include <stdio.h>
 
 
+/**
+ * Creates a buffer that reads size data points from a void * usually a float array data.
+ * 
+ * @param size int the amount of data points being passed.
+ * @param data void * the data being passed into the  buffer. 
+*/
 GLuint makeBuffer(int size, void * data) {
     GLuint buffer;
 	glCreateBuffers(1,&buffer);

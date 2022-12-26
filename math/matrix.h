@@ -66,6 +66,7 @@ namespace GLMatrix {
 			float * toArray();
 			void makeIdentity();
 			void translation(float, float, float);
+			void makeTranslation(float,float,float);
 			void rotateX( int );
 			void rotateY( int );
 			void rotateZ( int );

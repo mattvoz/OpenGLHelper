@@ -258,10 +258,24 @@ void matrix4::makeIdentity(){
     }
 }
 
+/**
+ * Translation adds to an existing translation for a system so if you want to adjust a object to move +xyz then use this function.
+*/
 void matrix4::translation( float x, float y, float z ) {
     this->values[12] += x;
     this->values[13] += y;
     this->values[14] += z;
+}
+
+/**
+ * Retruns a new translation to make so set to a new position.
+*/
+void matrix4::makeTranslation(float x, float y, float z){
+    this->makeIdentity();
+
+    this->values[12] = x;
+    this->values[13] = y;
+    this->values[14] = z;
 }
 
 void matrix4::rotateX( int degree ){
