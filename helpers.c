@@ -1,4 +1,5 @@
 #include "helpers.h"
+#include <glad/glad.h>
 #include <stdlib.h>
 #include <stdio.h>
 

@@ -28,8 +28,9 @@ executable:	main.o	helpers.o
 main.o: main.cpp
 	$(CC) main.cpp	$(CFLAGS)	$(LIBS) -c
 
+#since helpers is a C program hard code in using gcc to compile
 helpers.o: helpers.c	helpers.h
-	$(CC) helpers.c $(CFLAGS) $(LIBS) -c
+	gcc helpers.c $(CFLAGS) $(LIBS) -c
 
 clean:
 	rm	*.o 
