@@ -1,5 +1,5 @@
 DIR := $(CURDIR)
-CC=gcc
+CC=g++
 
 WINDOWSHEADER = $(DIR)/OpenGL_Libraries/Windows/GLFW/include
 WINDOWSLIB=$(DIR)/OpenGL_Libraries/Windows/GLFW
@@ -9,14 +9,17 @@ GLADLIB = $(DIR)/OpenGL_Libraries/glad
 
 GLADLIBWIN = $(DIR)/OpenGL_Libraries/glad/windows
 
+MATHHEADER = $(DIR)/math
+MATHLIB = $(DIR)/math
+
 #Windows mingW flags if compiling on windows use these
-CFLAGS = -I$(WINDOWSHEADER) -I$(GLADHEADER)
+CFLAGS = -I$(WINDOWSHEADER) -I$(GLADHEADER) -I$(MATHHEADER)
 ifeq ($(OS),Windows_NT) 
-	LIBS = -L$(WINDOWSLIB) -L$(GLADLIBWIN) -lglfw3 -lgdi32 -lopengl32 -lglad
+	LIBS = -L$(WINDOWSLIB) -L$(GLADLIBWIN) -L$(MATHLIB) -lglfw3 -lgdi32 -lopengl32 -lglad	-lglMath
 
 else
 #linux flags if compiling on linux try these
-	LIBS = -L$(GLADLIB) -lglad -lglfw -lGL
+	LIBS = -L$(GLADLIB) -L$(MATHLIB) -lglad -lglfw -lGL -lglMath	-lglMath
 endif
 
 executable:	main.o	helpers.o

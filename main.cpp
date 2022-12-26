@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <GL/gl.h>
+#include <matrix.h>
+
 extern "C" {
 	#include "helpers.h"
 }
