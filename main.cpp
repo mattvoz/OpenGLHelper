@@ -25,11 +25,12 @@ int main(int argc, char** argv) {
 
 	GLMatrix::matrix4 * camera = new GLMatrix::matrix4();
 
-	GLMatrix::matrix4 rot = GLMatrix::matrix4();
+	GLMatrix::matrix4 model = GLMatrix::matrix4();
 
-	rot.rotateY(60);
+	GLMatrix::matrix4 world = GLMatrix::matrix4();
 
-	*camera = *camera * rot;
+	camera->makeTranslation(0,0,-.2);
+
 	camera->print();
 	if(!glfwInit()) {
 		return -1;
@@ -48,13 +49,16 @@ int main(int argc, char** argv) {
 		return -1;
 	}
 
-	float vertices[9] =  {-0.5f, -0.5f, 0.0f,
+	float vertices[18] =  {
+	 -0.5f, -0.5f, 0.0f,
      0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
+     -0.5f,  0.5f, 0.0f,
+	 -0.5f, 0.5f, 0.0f,
+     0.5f, 0.5f, 0.0f,
+     0.5f,  -0.5f, 0.0f,
 	};
-	int n = 9;
 
-	GLuint buffer = makeBuffer(9, vertices);
+	GLuint buffer = makeBuffer(18, vertices);
 
 	std::string vertexShaderSource = "#version 330 core\n"
     "attribute vec4 aPos;\n"
@@ -65,7 +69,7 @@ int main(int argc, char** argv) {
     "void main()\n"
     "{\n"
 	"	color = aPos;\n"
-    "   gl_Position = aPos;\n"
+    "   gl_Position = projection * view * model * aPos;\n"
     "}\0";
 
 	std::string fragmentShaderSource = " #version 330 core\n"
@@ -104,8 +108,15 @@ int main(int argc, char** argv) {
 		int loc = glGetUniformLocation( shaderProgram, "view");
 		float * cameraLook = camera->toArray();
 		glUniformMatrix4fv(loc,1,false, cameraLook);
+		loc = glGetUniformLocation(shaderProgram, "model");
+		float * modelMat = model.toArray();
+		glUniformMatrix4fv(loc,1,false, modelMat);
+		loc = glGetUniformLocation(shaderProgram, "projection");
+		float * projMat = world.toArray();
+		glUniformMatrix4fv(loc,1,false, projMat);
+		delete modelMat;
 		delete cameraLook;
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
     	glfwSwapBuffers(window);
     	glfwPollEvents();    
 	}
