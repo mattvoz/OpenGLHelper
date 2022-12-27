@@ -296,10 +296,11 @@ void matrix4::rotateY( int degree ) {
     float cosTheta = cos(radians);
     float sinTheta = sin(radians);
 
+    this->makeIdentity();
+
     this->values[0] = cosTheta;
     this->values[2] = -sinTheta;
 
-    this->makeIdentity();
 
     this->values[8] = sinTheta;
     this->values[11] = cosTheta;

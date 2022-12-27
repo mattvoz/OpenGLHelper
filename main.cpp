@@ -21,6 +21,15 @@ void draw( unsigned int vertexShader, unsigned int fragmentShader, void ** buffe
 int main(int argc, char** argv) {
 	GLFWwindow * window;
 
+	GLMatrix::matrix4 * camera = new GLMatrix::matrix4();
+
+	GLMatrix::matrix4 rot = GLMatrix::matrix4();
+
+	rot.rotateY(60);
+
+	*camera = *camera * rot;
+	camera->print();
+
 	if(!glfwInit()) {
 		return -1;
 	};
@@ -55,7 +64,7 @@ int main(int argc, char** argv) {
     "void main()\n"
     "{\n"
 	"	color = aPos;\n"
-    "   gl_Position = aPos;\n"
+    "   gl_Position = view * aPos;\n"
     "}\0";
 
 	char * fragmentShaderSource = " #version 330 core\n"
@@ -81,14 +90,18 @@ int main(int argc, char** argv) {
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_ALWAYS); 
+
 	glUseProgram(shaderProgram);
 	glBindVertexArray(buffer);
 
 	glViewport(0,0,1920,1080);
 	glfwSetFramebufferSizeCallback(window, size_callback);
-	glClearColor(0,0,0,1);
 	while(!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT);
+		int loc = glGetUniformLocation( shaderProgram, "view");
+		glUniformMatrix4fv(loc,1,false, camera->toArray());
 		glDrawArrays(GL_TRIANGLES, 0, 3);
     	glfwSwapBuffers(window);
     	glfwPollEvents();    
