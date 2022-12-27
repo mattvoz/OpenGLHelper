@@ -4,7 +4,7 @@
 
 GLuint makeBuffer( int, void *);
 
-unsigned int createShader( char *, char );
+unsigned int createShader( const char *, char );
 
 unsigned int createShaderProgram( unsigned int **, int );
 

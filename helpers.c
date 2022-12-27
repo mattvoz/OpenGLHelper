@@ -22,7 +22,7 @@ GLuint makeBuffer(int size, void * data) {
 /**
  * Creates a shader in openGL and returns the handle for that shader :).
 **/
-unsigned int createShader( char * shaderSource, char shaderType ) {
+unsigned int createShader( const char * shaderSource, char shaderType ) {
 	unsigned int shader;
 	if( shaderType == 0) {
 		shader = glCreateShader(GL_VERTEX_SHADER);

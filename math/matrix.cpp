@@ -249,7 +249,7 @@ float matrix4::get( int row, int column) {
  * Returns an array copy of whats' in the object on heap don't forget to free once finished.
 */
 float * matrix4::toArray() {
-    static float tmp[16];
+    float * tmp = new float[16];
     for(int i = 0; i < 16; i ++) {
         tmp[i] = this->values[i];
     }

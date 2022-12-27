@@ -1,9 +1,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
+#include <iostream>
 #include <stdio.h>
 #include <GL/gl.h>
 #include <matrix.h>
+#include "graphicsObjects/shader.h"
 
 extern "C" {
 	#include "helpers.h"
@@ -29,7 +31,6 @@ int main(int argc, char** argv) {
 
 	*camera = *camera * rot;
 	camera->print();
-
 	if(!glfwInit()) {
 		return -1;
 	};
@@ -55,7 +56,7 @@ int main(int argc, char** argv) {
 
 	GLuint buffer = makeBuffer(9, vertices);
 
-	char * vertexShaderSource = "#version 330 core\n"
+	std::string vertexShaderSource = "#version 330 core\n"
     "attribute vec4 aPos;\n"
 	"uniform mat4 model;\n"
 	"uniform mat4 view;\n"
@@ -64,10 +65,10 @@ int main(int argc, char** argv) {
     "void main()\n"
     "{\n"
 	"	color = aPos;\n"
-    "   gl_Position = view * aPos;\n"
+    "   gl_Position = aPos;\n"
     "}\0";
 
-	char * fragmentShaderSource = " #version 330 core\n"
+	std::string fragmentShaderSource = " #version 330 core\n"
 	"out vec4 FragColor;\n"
 	"varying vec4 color;"
 	"void main()\n"
@@ -76,13 +77,13 @@ int main(int argc, char** argv) {
 		"FragColor.a = 1.0;\n"
 	"}\0";
 
-	unsigned int vertexShader = createShader( vertexShaderSource, 0);
-	unsigned int fragmentShader = createShader( fragmentShaderSource, 1);
+	shader testShader = shader(vertexShaderSource, false, fragmentShaderSource, false);
 
-	printf(" buffer %d\n", buffer);
+	testShader.compile();
 
-	unsigned int * arr[] = { &vertexShader, &fragmentShader};
-	unsigned int shaderProgram = createShaderProgram(arr, 2);
+	unsigned int shaderProgram = testShader.getProgram();
+
+	glUseProgram(shaderProgram);
 
 	glBindVertexArray(buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
@@ -101,7 +102,9 @@ int main(int argc, char** argv) {
 	while(!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT);
 		int loc = glGetUniformLocation( shaderProgram, "view");
-		glUniformMatrix4fv(loc,1,false, camera->toArray());
+		float * cameraLook = camera->toArray();
+		glUniformMatrix4fv(loc,1,false, cameraLook);
+		delete cameraLook;
 		glDrawArrays(GL_TRIANGLES, 0, 3);
     	glfwSwapBuffers(window);
     	glfwPollEvents();    

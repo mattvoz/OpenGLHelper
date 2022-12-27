@@ -4,8 +4,8 @@
 #include <cerrno>
 
 shader::shader(){
-    vertexShader = "";
-    fragmentShader = "";
+    vertexShaderSource = "";
+    fragmentShaderSource = "";
     shaderProgram = NULL;
 }
 
@@ -46,10 +46,6 @@ void shader::setFragmentShader(std::string fragment, bool file) {
     }
 }
 
-unsigned int shader::getProgram() {
-    return shaderProgram;
-}
-
 void shader::compile() {
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     const char * vertexCStr = vertexShaderSource.c_str();
@@ -65,4 +61,8 @@ void shader::compile() {
     glAttachShader(shaderProgram, fragmentShader);
 
     glLinkProgram(shaderProgram);
+}
+
+unsigned int shader::getProgram() {
+    return this->shaderProgram;
 }
