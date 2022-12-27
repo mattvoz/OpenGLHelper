@@ -324,8 +324,6 @@ void matrix4::rotateZ( int degree ) {
     this->values[1] = sinTheta;
     this->values[4] = -sinTheta;
     this->values[5] = cosTheta;
-
-
 }
 
 void matrix4::scale( int x, int y, int z ) {

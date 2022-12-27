@@ -1,38 +1,68 @@
 #include "shader.h"
+#include <glad/glad.h>
 #include <cstdio>
 #include <cerrno>
 
 shader::shader(){
-    vertexShader = NULL;
-    fragmentShader = NULL;
+    vertexShader = "";
+    fragmentShader = "";
     shaderProgram = NULL;
 }
 
 shader::shader(std::string vertex, bool vertexFile, std::string fragment, bool fragFile) {
+    this->setVertexShader(vertex,vertexFile);
+    this->setFragmentShader(fragment,fragFile);
+}
+
+void shader::setVertexShader(std::string vertex, bool file) {
     FILE * fp;
-    if( vertexFile ) {
+    if( file ) {
         fp = fopen( vertex.c_str(), "r");
         if(fp) {
             fseek(fp, 0, SEEK_END);
-            vertexShader.resize(ftell(fp));
+            vertexShaderSource.resize(ftell(fp));
             rewind(fp);
-            fread( &vertexShader[0], 1, vertexShader.size(), fp);
+            fread( &vertexShaderSource[0], 1, vertexShaderSource.size(), fp);
             fclose(fp);
         }
     } else {
-        vertexShader = vertex.c_str();
+        vertexShaderSource = vertex.c_str();
     }
+}
 
-    if(fragFile) {
+void shader::setFragmentShader(std::string fragment, bool file) {
+    FILE * fp;
+    if(file) {
         fp = fopen( fragment.c_str(), "r");
         if(fp) {
             fseek(fp, 0, SEEK_END);
-            fragmentShader.resize(ftell(fp));
+            fragmentShaderSource.resize(ftell(fp));
             rewind(fp);
-            fread( &fragmentShader[0], 1, vertexShader.size(), fp);
+            fread( &fragmentShaderSource[0], 1, fragmentShaderSource.size(), fp);
             fclose(fp);
         }
     } else {
-        fragmentShader = fragment.c_str();
+        fragmentShaderSource = fragment.c_str();
     }
+}
+
+unsigned int shader::getProgram() {
+    return shaderProgram;
+}
+
+void shader::compile() {
+    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    const char * vertexCStr = vertexShaderSource.c_str();
+    glShaderSource(vertexShader, 1, &vertexCStr, NULL);
+    glCompileShader(vertexShader);
+
+    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    const char * fragmentCStr = fragmentShaderSource.c_str();
+    glShaderSource(fragmentShader, 1, &fragmentCStr, NULL);
+
+    shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+
+    glLinkProgram(shaderProgram);
 }

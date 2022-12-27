@@ -12,8 +12,8 @@ class shader{
         void compile();
         unsigned int getProgram();
     private:
-        std::string vertexShader;
-        std::string fragmentShader;
+        std::string vertexShaderSource;
+        std::string fragmentShaderSource;
         unsigned int shaderProgram;
 
 };
