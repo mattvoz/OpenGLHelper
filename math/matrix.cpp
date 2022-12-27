@@ -36,7 +36,7 @@ void matrix2::transpose() {
     values[1] = tmp;
 }
 float* matrix2::toArray() {
-    float tmp[4];
+    float * tmp = new float[4];
     for(int i = 0; i < 4; i++) {
         tmp[i] = values[i];
     }
@@ -151,6 +151,15 @@ void matrix3::makeIdentity() {
     }
 }
 
+float * matrix3::toArray() {
+    float * tmp= new float[9];
+    for( int i = 0; i < 9; i++) {
+        tmp[i] = this->values[i];
+    }
+
+    return tmp;
+}
+
 matrix4::matrix4() {
     for(int i = 0 ; i < 16 ; i++) {
         if(i == 0 || i == 5 || i == 10 || i == 15 ) {
@@ -240,7 +249,7 @@ float matrix4::get( int row, int column) {
  * Returns an array copy of whats' in the object on heap don't forget to free once finished.
 */
 float * matrix4::toArray() {
-    float * tmp = new float[16];
+    static float tmp[16];
     for(int i = 0; i < 16; i ++) {
         tmp[i] = this->values[i];
     }
