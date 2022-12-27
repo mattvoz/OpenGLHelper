@@ -1,5 +1,7 @@
 {
 	"files.associations": {
-		"cmath": "cpp"
+		"cmath": "cpp",
+		"cerrno": "cpp",
+		"string": "cpp"
 	}
 }
