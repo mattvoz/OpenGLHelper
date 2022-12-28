@@ -6,14 +6,13 @@
 
 class graphicsObject {
     public:
-        void render();
+        virtual void render();
     
-    private:
+    protected:
         GLVector::vector3 position;
         GLMatrix::matrix4 rotation;
-        GLMatrix::matrix4 translation;
         GLMatrix::matrix4 scale;
-
+    private:
 };
 
 #endif

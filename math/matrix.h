@@ -71,6 +71,7 @@ namespace GLMatrix {
 			void rotateY( float );
 			void rotateZ( float );
 			void scale( float, float, float );
+			void makePerspective(float, float, float, float, float, float);
 			void print();
 		private:
 			float values[16];

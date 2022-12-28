@@ -4,9 +4,22 @@
 #include "./math/matrix.h"
 #include "graphicsObject.h"
 
-class camera : public graphicsObject {
+class camera : private graphicsObject {
     public:
+        camera(float, float, float, float);
         camera();
+
+        void updatePerspective();
+        void updateNear(float);
+        void updateFar(float);
+        void updateFov(float);
+        void updateAspect(float);
     private:
+        float fov;
+        float aspect;
+        float zNear;
+        float zFar;
 
 };
+
+#endif

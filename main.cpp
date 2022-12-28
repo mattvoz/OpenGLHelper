@@ -26,6 +26,7 @@ int main(int argc, char** argv) {
 	GLFWwindow * window;
 
 	GLMatrix::matrix4 camera = GLMatrix::matrix4();
+	camera.translation(.5,-.5,-.5);
 
 	GLMatrix::matrix4 model = GLMatrix::matrix4();
 
@@ -66,7 +67,7 @@ int main(int argc, char** argv) {
 	"varying vec4 color;\n"
     "void main() {\n"
 	"	color = vec4(aPos.xyz, 1.0);\n"
-    "   gl_Position = transform * vec4(aPos,1.0);\n"
+    "   gl_Position = view * transform * vec4(aPos,1.0);\n"
     "}\0";
 
 	std::string fragmentShaderSource = " #version 330 core\n"
@@ -121,6 +122,7 @@ int main(int argc, char** argv) {
 		float * projMat = world.toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, projMat);
 
+		transform.rotateZ(x);
 		loc = glGetUniformLocation(shaderProgram, "transform");
 		float * transformMatrix = transform.toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, transformMatrix);

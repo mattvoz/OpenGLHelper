@@ -353,3 +353,29 @@ void matrix4::print() {
         printf("\n");
     }
 }
+
+void matrix4::makePerspective(float left, float right, float top, float bottom, float near, float far) {
+    float x = 2 * near / (right - left);
+    float y = 2 * near / (top - bottom);
+    float a = (right + left) / (right - left);
+    float b = (top + bottom) / (top - bottom);
+    float c = -(far - near) / (far - near);
+    float d = -2 * far * near / (far - near);
+    
+    values[0] = x;
+	values[4] = 0;
+	values[8] = a;
+	values[12] = 0;
+	values[1] = 0;
+	values[5] = y;
+	values[9] = b;
+	values[13] = 0;
+	values[2] = 0;
+	values[6] = 0;
+	values[10] = c;
+	values[14] = d;
+	values[3] = 0;
+	values[7] = 0;
+	values[11] = -1;
+	values[15] = 0;
+}
