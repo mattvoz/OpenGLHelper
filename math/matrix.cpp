@@ -5,6 +5,10 @@
 
 using namespace GLMatrix;
 
+float toRadians( float degrees ) {
+    return ( (degrees * M_PI) / 180 );
+}
+
 matrix2::matrix2() {
     this->values[0] = 1;
     this->values[2] = 0;
@@ -117,7 +121,7 @@ void matrix3::translation(float x, float y) {
 
 void matrix3::rotation( int degree ) {
     this->makeIdentity();
-    float radians = (M_PI * degree) / 180;
+    float radians = toRadians(degree);
 
     float c = cos( radians );
     float s = sin( radians );
@@ -287,8 +291,8 @@ void matrix4::makeTranslation(float x, float y, float z){
     this->values[14] = z;
 }
 
-void matrix4::rotateX( int degree ){
-    float radians = (M_PI * degree) / 180;
+void matrix4::rotateX( float degrees ){
+    float radians = toRadians(degrees);
     float cosTheta = cos(radians);
     float sinTheta = sin(radians);
 
@@ -297,11 +301,12 @@ void matrix4::rotateX( int degree ){
     this->values[5] = cosTheta;
     this->values[6] = sinTheta;
 
-    this->values[9] = -sinTheta;
+    this->values[9] = -1 * sinTheta;
     this->values[10] = cosTheta;
 }
-void matrix4::rotateY( int degree ) {
-    float radians = (M_PI * degree) / 180;
+
+void matrix4::rotateY( float degrees ) {
+    float radians = toRadians(degrees);
     float cosTheta = cos(radians);
     float sinTheta = sin(radians);
 
@@ -312,21 +317,23 @@ void matrix4::rotateY( int degree ) {
 
 
     this->values[8] = sinTheta;
-    this->values[11] = cosTheta;
+    this->values[10] = cosTheta;
 }
 
-void matrix4::rotateZ( int degree ) {
-    float radians = (M_PI * degree) / 180;
+void matrix4::rotateZ( float degrees ) {
+    float radians = toRadians(degrees);
     float cosTheta = cos(radians);
     float sinTheta = sin(radians);
+    
+    this->makeIdentity();
 
     this->values[0] = cosTheta;
     this->values[1] = sinTheta;
-    this->values[4] = -sinTheta;
+    this->values[4] = -1 * sinTheta;
     this->values[5] = cosTheta;
 }
 
-void matrix4::scale( int x, int y, int z ) {
+void matrix4::scale( float x, float y, float z ) {
     this->makeIdentity();
 
     this->values[0] = x;

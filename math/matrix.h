@@ -67,10 +67,10 @@ namespace GLMatrix {
 			void makeIdentity();
 			void translation(float, float, float);
 			void makeTranslation(float,float,float);
-			void rotateX( int );
-			void rotateY( int );
-			void rotateZ( int );
-			void scale( int, int, int );
+			void rotateX( float );
+			void rotateY( float );
+			void rotateZ( float );
+			void scale( float, float, float );
 			void print();
 		private:
 			float values[16];
