@@ -1,7 +1,7 @@
 #ifndef __GL_MATRIX__
 #define __GL_MATRIX__
 
-
+float toRadians( float );
 namespace GLVector{
 	class vector2;
 	class vector3;

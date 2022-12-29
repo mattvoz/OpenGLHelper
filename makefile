@@ -22,8 +22,8 @@ else
 	LIBS = -L$(GLADLIB) -L$(MATHLIB) -lglad -lglfw -lGL -lglMath	-lglMath
 endif
 
-executable:	main.o	helpers.o	shader.o
-	$(CC) main.o helpers.o	shader.o  $(CFLAGS) $(LIBS) -o main.exe
+executable:	main.o	helpers.o	shader.o	GLCamera.o
+	$(CC) main.o helpers.o	shader.o	GLCamera.o  $(CFLAGS) $(LIBS) -o main.exe
 
 main.o: main.cpp	helpers.h
 	$(CC) main.cpp	$(CFLAGS)	$(LIBS) -c
@@ -31,6 +31,9 @@ main.o: main.cpp	helpers.h
 #since helpers is a C program hard code in using gcc to compile
 helpers.o: helpers.c	helpers.h
 	gcc helpers.c $(CFLAGS) $(LIBS) -c
+
+GLCamera.o:	graphicsObjects/GLCamera.cpp	graphicsObjects/GLCamera.h
+	$(CC) graphicsObjects/GLCamera.cpp $(CFLAGS) $(LIBS) -c
 
 shader.o:	graphicsObjects/shader.cpp	graphicsObjects/shader.h
 	$(CC) graphicsObjects/shader.cpp $(CFLAGS) $(LIBS) -c

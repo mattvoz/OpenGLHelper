@@ -6,6 +6,7 @@
 #include <GL/gl.h>
 #include <matrix.h>
 #include "graphicsObjects/shader.h"
+#include "graphicsObjects/GLCamera.h"
 
 GLMatrix::matrix4 transform = GLMatrix::matrix4();
 
@@ -24,15 +25,13 @@ void draw( unsigned int vertexShader, unsigned int fragmentShader, void ** buffe
 
 int main(int argc, char** argv) {
 	GLFWwindow * window;
-
-	GLMatrix::matrix4 camera = GLMatrix::matrix4();
-	camera.translation(.5,-.5,-.5);
+	GLCamera camera = GLCamera();
+	camera.updatePerspective();
+	camera.translate(.2,.2,-.5);
 
 	GLMatrix::matrix4 model = GLMatrix::matrix4();
 
 	GLMatrix::matrix4 world = GLMatrix::matrix4();
-
-	camera.print();
 	if(!glfwInit()) {
 		return -1;
 	};
@@ -67,7 +66,7 @@ int main(int argc, char** argv) {
 	"varying vec4 color;\n"
     "void main() {\n"
 	"	color = vec4(aPos.xyz, 1.0);\n"
-    "   gl_Position = view * transform * vec4(aPos,1.0);\n"
+    "   gl_Position = projection * view * transform * vec4(aPos,1.0);\n"
     "}\0";
 
 	std::string fragmentShaderSource = " #version 330 core\n"
@@ -105,13 +104,14 @@ int main(int argc, char** argv) {
 
 	GLMatrix::matrix4 test = GLMatrix::matrix4();
 	int x = 30;
+	float z = .01;
 	transform.rotateZ(x);
 	transform.print();
 	while(!glfwWindowShouldClose(window)) {
 		x ++;
 		glClear(GL_COLOR_BUFFER_BIT);
 		int loc = glGetUniformLocation( shaderProgram, "view");
-		float * cameraLook = camera.toArray();
+		float * cameraLook = camera.getViewMatrix().toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, cameraLook);
 
 		loc = glGetUniformLocation(shaderProgram, "model");
@@ -119,7 +119,7 @@ int main(int argc, char** argv) {
 		glUniformMatrix4fv(loc,1,GL_FALSE, modelMat);
 
 		loc = glGetUniformLocation(shaderProgram, "projection");
-		float * projMat = world.toArray();
+		float * projMat = camera.getPerspective().toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, projMat);
 
 		transform.rotateZ(x);

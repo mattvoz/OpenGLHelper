@@ -6,7 +6,7 @@
 
 class graphicsObject {
     public:
-        virtual void render();
+        virtual void render() {};
     
     protected:
         GLVector::vector3 position;
