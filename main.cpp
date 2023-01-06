@@ -27,7 +27,6 @@ int main(int argc, char** argv) {
 	GLFWwindow * window;
 	GLCamera camera = GLCamera();
 	camera.updatePerspective();
-	camera.translate(.2,.2,-.5);
 
 	GLMatrix::matrix4 model = GLMatrix::matrix4();
 
@@ -58,7 +57,7 @@ int main(int argc, char** argv) {
 	GLuint buffer = makeBuffer(9, vertices);
 
 	std::string vertexShaderSource = "#version 330 core\n"
-    "attribute vec3 aPos;\n"
+    "attribute vec4 aPos;\n"
 	"uniform mat4 model;\n"
 	"uniform mat4 view;\n"
 	"uniform mat4 projection;\n"
@@ -66,7 +65,7 @@ int main(int argc, char** argv) {
 	"varying vec4 color;\n"
     "void main() {\n"
 	"	color = vec4(aPos.xyz, 1.0);\n"
-    "   gl_Position = projection * view * transform * vec4(aPos,1.0);\n"
+    "   gl_Position = transform * aPos;\n"
     "}\0";
 
 	std::string fragmentShaderSource = " #version 330 core\n"
@@ -102,13 +101,13 @@ int main(int argc, char** argv) {
 	glViewport(0,0,600,600);
 	glfwSetFramebufferSizeCallback(window, size_callback);
 
-	GLMatrix::matrix4 test = GLMatrix::matrix4();
-	int x = 30;
+	int x = 0;
 	float z = .01;
-	transform.rotateZ(x);
 	transform.print();
+	glClearColor(.1f,0.5f,0.5f,1.0f);
 	while(!glfwWindowShouldClose(window)) {
-		x ++;
+		x = (x+1) %360;
+
 		glClear(GL_COLOR_BUFFER_BIT);
 		int loc = glGetUniformLocation( shaderProgram, "view");
 		float * cameraLook = camera.getViewMatrix().toArray();
@@ -122,15 +121,12 @@ int main(int argc, char** argv) {
 		float * projMat = camera.getPerspective().toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, projMat);
 
-		transform.rotateZ(x);
+		transform.rotateY(x);
+		transform.print();
 		loc = glGetUniformLocation(shaderProgram, "transform");
 		float * transformMatrix = transform.toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, transformMatrix);
 
-		delete modelMat;
-		delete cameraLook;
-		delete projMat;
-		delete transformMatrix;
 		glDrawArrays(GL_TRIANGLES, 0, 3);
     	glfwSwapBuffers(window);
     	glfwPollEvents();    

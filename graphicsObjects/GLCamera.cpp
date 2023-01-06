@@ -6,7 +6,7 @@ GLCamera::GLCamera() {
     this->near = 0.01;
     this->far = 1000;
     this->aspect = 16/9;
-    this->fov = 60;
+    this->fov = 70;
     this->position = GLVector::vector3(0,0,0);
 
     this->updatePerspective();
