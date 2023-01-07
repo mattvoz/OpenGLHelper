@@ -5,7 +5,7 @@
 GLCamera::GLCamera() {
     this->near = 0.01;
     this->far = 1000;
-    this->aspect = 16/9;
+    this->aspect = 16.0f/9.0f;
     this->fov = 70;
     this->position = GLVector::vector3(0,0,0);
 
@@ -28,7 +28,7 @@ GLCamera::GLCamera(float aspect, float fov, float near, float far) {
 
 void GLCamera::updatePerspective() {
     float top = near * tan( toRadians(fov) / 2);
-    float bottom = -1 * top;
+    float bottom = -top;
     float right = top * aspect;
     float left = -1 * right;
     perspectiveMatrix.makePerspective(left,right, top, bottom, near, far);

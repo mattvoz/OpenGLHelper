@@ -25,8 +25,7 @@ void draw( unsigned int vertexShader, unsigned int fragmentShader, void ** buffe
 
 int main(int argc, char** argv) {
 	GLFWwindow * window;
-	GLCamera camera = GLCamera();
-	camera.updatePerspective();
+	GLCamera camera = GLCamera(300,1.5,1,100);
 
 	GLMatrix::matrix4 model = GLMatrix::matrix4();
 
@@ -60,12 +59,12 @@ int main(int argc, char** argv) {
     "attribute vec4 aPos;\n"
 	"uniform mat4 model;\n"
 	"uniform mat4 view;\n"
-	"uniform mat4 projection;\n"
+	"uniform mat4 perspective;\n"
 	"uniform mat4 transform;\n"
 	"varying vec4 color;\n"
     "void main() {\n"
 	"	color = vec4(aPos.xyz, 1.0);\n"
-    "   gl_Position = transform * aPos;\n"
+    "   gl_Position = perspective * view * model * aPos;\n"
     "}\0";
 
 	std::string fragmentShaderSource = " #version 330 core\n"
@@ -105,6 +104,7 @@ int main(int argc, char** argv) {
 	float z = .01;
 	transform.print();
 	glClearColor(.1f,0.5f,0.5f,1.0f);
+	camera.getPerspective().print();
 	while(!glfwWindowShouldClose(window)) {
 		x = (x+1) %360;
 
@@ -117,12 +117,10 @@ int main(int argc, char** argv) {
 		float * modelMat = model.toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, modelMat);
 
-		loc = glGetUniformLocation(shaderProgram, "projection");
+		loc = glGetUniformLocation(shaderProgram, "perspective");
 		float * projMat = camera.getPerspective().toArray();
-		glUniformMatrix4fv(loc,1,GL_FALSE, projMat);
+		glUniformMatrix4fv(loc,1,GL_FALSE, projMat);\
 
-		transform.rotateY(x);
-		transform.print();
 		loc = glGetUniformLocation(shaderProgram, "transform");
 		float * transformMatrix = transform.toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, transformMatrix);
