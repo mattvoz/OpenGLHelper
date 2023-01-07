@@ -25,7 +25,7 @@ void draw( unsigned int vertexShader, unsigned int fragmentShader, void ** buffe
 
 int main(int argc, char** argv) {
 	GLFWwindow * window;
-	GLCamera camera = GLCamera(30, 1.5, 0.001, 1);
+	GLCamera camera = GLCamera(30, 1.5, 1, 100);
 	camera.translate(1,1,1);
 
 	GLMatrix::matrix4 model = GLMatrix::matrix4();
@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
 		return -1;
 	};
 
-	window = glfwCreateWindow(600,600, "Hello World", NULL,NULL);
+	window = glfwCreateWindow(1000,1000, "Hello World", NULL,NULL);
 
 	if( !window ) {
 		glfwTerminate();
@@ -57,15 +57,14 @@ int main(int argc, char** argv) {
 	GLuint buffer = makeBuffer(9, vertices);
 
 	std::string vertexShaderSource = "#version 330 core\n"
-    "attribute vec4 aPos;\n"
+    "attribute vec3 aPos;\n"
 	"uniform mat4 model;\n"
 	"uniform mat4 view;\n"
-	"uniform mat4 perspective;\n"
-	"uniform mat4 transform;\n"
+	"uniform mat4 projection;\n"
 	"varying vec4 color;\n"
     "void main() {\n"
 	"	color = vec4(aPos.xyz, 1.0);\n"
-    "   gl_Position = perspective * view * model * aPos;\n"
+    "   gl_Position =  projection * model * vec4(aPos, 1.0);\n"
     "}\0";
 
 	std::string fragmentShaderSource = " #version 330 core\n"
@@ -98,7 +97,7 @@ int main(int argc, char** argv) {
 
 	glBindVertexArray(buffer);
 
-	glViewport(0,0,600,400);
+	glViewport(0,0,1000,1000);
 	glfwSetFramebufferSizeCallback(window, size_callback);
 
 	int x = 0;
@@ -106,11 +105,13 @@ int main(int argc, char** argv) {
 	transform.print();
 	glClearColor(.1f,0.5f,0.5f,1.0f);
 	camera.getPerspective().print();
+	printf("invalid val: %d, Invalid op: %d ", GL_INVALID_VALUE, GL_INVALID_OPERATION);
 	while(!glfwWindowShouldClose(window)) {
 		x = (x+1) %360;
 
 		glClear(GL_COLOR_BUFFER_BIT);
-		int loc = glGetUniformLocation( shaderProgram, "view");
+		GLint loc = glGetUniformLocation( shaderProgram, "view");
+		printf("%d\n", loc);
 		float * cameraLook = camera.getViewMatrix().toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, cameraLook);
 
@@ -118,13 +119,9 @@ int main(int argc, char** argv) {
 		float * modelMat = model.toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, modelMat);
 
-		loc = glGetUniformLocation(shaderProgram, "perspective");
+		loc = glGetUniformLocation(shaderProgram, "projection");
 		float * projMat = camera.getPerspective().toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, projMat);
-
-		loc = glGetUniformLocation(shaderProgram, "transform");
-		float * transformMatrix = transform.toArray();
-		glUniformMatrix4fv(loc,1,GL_FALSE, transformMatrix);
 
 		glDrawArrays(GL_TRIANGLES, 0, 3);
     	glfwSwapBuffers(window);

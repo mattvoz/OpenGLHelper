@@ -58,6 +58,8 @@ namespace GLMatrix {
 
 		//Operators
 			matrix4 operator * ( matrix4 & );
+			matrix4 operator - ( matrix4 & );
+			matrix4 operator + ( matrix4 & );
 			GLVector::vector4 operator * (GLVector::vector4 &);
 		
 		//Methods
@@ -72,6 +74,7 @@ namespace GLMatrix {
 			void rotateZ( float );
 			void scale( float, float, float );
 			void makePerspective(float, float, float, float, float, float);
+			void lookAt( GLVector::vector3, GLVector::vector3, GLVector::vector3);
 			void print();
 		private:
 			float values[16];

@@ -210,6 +210,58 @@ matrix4 matrix4::operator* ( matrix4& operand) {
 
 }
 
+matrix4 matrix4::operator - ( matrix4& operand) {
+    float tmp[16];
+    tmp[0] = ( values[0] - operand.get(0,0) );
+    tmp[4] = ( values[4] - operand.get(1,0) );
+    tmp[8] = ( values[8] - operand.get(2,0) );
+    tmp[12] = ( values[12] - operand.get(3,0) );
+
+    tmp[1] = ( values[1] - operand.get(0,1) );
+    tmp[5] = ( values[5] - operand.get(1,1) );
+    tmp[9] = ( values[9] - operand.get(2,1) );
+    tmp[13] = ( values[13] - operand.get(3,1) );
+
+    tmp[2] = ( values[2] - operand.get(0,2) );
+    tmp[6] = ( values[6] - operand.get(1,2) );
+    tmp[10] = ( values[10] - operand.get(2,2) );
+    tmp[14] = ( values[14] - operand.get(3,2) );
+
+    tmp[3] = ( values[3] - operand.get(0,3) );
+    tmp[7] = ( values[7] - operand.get(1,3) );
+    tmp[11] = ( values[11] - operand.get(2,3) );
+    tmp[15] = ( values[15] - operand.get(3,3) );
+
+    return matrix4(tmp);
+
+}
+
+matrix4 matrix4::operator + ( matrix4& operand) {
+    float tmp[16];
+    tmp[0] = ( values[0] + operand.get(0,0) );
+    tmp[4] = ( values[4] + operand.get(1,0) );
+    tmp[8] = ( values[8] + operand.get(2,0) );
+    tmp[12] = ( values[12] + operand.get(3,0) );
+
+    tmp[1] = ( values[1] + operand.get(0,1) );
+    tmp[5] = ( values[5] + operand.get(1,1) );
+    tmp[9] = ( values[9] + operand.get(2,1) );
+    tmp[13] = ( values[13] + operand.get(3,1) );
+
+    tmp[2] = ( values[2] + operand.get(0,2) );
+    tmp[6] = ( values[6] + operand.get(1,2) );
+    tmp[10] = ( values[10] + operand.get(2,2) );
+    tmp[14] = ( values[14] + operand.get(3,2) );
+
+    tmp[3] = ( values[3] + operand.get(0,3) );
+    tmp[7] = ( values[7] + operand.get(1,3) );
+    tmp[11] = ( values[11] + operand.get(2,3) );
+    tmp[15] = ( values[15] + operand.get(3,3) );
+
+    return matrix4(tmp);
+
+}
+
 GLVector::vector4 matrix4::operator* (GLVector::vector4 & operand) {
     float x = operand.xVal() * this->values[0] + operand.yVal() * this->values[4] + operand.zVal() * this->values[8] + operand.wVal() * this->values[12];
     float y = operand.xVal() * this->values[1] + operand.yVal() * this->values[5] + operand.zVal() * this->values[9] + operand.wVal() * this->values[13];
@@ -371,4 +423,8 @@ void matrix4::makePerspective(float left, float right, float top, float bottom, 
     values[11] = -1;
 	values[14] = d;
     values[15] = 0;
+}
+
+void matrix4::lookAt( GLVector::vector3 eye, GLVector::vector3 looking, GLVector::vector3 up) {
+    GLVector::vector3 z;
 }

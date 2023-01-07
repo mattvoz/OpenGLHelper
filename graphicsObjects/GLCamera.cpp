@@ -59,18 +59,17 @@ GLMatrix::matrix4& GLCamera::getViewMatrix() {
 }
 
 void GLCamera::rotateX( float degrees ) {
-    return viewMatrix.rotateX( degrees );
+    viewMatrix.rotateX( degrees );
 }
 
 void GLCamera::rotateY( float degrees ) {
-    return viewMatrix.rotateY( degrees );
+    viewMatrix.rotateY( degrees );
 }
 
 void GLCamera::rotateZ( float degrees ) {
-    return viewMatrix.rotateZ( degrees );
+    viewMatrix.rotateZ( degrees );
 }
 
 void GLCamera::translate( float x, float y, float z ) {
-    return viewMatrix.translation(x,y,z);
 }
 
