@@ -25,7 +25,8 @@ void draw( unsigned int vertexShader, unsigned int fragmentShader, void ** buffe
 
 int main(int argc, char** argv) {
 	GLFWwindow * window;
-	GLCamera camera = GLCamera(300,1.5,1,100);
+	GLCamera camera = GLCamera(30, 1.5, 0.001, 1);
+	camera.translate(1,1,1);
 
 	GLMatrix::matrix4 model = GLMatrix::matrix4();
 
@@ -97,7 +98,7 @@ int main(int argc, char** argv) {
 
 	glBindVertexArray(buffer);
 
-	glViewport(0,0,600,600);
+	glViewport(0,0,600,400);
 	glfwSetFramebufferSizeCallback(window, size_callback);
 
 	int x = 0;
@@ -119,7 +120,7 @@ int main(int argc, char** argv) {
 
 		loc = glGetUniformLocation(shaderProgram, "perspective");
 		float * projMat = camera.getPerspective().toArray();
-		glUniformMatrix4fv(loc,1,GL_FALSE, projMat);\
+		glUniformMatrix4fv(loc,1,GL_FALSE, projMat);
 
 		loc = glGetUniformLocation(shaderProgram, "transform");
 		float * transformMatrix = transform.toArray();

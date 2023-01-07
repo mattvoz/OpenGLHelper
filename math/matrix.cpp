@@ -370,4 +370,5 @@ void matrix4::makePerspective(float left, float right, float top, float bottom, 
 	values[10] = c;
     values[11] = -1;
 	values[14] = d;
+    values[15] = 0;
 }
