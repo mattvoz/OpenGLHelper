@@ -77,10 +77,6 @@ vector3::vector3(float x, float y, float z) {
 	this->z = z;
 }
 
-vector3 vector3::operator*( const vector3 & vec ) {
-	return vector3(this->x * vec.x, this->y * vec.y, this->z * vec.z);
-}
-
 vector3 vector3::crossProduct( const vector3 & vec ){
 	return vector3( this->y * vec.z - this->z * vec.y, this->z * vec.x - this->x * vec.z, this->x * vec.y - this->y * vec.x);
 }
@@ -110,7 +106,43 @@ vector3::~vector3(){
 
 }
 
+vector3 vector3::operator*( const vector3 & operand ) {
+	float xtmp = x * operand.x;
+	float ytmp =  y * operand.y;
+	float ztmp = z * operand.z;
 
+	return vector3( xtmp, ytmp, ztmp );
+}
+
+vector3 vector3::operator*( float scalar ) {
+	float xtmp = x * scalar;
+	float ytmp =  y * scalar;
+	float ztmp = z * scalar;
+
+	return vector3( xtmp, ytmp, ztmp );
+}
+
+vector3 vector3::operator+( const vector3 & operand ) {
+	float xtmp = x + operand.x;
+	float ytmp =  y + operand.y;
+	float ztmp = z + operand.z;
+
+	return vector3( xtmp, ytmp, ztmp );
+}
+
+vector3 vector3::operator-( const vector3 & operand ) {
+	float xtmp = x - operand.x;
+	float ytmp =  y - operand.y;
+	float ztmp = z - operand.z;
+
+	return vector3( xtmp, ytmp, ztmp );
+}
+
+void vector3::operator=( const vector3 & right ) {
+	x = right.x;
+	y = right.y;
+	z = right.z;
+}
 
 //VECTOR 4
 vector4::vector4() {

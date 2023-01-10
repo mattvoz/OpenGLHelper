@@ -2,6 +2,7 @@
 #define __GL_CAMERA__
 
 #include <matrix.h>
+#include <vector.h>
 #include "graphicsObject.h"
 
 class GLCamera : virtual protected graphicsObject {
@@ -10,6 +11,7 @@ class GLCamera : virtual protected graphicsObject {
         GLCamera();
 
         void updatePerspective();
+        void updateView();
         void updateNear(float);
         void updateFar(float);
         void updateFov(float);
@@ -18,7 +20,9 @@ class GLCamera : virtual protected graphicsObject {
         void rotateX( float );
         void rotateY( float );
         void rotateZ( float );
-        void translate( float, float, float);
+        void translate( float, float, float );
+        void moveTo( GLVector::vector3 );
+        void lookAt( GLVector::vector3 & at );
         
 
         GLMatrix::matrix4& getPerspective();
@@ -30,6 +34,9 @@ class GLCamera : virtual protected graphicsObject {
         float far;
         GLMatrix::matrix4 perspectiveMatrix;
         GLMatrix::matrix4 viewMatrix;
+        GLMatrix::matrix4 rotation;
+        GLVector::vector3 position;
+        GLVector::vector3 up;
 };
 
 #endif

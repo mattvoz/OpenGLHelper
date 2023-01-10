@@ -34,6 +34,9 @@ void GLCamera::updatePerspective() {
     perspectiveMatrix.makePerspective(left, right, top, bottom, near, far);
 }
 
+void GLCamera::updateView() {
+}
+
 void GLCamera::updateAspect(float newAspect) {
     aspect = newAspect;
 }
@@ -71,5 +74,13 @@ void GLCamera::rotateZ( float degrees ) {
 }
 
 void GLCamera::translate( float x, float y, float z ) {
+    position = ( position + GLVector::vector3(x,y,z) );
 }
 
+void GLCamera::moveTo( GLVector::vector3 newPos ) {
+    this->position = newPos;
+}
+
+void GLCamera::lookAt( GLVector::vector3 & at ) {
+    this->rotation.lookAt( this->position, at, GLVector::vector3(0,1,0));
+}

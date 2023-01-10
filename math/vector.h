@@ -46,10 +46,10 @@ namespace GLVector{
 
 			//Operators
 			vector3 operator *( const vector3 & );
-			vector3 operator *( const mat3 & );
 			vector3 operator *(float);
 			vector3 operator + ( const vector3 & );
-			vector3 operator - (const vector3 & );
+			vector3 operator - ( const vector3 & );
+			void operator = (const vector3 &);
 
 			//methods
 			vector3 normalize();

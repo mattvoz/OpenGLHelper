@@ -425,6 +425,12 @@ void matrix4::makePerspective(float left, float right, float top, float bottom, 
     values[15] = 0;
 }
 
-void matrix4::lookAt( GLVector::vector3 eye, GLVector::vector3 looking, GLVector::vector3 up) {
-    GLVector::vector3 z;
+matrix4 matrix4::lookAt( GLVector::vector3 & eye, GLVector::vector3 & looking, GLVector::vector3 & up) {
+    GLVector::vector3 z = (looking - eye).normalize();
+    GLVector::vector3 x = (z.crossProduct(up)).normalize();
+    GLVector::vector3 y = x.crossProduct(z);
+
+    float tmp[16] = { x.xVal(), y.xVal(), z.xVal(), 0, x.yVal(),y.yVal(), z.yVal(), 0, x.zVal(), y.zVal(), z.zVal(), 0, 0, 0, 0, 1 };
+
+    return matrix4( tmp );
 }
