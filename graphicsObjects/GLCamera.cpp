@@ -39,9 +39,9 @@ void GLCamera::updatePerspective() {
 
 void GLCamera::updateView() {
     GLMatrix::matrix4 tmp = GLMatrix::matrix4();
-    tmp.set( 0, 3, position.xVal() );
-    tmp.set( 1, 3, position.yVal() );
-    tmp.set( 2, 3, position.zVal() );
+    tmp.set( 0, 3, -position.xVal() );
+    tmp.set( 1, 3, -position.yVal() );
+    tmp.set( 2, 3, -position.zVal() );
     GLMatrix::matrix4 tmpRot = rotationMatrix;
     tmpRot.transpose();
     viewMatrix = tmpRot * tmp;

@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
 	GLFWwindow * window;
 	GLCamera camera = GLCamera(60, 1.5);
 	GLVector::vector3 origin = GLVector::vector3(0,0,0);
-	camera.moveTo(GLVector::vector3(10,10,10));
+	camera.moveTo(GLVector::vector3(0,0,10));
 	camera.lookAt(origin);
 
 	GLMatrix::matrix4 model = GLMatrix::matrix4();
