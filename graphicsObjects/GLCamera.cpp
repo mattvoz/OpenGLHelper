@@ -7,11 +7,12 @@ GLCamera::GLCamera() {
     this->far = 1000;
     this->aspect = 16.0f/9.0f;
     this->fov = 70;
-    this->position = GLVector::vector3(0,0,0);
+    this->position = GLVector::vector3(1,1,1);
+    this->rotationMatrix = GLMatrix::matrix4();
+    this->viewMatrix = GLMatrix::matrix4();
 
     this->updatePerspective();
-
-    this->viewMatrix = GLMatrix::matrix4();
+    this->updateView();
 }
 
 GLCamera::GLCamera(float fov, float aspect, float near, float far) {
@@ -19,11 +20,12 @@ GLCamera::GLCamera(float fov, float aspect, float near, float far) {
     this->aspect = aspect;
     this->near = near;
     this->far = far;
-    this->position = GLVector::vector3(0,0,0);
+    this->position = GLVector::vector3(1,1,1);
+    this->rotationMatrix = GLMatrix::matrix4();
+    this->viewMatrix = GLMatrix::matrix4();
 
     this->updatePerspective();
-
-    this->viewMatrix = GLMatrix::matrix4();
+    this->updateView();
 }
 
 void GLCamera::updatePerspective() {
@@ -35,6 +37,13 @@ void GLCamera::updatePerspective() {
 }
 
 void GLCamera::updateView() {
+    float * tmp = rotationMatrix.toArray();
+
+    tmp[12] = position.xVal();
+    tmp[13] = position.yVal();
+    tmp[14] = position.zVal();
+
+    viewMatrix = GLMatrix::matrix4(tmp);
 }
 
 void GLCamera::updateAspect(float newAspect) {
@@ -63,6 +72,7 @@ GLMatrix::matrix4& GLCamera::getViewMatrix() {
 
 void GLCamera::rotateX( float degrees ) {
     viewMatrix.rotateX( degrees );
+    this->updateView();
 }
 
 void GLCamera::rotateY( float degrees ) {
@@ -75,12 +85,17 @@ void GLCamera::rotateZ( float degrees ) {
 
 void GLCamera::translate( float x, float y, float z ) {
     position = ( position + GLVector::vector3(x,y,z) );
+    this->updateView();
 }
 
 void GLCamera::moveTo( GLVector::vector3 newPos ) {
     this->position = newPos;
+    this->updateView();
 }
 
 void GLCamera::lookAt( GLVector::vector3 & at ) {
-    this->rotation.lookAt( this->position, at, GLVector::vector3(0,1,0));
+    GLVector::vector3 tmp = GLVector::vector3(0,1,0);
+    rotationMatrix = rotationMatrix.lookAt( position, at, tmp );
+    rotationMatrix.print();
+    this->updateView();
 }

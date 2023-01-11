@@ -77,7 +77,7 @@ namespace GLVector{
 			vector4(float x, float y);
 			vector4(float x, float y, float z);
 			vector4(float x, float y, float z, float w);
-			vector4( vector3, float);
+			vector4( GLVector::vector3, float);
 			~vector4();
 
 			//Operators

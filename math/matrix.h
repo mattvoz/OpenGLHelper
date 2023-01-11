@@ -65,6 +65,7 @@ namespace GLMatrix {
 		//Methods
 			void transpose();
 			float get( int , int);
+			void set(int, int, float);
 			float * toArray();
 			void makeIdentity();
 			void translation(float, float, float);

@@ -301,6 +301,10 @@ float matrix4::get( int row, int column) {
     return values[row + column * 4];
 }
 
+void matrix4::set(int row, int column, float value) {
+    values[row + column * 4 ] = value;
+}
+
 /**
  * Returns an array copy of whats' in the object on heap don't forget to free once finished.
 */
@@ -425,8 +429,8 @@ void matrix4::makePerspective(float left, float right, float top, float bottom, 
     values[15] = 0;
 }
 
-matrix4 matrix4::lookAt( GLVector::vector3 & eye, GLVector::vector3 & looking, GLVector::vector3 & up) {
-    GLVector::vector3 z = (looking - eye).normalize();
+matrix4 matrix4::lookAt( GLVector::vector3 & eye, GLVector::vector3 & target, GLVector::vector3 & up) {
+    GLVector::vector3 z = (target - eye).normalize();
     GLVector::vector3 x = (z.crossProduct(up)).normalize();
     GLVector::vector3 y = x.crossProduct(z);
 

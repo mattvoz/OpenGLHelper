@@ -3,15 +3,13 @@
 #include <stdio.h>
 
 int main( int argc, char * argv[] ) {
-    float test[16] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-    GLMatrix::matrix4 * x = new GLMatrix::matrix4(test);
-    GLMatrix::matrix4 * y = new GLMatrix::matrix4(test);
+    GLMatrix::matrix4 x = GLMatrix::matrix4();
 
-    GLMatrix::matrix4 z = (*x) * (*y);
+    GLVector::vector3 posEye = GLVector::vector3(1,0,0);
+    GLVector::vector3 lookAt = GLVector::vector3(0,0,0);
+    GLVector::vector3 up = GLVector::vector3(0,1,0);
 
-    *x = *x * *y;
+    x = x.lookAt(posEye, lookAt, up);
 
-    printf("%f \n", x->get(0,2));
-    x->transpose();
-    x->print();
+    x.print();
 }

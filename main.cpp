@@ -26,7 +26,8 @@ void draw( unsigned int vertexShader, unsigned int fragmentShader, void ** buffe
 int main(int argc, char** argv) {
 	GLFWwindow * window;
 	GLCamera camera = GLCamera(30, 1.5, 1, 100);
-	camera.translate(1,1,1);
+	GLVector::vector3 origin = GLVector::vector3(0,0,0);
+	camera.lookAt(origin);
 
 	GLMatrix::matrix4 model = GLMatrix::matrix4();
 
@@ -64,7 +65,7 @@ int main(int argc, char** argv) {
 	"varying vec4 color;\n"
     "void main() {\n"
 	"	color = vec4(aPos.xyz, 1.0);\n"
-    "   gl_Position =  projection * model * vec4(aPos, 1.0);\n"
+    "   gl_Position = projection * view * model * vec4(aPos, 1.0);\n"
     "}\0";
 
 	std::string fragmentShaderSource = " #version 330 core\n"
@@ -105,13 +106,12 @@ int main(int argc, char** argv) {
 	transform.print();
 	glClearColor(.1f,0.5f,0.5f,1.0f);
 	camera.getPerspective().print();
-	printf("invalid val: %d, Invalid op: %d ", GL_INVALID_VALUE, GL_INVALID_OPERATION);
+	camera.getViewMatrix().print();
 	while(!glfwWindowShouldClose(window)) {
 		x = (x+1) %360;
 
 		glClear(GL_COLOR_BUFFER_BIT);
 		GLint loc = glGetUniformLocation( shaderProgram, "view");
-		printf("%d\n", loc);
 		float * cameraLook = camera.getViewMatrix().toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, cameraLook);
 
