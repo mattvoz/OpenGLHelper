@@ -444,13 +444,10 @@ matrix4 matrix4::lookAt( GLVector::vector3 & eye, GLVector::vector3 & target, GL
     x.normalize();
     y.normalize();
 
-    /*
     float xd = -1 * ( x.dot( eye ) );
     float yd = -1 * ( y.dot( eye ) );
     float zd = -1 * ( z.dot( eye ) );
-    */
 
     float tmp[16] = { x.xVal(), x.yVal(), x.zVal(), 0, y.xVal(), y.yVal(), y.zVal(), 0, z.xVal(), z.yVal(), z.zVal(), 0, 0, 0, 0, 1 };
-
     return matrix4( tmp );
 }

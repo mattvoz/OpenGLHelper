@@ -1,9 +1,10 @@
 #include "GLCamera.h"
 #include <matrix.h>
 #include <math.h>
+#include <stdio.h>
 
 GLCamera::GLCamera() {
-    this->near = 0.01;
+    this->near = 0.1;
     this->far = 1000;
     this->aspect = 16.0f/9.0f;
     this->fov = 70;
@@ -15,11 +16,11 @@ GLCamera::GLCamera() {
     this->updateView();
 }
 
-GLCamera::GLCamera(float fov, float aspect, float near, float far) {
+GLCamera::GLCamera(float fov, float aspect) {
     this->fov = fov;
     this->aspect = aspect;
-    this->near = near;
-    this->far = far;
+    this->near = .1;
+    this->far = 1000;
     this->position = GLVector::vector3(1,1,1);
     this->rotationMatrix = GLMatrix::matrix4();
     this->viewMatrix = GLMatrix::matrix4();
@@ -41,7 +42,9 @@ void GLCamera::updateView() {
     tmp.set( 0, 3, position.xVal() );
     tmp.set( 1, 3, position.yVal() );
     tmp.set( 2, 3, position.zVal() );
-    viewMatrix = tmp * rotationMatrix;
+    GLMatrix::matrix4 tmpRot = rotationMatrix;
+    tmpRot.transpose();
+    viewMatrix = tmpRot * tmp;
 }
 
 void GLCamera::updateAspect(float newAspect) {
@@ -65,35 +68,40 @@ GLMatrix::matrix4 & GLCamera::getPerspective() {
 }
 
 GLMatrix::matrix4& GLCamera::getViewMatrix() {
+    if(needsUpdate) {
+        updateView();
+        needsUpdate = false;
+    }
     return viewMatrix;
 }
 
 void GLCamera::rotateX( float degrees ) {
     viewMatrix.rotateX( degrees );
-    this->updateView();
+    needsUpdate = true;
 }
 
 void GLCamera::rotateY( float degrees ) {
     viewMatrix.rotateY( degrees );
+    needsUpdate = true;
 }
 
 void GLCamera::rotateZ( float degrees ) {
     viewMatrix.rotateZ( degrees );
+    needsUpdate = true;
 }
 
 void GLCamera::translate( float x, float y, float z ) {
     position = ( position + GLVector::vector3(x,y,z) );
-    this->updateView();
+    needsUpdate = true;
 }
 
 void GLCamera::moveTo( GLVector::vector3 newPos ) {
     this->position = newPos;
-    this->updateView();
+    needsUpdate = true;
 }
 
 void GLCamera::lookAt( GLVector::vector3 & at ) {
-    GLVector::vector3 tmp = GLVector::vector3(0,1,0);
-    rotationMatrix = rotationMatrix.lookAt( position, at, tmp );
-    rotationMatrix.print();
-    this->updateView();
+    GLVector::vector3 up = GLVector::vector3(0,1,0);
+    rotationMatrix = rotationMatrix.lookAt( position, at, up );
+    needsUpdate = true;
 }

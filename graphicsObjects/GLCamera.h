@@ -6,7 +6,7 @@
 
 class GLCamera : virtual protected graphicsObject {
     public:
-        GLCamera(float, float, float, float);
+        GLCamera(float, float);
         GLCamera();
 
         void updatePerspective();
@@ -31,6 +31,7 @@ class GLCamera : virtual protected graphicsObject {
         float aspect;
         float near;
         float far;
+        bool needsUpdate;
         GLMatrix::matrix4 perspectiveMatrix;
         GLMatrix::matrix4 viewMatrix;
         GLMatrix::matrix4 rotationMatrix;

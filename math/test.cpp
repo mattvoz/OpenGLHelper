@@ -5,7 +5,7 @@
 int main( int argc, char * argv[] ) {
     GLMatrix::matrix4 x = GLMatrix::matrix4();
 
-    GLVector::vector3 posEye = GLVector::vector3(1,1,1);
+    GLVector::vector3 posEye = GLVector::vector3(10,10,10);
     GLVector::vector3 lookAt = GLVector::vector3(0,0,0);
     GLVector::vector3 up = GLVector::vector3(0,1,0);
 

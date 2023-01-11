@@ -25,8 +25,9 @@ void draw( unsigned int vertexShader, unsigned int fragmentShader, void ** buffe
 
 int main(int argc, char** argv) {
 	GLFWwindow * window;
-	GLCamera camera = GLCamera(30, 1.5, 1, 100);
+	GLCamera camera = GLCamera(60, 1.5);
 	GLVector::vector3 origin = GLVector::vector3(0,0,0);
+	camera.moveTo(GLVector::vector3(10,10,10));
 	camera.lookAt(origin);
 
 	GLMatrix::matrix4 model = GLMatrix::matrix4();
@@ -104,7 +105,10 @@ int main(int argc, char** argv) {
 	int x = 0;
 	float z = .01;
 	glClearColor(.1f,0.5f,0.5f,1.0f);
+
 	camera.getViewMatrix().print();
+	camera.getPerspective().print();
+	
 	while(!glfwWindowShouldClose(window)) {
 		x = (x+1) %360;
 
