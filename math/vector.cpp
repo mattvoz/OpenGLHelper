@@ -78,7 +78,7 @@ vector3::vector3(float x, float y, float z) {
 }
 
 vector3 vector3::crossProduct( const vector3 & vec ){
-	return vector3( this->y * vec.z - this->z * vec.y, this->z * vec.x - this->x * vec.z, this->x * vec.y - this->y * vec.x);
+	return vector3( ( y * vec.z ) - ( z * vec.y ), ( z * vec.x ) - ( x * vec.z ), ( x * vec.y ) -  ( y * vec.x ) );
 }
 
 float vector3::xVal() {
@@ -134,10 +134,10 @@ vector3 vector3::operator+( const vector3 & operand ) {
 	return vector3( xtmp, ytmp, ztmp );
 }
 
-vector3 vector3::operator-( const vector3 & operand ) {
-	float xtmp = x - operand.x;
-	float ytmp =  y - operand.y;
-	float ztmp = z - operand.z;
+vector3 vector3::operator-( const vector3 & right ) {
+	float xtmp = x - right.x;
+	float ytmp =  y - right.y;
+	float ztmp = z - right.z;
 
 	return vector3( xtmp, ytmp, ztmp );
 }
@@ -146,6 +146,18 @@ void vector3::operator=( const vector3 & right ) {
 	x = right.x;
 	y = right.y;
 	z = right.z;
+}
+
+void vector3::setX( float xNew ){
+	x = xNew;
+}
+
+void vector3::setY( float yNew ) {
+	y = yNew;
+}
+
+void vector3::setZ( float zNew ){
+	z = zNew;
 }
 
 //VECTOR 4

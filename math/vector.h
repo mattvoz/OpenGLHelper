@@ -63,6 +63,10 @@ namespace GLVector{
 			float xVal();
 			float yVal();
 			float zVal();
+
+			void setX( float );
+			void setY( float );
+			void setZ( float );
 		private:
 			float x;
 			float y;

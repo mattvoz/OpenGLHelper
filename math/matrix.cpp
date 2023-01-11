@@ -430,8 +430,18 @@ void matrix4::makePerspective(float left, float right, float top, float bottom, 
 }
 
 matrix4 matrix4::lookAt( GLVector::vector3 & eye, GLVector::vector3 & target, GLVector::vector3 & up) {
-    GLVector::vector3 z = (eye - target).normalize();
+    printf("eye vec x: %f, y: %f, z: %f \n", eye.xVal(), eye.yVal(), eye.zVal() );
+    printf("target vec x: %f, y: %f, z: %f \n", target.xVal(), target.yVal(), target.zVal() );
+    GLVector::vector3 z = (eye - target);
+    printf("z length %f\n", z.length());
+
+    if(z.length() == 0) {
+        z.setZ(1);
+    }
+    z = z.normalize();
+
     GLVector::vector3 x = (z.crossProduct(up)).normalize();
+    printf("xval x: %f \n", x.xVal());
     GLVector::vector3 y = x.crossProduct(z);
 
     float xd = -1 * ( x.dot( eye ) );
