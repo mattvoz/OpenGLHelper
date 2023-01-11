@@ -102,6 +102,10 @@ vector3 vector3::normalize() {
 	return vector3( x / length, y / length, z / length );
 }
 
+float vector3::dot( const vector3 & operand ) {
+	return x * operand.x + y * operand.y + z * operand.z;
+}
+
 vector3::~vector3(){
 
 }
@@ -202,7 +206,10 @@ vector4 vector4::operator-( const vector4 & vec) {
 	return vector4( x - vec.x, y - vec.y, z - vec.z, w - vec.w);
 }
 
-vector4 dot( vector4 & );
+float vector4::dot( vector4 & operand ) {
+	return x * operand.x + y * operand.y + z * operand.z + w * operand.w;
+}
+
 void applyMatrix( mat4& );
 
 void vector4::scaleX( float scalar ) {

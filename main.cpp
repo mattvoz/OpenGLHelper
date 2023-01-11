@@ -103,9 +103,7 @@ int main(int argc, char** argv) {
 
 	int x = 0;
 	float z = .01;
-	transform.print();
 	glClearColor(.1f,0.5f,0.5f,1.0f);
-	camera.getPerspective().print();
 	camera.getViewMatrix().print();
 	while(!glfwWindowShouldClose(window)) {
 		x = (x+1) %360;

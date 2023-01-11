@@ -37,13 +37,11 @@ void GLCamera::updatePerspective() {
 }
 
 void GLCamera::updateView() {
-    float * tmp = rotationMatrix.toArray();
-
-    tmp[12] = position.xVal();
-    tmp[13] = position.yVal();
-    tmp[14] = position.zVal();
-
-    viewMatrix = GLMatrix::matrix4(tmp);
+    GLMatrix::matrix4 tmp = GLMatrix::matrix4();
+    tmp.set( 0, 3, position.xVal() );
+    tmp.set( 1, 3, position.yVal() );
+    tmp.set( 2, 3, position.zVal() );
+    viewMatrix = rotationMatrix * tmp;
 }
 
 void GLCamera::updateAspect(float newAspect) {

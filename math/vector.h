@@ -88,7 +88,7 @@ namespace GLVector{
 			vector4 operator - (const vector4 & );
 
 			//Methods
-			vector4 dot( vector4 & );
+			float dot( vector4 & );
 			void applyMatrix( mat4& );
 			void scaleX( float );
 			void scaleY(float);
