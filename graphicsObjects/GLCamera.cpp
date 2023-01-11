@@ -41,7 +41,7 @@ void GLCamera::updateView() {
     tmp.set( 0, 3, position.xVal() );
     tmp.set( 1, 3, position.yVal() );
     tmp.set( 2, 3, position.zVal() );
-    viewMatrix = rotationMatrix * tmp;
+    viewMatrix = tmp * rotationMatrix;
 }
 
 void GLCamera::updateAspect(float newAspect) {

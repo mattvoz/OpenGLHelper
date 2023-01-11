@@ -430,25 +430,27 @@ void matrix4::makePerspective(float left, float right, float top, float bottom, 
 }
 
 matrix4 matrix4::lookAt( GLVector::vector3 & eye, GLVector::vector3 & target, GLVector::vector3 & up) {
-    printf("eye vec x: %f, y: %f, z: %f \n", eye.xVal(), eye.yVal(), eye.zVal() );
-    printf("target vec x: %f, y: %f, z: %f \n", target.xVal(), target.yVal(), target.zVal() );
     GLVector::vector3 z = (eye - target);
-    printf("z length %f\n", z.length());
 
     if(z.length() == 0) {
         z.setZ(1);
     }
+
     z = z.normalize();
 
-    GLVector::vector3 x = (z.crossProduct(up)).normalize();
-    printf("xval x: %f \n", x.xVal());
-    GLVector::vector3 y = x.crossProduct(z);
+    GLVector::vector3 x = (up.crossProduct(z)).normalize();
+    GLVector::vector3 y = z.crossProduct(x);
 
+    x.normalize();
+    y.normalize();
+
+    /*
     float xd = -1 * ( x.dot( eye ) );
     float yd = -1 * ( y.dot( eye ) );
     float zd = -1 * ( z.dot( eye ) );
+    */
 
-    float tmp[16] = { x.xVal(), x.yVal(), x.zVal(), xd, y.xVal(), y.yVal(), y.zVal(), yd, z.xVal(), z.yVal(), z.zVal(), zd, 0, 0, 0, 1 };
+    float tmp[16] = { x.xVal(), x.yVal(), x.zVal(), 0, y.xVal(), y.yVal(), y.zVal(), 0, z.xVal(), z.yVal(), z.zVal(), 0, 0, 0, 0, 1 };
 
     return matrix4( tmp );
 }
