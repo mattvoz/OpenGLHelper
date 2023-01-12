@@ -12,4 +12,4 @@
 
 ## OpenGL 
 - While i dislike column major arrays it's the opengl standard so all math operations in this project use column major systems to do matrix operations.
-
+- The camera system is reversed to be left hand based.
