@@ -25,9 +25,9 @@ void draw( unsigned int vertexShader, unsigned int fragmentShader, void ** buffe
 
 int main(int argc, char** argv) {
 	GLFWwindow * window;
-	GLCamera camera = GLCamera(60, 1.5);
+	GLCamera camera = GLCamera(60, 1);
 	GLVector::vector3 origin = GLVector::vector3(0,0,0);
-	camera.moveTo(GLVector::vector3(0,5,1));
+	camera.moveTo(GLVector::vector3(1,3,3));
 	camera.lookAt(origin);
 
 	GLMatrix::matrix4 model = GLMatrix::matrix4();
@@ -51,12 +51,45 @@ int main(int argc, char** argv) {
 	}
 
 	float vertices[] =  {
-    0.0f,  0.0f, 0.0f,
-    0.3f, 0.0f, 0.0f,
-	0.3f,  0.2f, 0.0f,
+	-1.0f,-1.0f,-1.0f, // triangle 1 : begin
+    -1.0f,-1.0f, 1.0f,
+    -1.0f, 1.0f, 1.0f, // triangle 1 : end
+    1.0f, 1.0f,-1.0f, // triangle 2 : begin
+    -1.0f,-1.0f,-1.0f,
+    -1.0f, 1.0f,-1.0f, // triangle 2 : end
+    1.0f,-1.0f, 1.0f,
+    -1.0f,-1.0f,-1.0f,
+    1.0f,-1.0f,-1.0f,
+    1.0f, 1.0f,-1.0f,
+    1.0f,-1.0f,-1.0f,
+    -1.0f,-1.0f,-1.0f,
+    -1.0f,-1.0f,-1.0f,
+    -1.0f, 1.0f, 1.0f,
+    -1.0f, 1.0f,-1.0f,
+    1.0f,-1.0f, 1.0f,
+    -1.0f,-1.0f, 1.0f,
+    -1.0f,-1.0f,-1.0f,
+    -1.0f, 1.0f, 1.0f,
+    -1.0f,-1.0f, 1.0f,
+    1.0f,-1.0f, 1.0f,
+    1.0f, 1.0f, 1.0f,
+    1.0f,-1.0f,-1.0f,
+    1.0f, 1.0f,-1.0f,
+    1.0f,-1.0f,-1.0f,
+    1.0f, 1.0f, 1.0f,
+    1.0f,-1.0f, 1.0f,
+    1.0f, 1.0f, 1.0f,
+    1.0f, 1.0f,-1.0f,
+    -1.0f, 1.0f,-1.0f,
+    1.0f, 1.0f, 1.0f,
+    -1.0f, 1.0f,-1.0f,
+    -1.0f, 1.0f, 1.0f,
+    1.0f, 1.0f, 1.0f,
+    -1.0f, 1.0f, 1.0f,
+    1.0f,-1.0f, 1.0f
 	};
 
-	GLuint buffer = makeBuffer(9, vertices);
+	GLuint buffer = makeBuffer(12*3, vertices);
 
 	std::string vertexShaderSource = "#version 330 core\n"
     "attribute vec3 aPos;\n"
@@ -125,7 +158,7 @@ int main(int argc, char** argv) {
 		float * projMat = camera.getPerspective().toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, projMat);
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 12*3);
     	glfwSwapBuffers(window);
     	glfwPollEvents();    
 	}
