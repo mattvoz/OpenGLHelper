@@ -201,7 +201,7 @@ vector4 vector4::operator * ( const vector4 & vec) {
 }
 
 //TODO figure out how to use mat4 correctly
-vector4 vector4::operator*( const mat4 & ) {
+vector4 vector4::operator*( const GLMatrix::matrix4 & ) {
 	float xNew = ( x + x );
 	return vector4();
 }
@@ -222,7 +222,7 @@ float vector4::dot( vector4 & operand ) {
 	return x * operand.x + y * operand.y + z * operand.z + w * operand.w;
 }
 
-void applyMatrix( mat4& );
+void applyMatrix( GLMatrix::matrix4 & );
 
 void vector4::scaleX( float scalar ) {
 	x *= scalar;

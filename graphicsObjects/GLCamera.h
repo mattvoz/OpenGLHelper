@@ -6,7 +6,7 @@
 
 class GLCamera : virtual protected graphicsObject {
     public:
-        GLCamera(float, float);
+        GLCamera(float fov, float aspectRatio);
         GLCamera();
 
         void updatePerspective();
@@ -16,10 +16,10 @@ class GLCamera : virtual protected graphicsObject {
         void updateFov(float);
         void updateAspect(float);
 
-        void rotateX( float );
-        void rotateY( float );
-        void rotateZ( float );
-        void translate( float, float, float );
+        void rotateX( float degrees );
+        void rotateY( float degrees );
+        void rotateZ( float degrees );
+        void translate( float x, float y, float z);
         void moveTo( GLVector::vector3 );
         void lookAt( GLVector::vector3 & at );
         

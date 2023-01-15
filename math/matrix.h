@@ -64,11 +64,11 @@ namespace GLMatrix {
 		
 		//Methods
 			void transpose();
-			float get( int , int);
-			void set(int, int, float);
+			float get( int row , int column);
+			void set(int row, int column, float value);
 			float * toArray();
 			void makeIdentity();
-			void translation(float, float, float);
+			void translation(float x, float y, float z);
 			void makeTranslation(float,float,float);
 			void rotateX( float );
 			void rotateY( float );

@@ -1,9 +1,11 @@
 #ifndef __GL_VECTOR__
 #define __GL_VECOTR__
 
-class mat2;
-class mat3;
-class mat4;
+namespace GLMatrix {
+	class matrix4;
+	class matrix3;
+	class matrix2;
+}
 
 namespace GLVector{
 	class vector2 {
@@ -16,7 +18,6 @@ namespace GLVector{
 			
 			//Operators
 			vector2 operator * (const vector2 &);
-			vector2 operator * ( const mat2 & );
 			vector2 operator * (float);
 			vector2 operator + (const vector2 &);
 			vector2 operator - (const vector2 &);
@@ -86,14 +87,14 @@ namespace GLVector{
 
 			//Operators
 			vector4  operator *( const vector4 & );
-			vector4 operator * ( const mat4 & );
+			vector4 operator * ( const GLMatrix::matrix4 & );
 			vector4 operator* (float);
 			vector4 operator + ( const vector4 & );
 			vector4 operator - (const vector4 & );
 
 			//Methods
 			float dot( vector4 & );
-			void applyMatrix( mat4& );
+			void applyMatrix( GLMatrix::matrix4 & );
 			void scaleX( float );
 			void scaleY(float);
 			void scaleZ(float);
