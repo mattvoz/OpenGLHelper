@@ -9,18 +9,24 @@ enum variableType { floatVal, vec2, vec3, vec4, mat2, mat3, mat4 };
 typedef struct shaderVar {
     std::string name;
     void * value;
+    variableType type;
     struct shaderVar * next;
 
 } shaderVar;
 
 class shaderVariables {
     public:
-        void addVariable( variableType type, shaderVar * value);
+        shaderVariables(){
+            for(int i = 0; i < 100; i++) {
+                variables[i] = void;
+            }
+        };
+        void addVariable( variableType type, std::string name, void * value);
         void applyVariables(unsigned int shaderProgram);
         void setVariable( std::string name, void * value);
 
     private:
-        int hash();
+        unsigned int hash( std::string key );
         shaderVar variables[100];
 
 };
