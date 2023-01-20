@@ -16,39 +16,56 @@ unsigned int shaderVariables::hash( std::string key) {
 /**
  * Type is specified with an enum starting wtih an enum values can be found in shader.h
 */
-void shaderVariables::addVariable( variableType type, std::string name, shaderVar * value ) {
+void shaderVariables::addVariable( variableType type, std::string name, void * value ) {
     unsigned int loc = hash(name);
+    shaderVar * newVar = new shaderVar{name, value, type, NULL};
     if( variables[loc] == NULL ) {
-        variables[loc].name = name;
-        variables[loc].value = value;
-        variables[loc].type = type;
-        variables[loc].next = NULL;
+        variables[loc] = newVar;
         return;
     }
     shaderVar * tmp = variables[loc];
-    while( tmp.next != NULL ) {
-        tmp = tmp.next;
+    while( tmp->next != NULL ) {
+        if( tmp->name == name ) {
+            printf("this shader already has a value assigned to %s please check your shaders", name.c_str());
+            return;
+        }
+        tmp = tmp->next;
     }
+
+    tmp->next = newVar;
 }
 
 void shaderVariables::applyVariables( unsigned int shaderProgram ) {
-    for(int i = 0; i < ) {
-        switch (type) {
-        case floatVal:
-            break;
-        case vec2:
-            break;
-        case vec3:
-            break;
-        case vec4:
-            break;
-        case mat2:
-            break;
-        case mat3:
-            break;
-        case mat4:
-            break;
-    }
+    for(int i = 0; i < 100 ; i++) {
+        shaderVar * currentVar = variables[i];
+
+        if(currentVar == NULL) {
+            continue;
+        }
+
+        while( currentVar != NULL) {
+            GLint loc = glGetUniformLocation( shaderProgram, currentVar->name.c_str());
+            switch (currentVar->type) {
+                case floatVal:
+                    glUniform1f(loc, currentVar->value);
+                    break;
+                case vec2:
+                    glUniform2f(loc, )
+                    break;
+                case vec3:
+                   break;
+                case vec4:
+                    break;
+                case mat2:
+                    break;
+                case mat3:
+                    break;
+                case mat4:
+                    break;
+            }
+
+            currentVar = currentVar->next;
+        }
     }
 }
 

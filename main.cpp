@@ -113,6 +113,8 @@ int main(int argc, char** argv) {
 
 	shader testShader = shader(vertexShaderSource, false, fragmentShaderSource, false);
 
+	shaderVariables test = shaderVariables();
+
 	testShader.compile();
 
 	unsigned int shaderProgram = testShader.getProgram();

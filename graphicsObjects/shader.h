@@ -18,16 +18,17 @@ class shaderVariables {
     public:
         shaderVariables(){
             for(int i = 0; i < 100; i++) {
-                variables[i] = void;
+                variables[i] = NULL;
             }
         };
         void addVariable( variableType type, std::string name, void * value);
+        void updateVariable( std::string name, void * newValue );
         void applyVariables(unsigned int shaderProgram);
         void setVariable( std::string name, void * value);
 
     private:
         unsigned int hash( std::string key );
-        shaderVar variables[100];
+        struct shaderVar * variables[100];
 
 };
 
