@@ -22,7 +22,10 @@ class shaderVariables {
             }
         };
         void addVariable( variableType type, std::string name, void * value);
-        void updateVariable( std::string name, void * newValue );
+        /**
+         * This function will return the void * of the previous data so if it's allocated it can be deleted.
+        */
+        void * updateVariable( std::string name, void * newValue );
         void applyVariables(unsigned int shaderProgram);
         void setVariable( std::string name, void * value);
 

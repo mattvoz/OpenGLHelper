@@ -1,4 +1,5 @@
 #include "shader.h"
+#include <matrix.h>
 #include <glad/glad.h>
 #include <cstdio>
 #include <cerrno>
@@ -35,6 +36,30 @@ void shaderVariables::addVariable( variableType type, std::string name, void * v
     tmp->next = newVar;
 }
 
+void shaderVariables::updateVariable( std::string name, void * newValue ) {
+    int hashval = this->hash(name);
+
+    shaderVariable * tmp = variables[hashval];
+    if( tmp == NULL ) {
+        printf("no shader variable with this name");
+        return;
+    }
+
+    while( tmp->name != name ) {
+        if(tmp == NULL) {
+            return;
+        }
+        
+        tmp = tmp->next;
+    }
+
+    void * returnVal = tmp->value;
+
+    tmp->value = value;
+
+    return returnVal;
+}
+
 void shaderVariables::applyVariables( unsigned int shaderProgram ) {
     for(int i = 0; i < 100 ; i++) {
         shaderVar * currentVar = variables[i];
@@ -50,17 +75,22 @@ void shaderVariables::applyVariables( unsigned int shaderProgram ) {
                     glUniform1f(loc, currentVar->value);
                     break;
                 case vec2:
-                    glUniform2f(loc, )
+                    glUniform2f(loc, currentVar->value)
                     break;
                 case vec3:
+                    glUniform3f(loc, currentVar->value)
                    break;
                 case vec4:
+                    glUniform4f(loc, currentVar->value)
                     break;
                 case mat2:
+                    glUniformMatrix2fv(loc,1,GL_FALSE, currentVar->value->toArray());
                     break;
                 case mat3:
+                    glUniformMatrix3fv(loc,1,GL_FALSE, currentVar->value->toArray());
                     break;
                 case mat4:
+                    glUniformMatrix4fv(loc,1,GL_FALSE, currentVar->value->toArray());
                     break;
             }
 

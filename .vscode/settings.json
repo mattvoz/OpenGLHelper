@@ -2,6 +2,7 @@
 	"files.associations": {
 		"cmath": "cpp",
 		"cerrno": "cpp",
-		"string": "cpp"
+		"string": "cpp",
+		"cstdio": "cpp"
 	}
 }

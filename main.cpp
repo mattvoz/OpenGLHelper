@@ -115,6 +115,8 @@ int main(int argc, char** argv) {
 
 	shaderVariables test = shaderVariables();
 
+	test.addVariable( mat4, "test", camera.getPerspective().toArray());
+
 	testShader.compile();
 
 	unsigned int shaderProgram = testShader.getProgram();
