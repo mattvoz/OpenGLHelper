@@ -10,13 +10,24 @@
 
 GLMatrix::matrix4 transform = GLMatrix::matrix4();
 
+int width = 1920;
+int height = 1080;
+
+GLCamera camera;
+
 extern "C" {
 	#include "helpers.h"
 }
 
 
 void size_callback(GLFWwindow * window, int w, int h) {
-	glViewport(0,0,w,h);
+	width = w;
+	height = h;
+
+	camera.updateAspect(width/height);
+	camera.updatePerspective();
+
+	glViewport(0,0,width,height);
 }
 
 void draw( unsigned int vertexShader, unsigned int fragmentShader, void ** buffers, int bufferCount) {
@@ -25,7 +36,7 @@ void draw( unsigned int vertexShader, unsigned int fragmentShader, void ** buffe
 
 int main(int argc, char** argv) {
 	GLFWwindow * window;
-	GLCamera camera = GLCamera(60, 1);
+	camera = GLCamera(60, width/height);
 	GLVector::vector3 origin = GLVector::vector3(0,0,0);
 	camera.moveTo(GLVector::vector3(1,3,3));
 	camera.lookAt(origin);
@@ -115,8 +126,6 @@ int main(int argc, char** argv) {
 
 	shaderVariables test = shaderVariables();
 
-	test.addVariable( mat4, "test", camera.getPerspective().toArray());
-
 	testShader.compile();
 
 	unsigned int shaderProgram = testShader.getProgram();
@@ -145,11 +154,16 @@ int main(int argc, char** argv) {
 
 	camera.getViewMatrix().print();
 	camera.getPerspective().print();
+
+	test.addVariable( mat4, "projection", &camera.getPerspective());
+	test.addVariable(mat4, "view", &camera.getViewMatrix());
+	test.addVariable(mat4, "model", &model);
 	
 	while(!glfwWindowShouldClose(window)) {
 		x = (x+1) %360;
-
 		glClear(GL_COLOR_BUFFER_BIT);
+		test.applyVariables(shaderProgram);
+		/*
 		GLint loc = glGetUniformLocation( shaderProgram, "view");
 		float * cameraLook = camera.getViewMatrix().toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, cameraLook);
@@ -161,6 +175,7 @@ int main(int argc, char** argv) {
 		loc = glGetUniformLocation(shaderProgram, "projection");
 		float * projMat = camera.getPerspective().toArray();
 		glUniformMatrix4fv(loc,1,GL_FALSE, projMat);
+		*/
 
 		glDrawArrays(GL_TRIANGLES, 0, 12*3);
     	glfwSwapBuffers(window);

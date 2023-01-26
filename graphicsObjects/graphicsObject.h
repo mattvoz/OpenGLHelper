@@ -7,11 +7,11 @@
 class graphicsObject {
     public:
         virtual void render() {};
-    
     protected:
         GLVector::vector3 position;
-        GLMatrix::matrix4 rotation;
+        GLMatrix::matrix4 rotationMatrix;
         GLMatrix::matrix4 scale;
+        
     private:
 };
 

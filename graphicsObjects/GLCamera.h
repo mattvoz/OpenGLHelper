@@ -34,8 +34,6 @@ class GLCamera : virtual protected graphicsObject {
         bool needsUpdate;
         GLMatrix::matrix4 perspectiveMatrix;
         GLMatrix::matrix4 viewMatrix;
-        GLMatrix::matrix4 rotationMatrix;
-        GLVector::vector3 position;
         GLVector::vector3 up;
 };
 

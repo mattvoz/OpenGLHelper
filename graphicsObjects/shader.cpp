@@ -19,15 +19,29 @@ unsigned int shaderVariables::hash( std::string key) {
 */
 void shaderVariables::addVariable( variableType type, std::string name, void * value ) {
     unsigned int loc = hash(name);
-    shaderVar * newVar = new shaderVar{name, value, type, NULL};
+
+    shaderVar * newVar = new shaderVar();
+    newVar->name = name.c_str();
+    newVar->type = type;
+    newVar->value = value;
+    newVar->next = NULL;
+
     if( variables[loc] == NULL ) {
+        printf("null var\n");
         variables[loc] = newVar;
         return;
     }
+
     shaderVar * tmp = variables[loc];
+
+    if( tmp->name == name ) {
+        printf("this shader already has a value assigned to %s please check your shaders\n", name.c_str());
+        return;
+    }
+
     while( tmp->next != NULL ) {
         if( tmp->name == name ) {
-            printf("this shader already has a value assigned to %s please check your shaders", name.c_str());
+            printf("this shader already has a value assigned to %s please check your shaders\n", name.c_str());
             return;
         }
         tmp = tmp->next;
@@ -41,7 +55,7 @@ void * shaderVariables::updateVariable( std::string name, void * newValue ) {
 
     shaderVar * tmp = variables[hashval];
     if( tmp == NULL ) {
-        printf("no shader variable with this name");
+        printf("no shader variable with this name\n");
         return NULL;
     }
 
@@ -69,7 +83,7 @@ void shaderVariables::applyVariables( unsigned int shaderProgram ) {
         }
 
         while( currentVar != NULL) {
-            GLint loc = glGetUniformLocation( shaderProgram, currentVar->name.c_str());
+            GLint loc = glGetUniformLocation( shaderProgram, currentVar->name.c_str() );
             switch (currentVar->type) {
                 case floatVal:
                     glUniform1f(loc,* ( (GLfloat *) currentVar->value) );
@@ -90,7 +104,8 @@ void shaderVariables::applyVariables( unsigned int shaderProgram ) {
                     glUniformMatrix3fv(loc,1,GL_FALSE, ( (GLMatrix::matrix3 *) currentVar->value)->toArray());
                     break;
                 case mat4:
-                    glUniformMatrix4fv(loc,1,GL_FALSE, ( (GLMatrix::matrix4 *) currentVar->value)->toArray());
+                    float * tmp = ( (GLMatrix::matrix4 *) currentVar->value)->toArray();
+                    glUniformMatrix4fv( loc, 1, GL_FALSE, tmp );
                     break;
             }
 
