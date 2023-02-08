@@ -5,8 +5,6 @@
 
 class glMesh : virtual protected graphicsObject {
     public:
-        void addChild();
-
 
     private:
         float * vertices;
@@ -15,6 +13,8 @@ class glMesh : virtual protected graphicsObject {
         int normalCount;
         float * tangents;
         int tangentCount;
+        float * texCoords;
+        int texCoordsCount;
 
 };
 
