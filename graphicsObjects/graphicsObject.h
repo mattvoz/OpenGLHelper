@@ -13,7 +13,7 @@ typedef struct graphicsChildContainer {
 
 class graphicsObject {
     public:
-        virtual void render() {};
+        virtual void render( GLMatrix::matrix4 & perspective, GLMatrix::matrix4 & world ) {};
         void addChild( graphicsChildContainer * child ) {
             children.push_back(child);
         }
