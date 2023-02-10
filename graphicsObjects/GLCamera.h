@@ -4,7 +4,7 @@
 #include <matrix.h>
 #include "graphicsObject.h"
 
-class GLCamera : virtual protected graphicsObject {
+class GLCamera : virtual protected graphicsInterface {
     public:
         GLCamera(float fov, float aspectRatio);
         GLCamera();

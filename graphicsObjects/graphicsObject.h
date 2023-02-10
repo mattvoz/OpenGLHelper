@@ -11,9 +11,9 @@ typedef struct graphicsChildContainer {
     std::string name;
 } graphicsChildContainer;
 
-class graphicsObject {
+class graphicsInterface {
     public:
-        virtual void render( GLMatrix::matrix4 & perspective, GLMatrix::matrix4 & world ) {};
+        virtual void render( GLMatrix::matrix4 & world ) {};
         void addChild( graphicsChildContainer * child ) {
             children.push_back(child);
         }

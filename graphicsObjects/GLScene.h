@@ -4,12 +4,12 @@
 #include "graphicsObject.h"
 #include "GLCamera.h"
 
-class GLScene : virtual protected graphicsObject {
+class GLScene : virtual protected graphicsInterface {
     public: 
         GLScene();
         //Overide render since a scene has all the information needed for rendering
         void render();
-        graphicsObject * findChild(std::string childName);
+        graphicsInterface * findChild(std::string childName);
         void setActiveCamera( GLCamera * newCam );
     protected:
         GLCamera * activeCamera;
