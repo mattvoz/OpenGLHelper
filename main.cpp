@@ -13,7 +13,7 @@ GLMatrix::matrix4 transform = GLMatrix::matrix4();
 int width = 1920;
 int height = 1080;
 
-GLCamera camera;
+glCamera camera;
 
 extern "C" {
 	#include "helpers.h"
@@ -36,7 +36,7 @@ void draw( unsigned int vertexShader, unsigned int fragmentShader, void ** buffe
 
 int main(int argc, char** argv) {
 	GLFWwindow * window;
-	camera = GLCamera(60, width/height);
+	camera = glCamera(60, width/height);
 	GLVector::vector3 origin = GLVector::vector3(0,0,0);
 	camera.moveTo(GLVector::vector3(1,3,3));
 	camera.lookAt(origin);

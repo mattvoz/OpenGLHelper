@@ -1,9 +1,9 @@
-#include "GLCamera.h"
+#include "glCamera.h"
 #include <matrix.h>
 #include <math.h>
 #include <stdio.h>
 
-GLCamera::GLCamera() {
+glCamera::glCamera() {
     this->near = 0.1;
     this->far = 1000;
     this->aspect = 16.0f/9.0f;
@@ -16,7 +16,7 @@ GLCamera::GLCamera() {
     this->updateView();
 }
 
-GLCamera::GLCamera(float fov, float aspect) {
+glCamera::glCamera(float fov, float aspect) {
     this->fov = fov;
     this->aspect = aspect;
     this->near = .1;
@@ -29,7 +29,7 @@ GLCamera::GLCamera(float fov, float aspect) {
     this->updateView();
 }
 
-void GLCamera::updatePerspective() {
+void glCamera::updatePerspective() {
     float top = near * tan( toRadians(fov) / 2);
     float bottom = -top;
     float right = top * aspect;
@@ -37,7 +37,7 @@ void GLCamera::updatePerspective() {
     perspectiveMatrix.makePerspective(left, right, top, bottom, near, far);
 }
 
-void GLCamera::updateView() {
+void glCamera::updateView() {
     GLMatrix::matrix4 tmp = GLMatrix::matrix4();
     tmp.set( 0, 3, -position.xVal() );
     tmp.set( 1, 3, -position.yVal() );
@@ -47,27 +47,27 @@ void GLCamera::updateView() {
     viewMatrix = tmpRot * tmp;
 }
 
-void GLCamera::updateAspect(float newAspect) {
+void glCamera::updateAspect(float newAspect) {
     aspect = newAspect;
 }
 
-void GLCamera::updateFov( float newFov ) {
+void glCamera::updateFov( float newFov ) {
     fov = newFov;
 }
 
-void GLCamera::updateNear(float newNear) {
+void glCamera::updateNear(float newNear) {
     near = newNear;
 }
 
-void GLCamera::updateFar(float newFar) {
+void glCamera::updateFar(float newFar) {
     far = newFar;
 }
 
-GLMatrix::matrix4 & GLCamera::getPerspective() {
+GLMatrix::matrix4 & glCamera::getPerspective() {
     return perspectiveMatrix;
 }
 
-GLMatrix::matrix4& GLCamera::getViewMatrix() {
+GLMatrix::matrix4& glCamera::getViewMatrix() {
     if(needsUpdate) {
         updateView();
         needsUpdate = false;
@@ -75,32 +75,32 @@ GLMatrix::matrix4& GLCamera::getViewMatrix() {
     return viewMatrix;
 }
 
-void GLCamera::rotateX( float degrees ) {
+void glCamera::rotateX( float degrees ) {
     viewMatrix.rotateX( degrees );
     needsUpdate = true;
 }
 
-void GLCamera::rotateY( float degrees ) {
+void glCamera::rotateY( float degrees ) {
     viewMatrix.rotateY( degrees );
     needsUpdate = true;
 }
 
-void GLCamera::rotateZ( float degrees ) {
+void glCamera::rotateZ( float degrees ) {
     viewMatrix.rotateZ( degrees );
     needsUpdate = true;
 }
 
-void GLCamera::translate( float x, float y, float z ) {
+void glCamera::translate( float x, float y, float z ) {
     position = ( position + GLVector::vector3(x,y,z) );
     needsUpdate = true;
 }
 
-void GLCamera::moveTo( GLVector::vector3 newPos ) {
+void glCamera::moveTo( GLVector::vector3 newPos ) {
     this->position = newPos;
     needsUpdate = true;
 }
 
-void GLCamera::lookAt( GLVector::vector3 & at ) {
+void glCamera::lookAt( GLVector::vector3 & at ) {
     GLVector::vector3 up = GLVector::vector3(0,1,0);
     rotationMatrix = rotationMatrix.lookAt( position, at, up );
     needsUpdate = true;

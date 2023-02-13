@@ -6,8 +6,10 @@
 #include <vector>
 #include <matrix.h>
 
+class graphicsInterface;
+
 typedef struct graphicsChildContainer {
-    graphicsObject * object;
+    graphicsInterface * object;
     std::string name;
 } graphicsChildContainer;
 

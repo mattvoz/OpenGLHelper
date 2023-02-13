@@ -2,7 +2,7 @@
 #define __GL_MeshObject__
 
 #include <glad/glad.h>
-#include "graphicsObject.h"
+#include "graphicsInterface.h"
 
 typedef struct vertex {
     GLVector::vector3 position;
@@ -17,9 +17,11 @@ class glMesh {
         glMesh( float * vertexArray, int count );
         void computeNormals();
         GLuint returnBuffer();
+        void loadBuffers();
 
     private:
         std::vector<vertex> vertexData;
+        GLuint vertexBuffer, normalBuffer, tangentBuffer, textureBuffer;
 
 };
 

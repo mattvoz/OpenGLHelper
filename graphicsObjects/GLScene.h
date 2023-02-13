@@ -2,7 +2,7 @@
 #define __GL__SCENE__
 
 #include "graphicsObject.h"
-#include "GLCamera.h"
+#include "glCamera.h"
 
 class GLScene : virtual protected graphicsInterface {
     public: 
@@ -10,9 +10,9 @@ class GLScene : virtual protected graphicsInterface {
         //Overide render since a scene has all the information needed for rendering
         void render();
         graphicsInterface * findChild(std::string childName);
-        void setActiveCamera( GLCamera * newCam );
+        void setActiveCamera( glCamera * newCam );
     protected:
-        GLCamera * activeCamera;
+        glCamera * activeCamera;
 };
 
 #endif

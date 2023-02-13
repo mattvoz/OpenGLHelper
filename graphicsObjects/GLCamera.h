@@ -2,12 +2,12 @@
 #define __GL_CAMERA__
 
 #include <matrix.h>
-#include "graphicsObject.h"
+#include "graphicsInterface.h"
 
-class GLCamera : virtual protected graphicsInterface {
+class glCamera : virtual protected graphicsInterface {
     public:
-        GLCamera(float fov, float aspectRatio);
-        GLCamera();
+        glCamera(float fov, float aspectRatio);
+        glCamera();
 
         void updatePerspective();
         void updateView();
