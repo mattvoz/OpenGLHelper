@@ -9,7 +9,7 @@ class GLScene : virtual protected graphicsInterface {
         GLScene();
         //Overide render since a scene has all the information needed for rendering
         void render();
-        graphicsInterface * findChild(std::string childName);
+        graphicsChildContainer * findChild(std::string childName);
         void setActiveCamera( glCamera * newCam );
     protected:
         glCamera * activeCamera;

@@ -105,3 +105,16 @@ void glCamera::lookAt( GLVector::vector3 & at ) {
     rotationMatrix = rotationMatrix.lookAt( position, at, up );
     needsUpdate = true;
 }
+
+glCamera::render( GLMatrix::matrix4 & world ) {
+    GLMatrix::matrix4 localWorld = GLMatrix::matrix4();
+    localWorld.set( 0, 3, -position.xVal() );
+    localWorld.set( 1, 3, -position.yVal() );
+    localWorld.set( 2, 3, -position.zVal() );
+
+    GLMatrix::matrix4 childWorld = world * localWorld * rotationMatrix * scale;
+
+    for( int i = 0; i < children.size(); i++) {
+        children[i]->object->render(childWorld);
+    }
+}
