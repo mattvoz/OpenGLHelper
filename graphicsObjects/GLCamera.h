@@ -15,6 +15,7 @@ class glCamera : virtual protected graphicsInterface {
         void updateFar(float);
         void updateFov(float);
         void updateAspect(float);
+        void updateLocalWorldMatrix();
 
         void rotateX( float degrees );
         void rotateY( float degrees );
@@ -22,19 +23,24 @@ class glCamera : virtual protected graphicsInterface {
         void translate( float x, float y, float z);
         void moveTo( GLVector::vector3 );
         void lookAt( GLVector::vector3 & at );
+        void render( GLMatrix::matrix4 & world );
         
 
         GLMatrix::matrix4& getPerspective();
         GLMatrix::matrix4& getViewMatrix();
+        GLMatrix::matrix4& getWolrdMatrix();
     private:
         float fov;
         float aspect;
         float near;
         float far;
         bool needsUpdate;
+        bool worldNeedsUpdate;
         GLMatrix::matrix4 perspectiveMatrix;
         GLMatrix::matrix4 viewMatrix;
         GLVector::vector3 up;
+
+        GLMatrix::matrix4 localWorldMatrix;
 };
 
 #endif

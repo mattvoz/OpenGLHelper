@@ -160,9 +160,10 @@ int main(int argc, char** argv) {
 	test.addVariable(mat4, "model", &model);
 	
 	while(!glfwWindowShouldClose(window)) {
-		x = (x+1) %360;
+		x = (x-1) %360;
 		glClear(GL_COLOR_BUFFER_BIT);
 		test.applyVariables(shaderProgram);
+		model.rotateX(x);
 		/*
 		GLint loc = glGetUniformLocation( shaderProgram, "view");
 		float * cameraLook = camera.getViewMatrix().toArray();
