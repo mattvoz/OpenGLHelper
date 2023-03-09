@@ -100,10 +100,8 @@ int main(int argc, char** argv) {
     1.0f,-1.0f, 1.0f
 	};
 
-	GLuint buffer = makeBuffer(12*3, vertices);
-
 	std::string vertexShaderSource = "#version 330 core\n"
-    "attribute vec3 aPos;\n"
+    "attribute vec3 pos;\n"
 	"uniform mat4 model;\n"
 	"uniform mat4 view;\n"
 	"uniform mat4 projection;\n"
@@ -128,6 +126,8 @@ int main(int argc, char** argv) {
 
 	testShader.compile();
 
+	GLuint buffer = makeBuffer(12*3, vertices);
+
 	unsigned int shaderProgram = testShader.getProgram();
 
 	glUseProgram(shaderProgram);
@@ -138,7 +138,7 @@ int main(int argc, char** argv) {
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	unsigned int positionLoc = glGetAttribLocation(shaderProgram, "aPos");
+	unsigned int positionLoc = glGetAttribLocation(shaderProgram, "pos");
 	printf("%d\n", positionLoc);
 	glEnableVertexAttribArray(positionLoc);
 

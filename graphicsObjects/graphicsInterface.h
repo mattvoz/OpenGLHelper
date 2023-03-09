@@ -1,5 +1,5 @@
-#ifndef __SCENE_OBJECT__
-#define __SCENE_OBJECT__
+#ifndef __GRAPHICS_INTERFACE__
+#define __GRAPHICS_INTERFACE__
 
 #include <string>
 #include <vector.h>

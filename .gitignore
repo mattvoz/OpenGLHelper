@@ -1,3 +1,6 @@
 *.o
 *.exe
 .vscode
+
+OpenGL_Libraries/glad/*
+OpenGL_Libraries/Windows/*
