@@ -1,8 +1,8 @@
 DIR := $(CURDIR)
 CC=g++
 
-WINDOWSHEADER = $(DIR)/OpenGL_Libraries/Windows/GLFW/include
-WINDOWSLIB=$(DIR)/OpenGL_Libraries/Windows/GLFW
+WINDOWSHEADER = $(DIR)/OpenGL_Libraries/GLFW/include
+WINDOWSLIB=$(DIR)/OpenGL_Libraries/GLFW
 
 GLADHEADER= $(DIR)/OpenGL_Libraries/glad/include
 GLADLIB = $(DIR)/OpenGL_Libraries/glad

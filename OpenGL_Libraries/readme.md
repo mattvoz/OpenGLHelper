@@ -10,7 +10,7 @@ For Glad the strucutre is
 
 for GLFW the structure should be 
 
-./Windows/GLFW/
+./GLFW/
     -libglfw3.a
     /include
         glfw3.h

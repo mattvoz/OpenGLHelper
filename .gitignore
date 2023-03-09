@@ -3,4 +3,4 @@
 .vscode
 
 OpenGL_Libraries/glad/*
-OpenGL_Libraries/Windows/*
+OpenGL_Libraries/GLFW/*

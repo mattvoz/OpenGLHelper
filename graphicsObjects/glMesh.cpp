@@ -56,7 +56,7 @@ glMesh::glMesh() {
     loadBuffers();
 }
 
-glMesh::computeNormals() {
+void glMesh::computeNormals() {
     for( int i = 0; i < this->vertexData.size(); i+3 ) {
         GLVector::vector3 e1 = vertexData[i].position - vertexData[i+1].position;
         GLVector::vector3 e2 = vertexData[i+2].position - vertexData[i+1].position;
@@ -68,7 +68,11 @@ glMesh::computeNormals() {
     }
 }
 
-glMesh::loadBuffers() {
+void glMesh::computeTangents() {
+    
+}
+
+void glMesh::loadBuffers() {
     int size = vertexData.size();
     float vertexes[size * 3];
     float normals[ size * 3];

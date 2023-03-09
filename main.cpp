@@ -101,7 +101,7 @@ int main(int argc, char** argv) {
 	};
 
 	std::string vertexShaderSource = "#version 330 core\n"
-    "attribute vec3 pos;\n"
+    "attribute vec3 a_pos;\n"
 	"uniform mat4 model;\n"
 	"uniform mat4 view;\n"
 	"uniform mat4 projection;\n"
@@ -120,13 +120,13 @@ int main(int argc, char** argv) {
 		"FragColor.a = 1.0;\n"
 	"}\0";
 
+	GLuint buffer = makeBuffer(12*3, vertices);
+
 	shader testShader = shader(vertexShaderSource, false, fragmentShaderSource, false);
 
 	shaderVariables test = shaderVariables();
 
 	testShader.compile();
-
-	GLuint buffer = makeBuffer(12*3, vertices);
 
 	unsigned int shaderProgram = testShader.getProgram();
 
@@ -138,8 +138,8 @@ int main(int argc, char** argv) {
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	unsigned int positionLoc = glGetAttribLocation(shaderProgram, "pos");
-	printf("%d\n", positionLoc);
+	unsigned int positionLoc = glGetAttribLocation(shaderProgram, "a_pos");
+	printf("vertex location is: %d\n", positionLoc);
 	glEnableVertexAttribArray(positionLoc);
 
 

@@ -11,7 +11,6 @@ typedef struct shaderVar {
     void * value;
     variableType type;
     struct shaderVar * next;
-    int size;
 } shaderVar;
 
 class shaderVariables {
@@ -21,7 +20,7 @@ class shaderVariables {
                 variables[i] = NULL;
             }
         };
-        void addVariable( variableType type, std::string name, void * value, int size);
+        void addVariable( variableType type, std::string name, void * value);
         /**
          * This function will return the void * of the previous data so if it's allocated it can be deleted.
         */

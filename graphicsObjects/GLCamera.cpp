@@ -121,12 +121,14 @@ void glCamera::render( GLMatrix::matrix4 & world ) {
 
 GLMatrix::matrix4& glCamera::getWolrdMatrix() {
 	if( ! worldNeedsUpdate ) {
-		return;
+		return localWorldMatrix;
 	}
 	GLMatrix::matrix4 localWorld = GLMatrix::matrix4();
 	localWorld.set( 0, 3, -position.xVal() );
 	localWorld.set( 1, 3, -position.yVal() );
 	localWorld.set( 2, 3, -position.zVal() );
+
+	localWorldMatrix = localWorld;
 
 	GLMatrix::matrix4 childWorld = localWorld * rotationMatrix * scale;
 }
