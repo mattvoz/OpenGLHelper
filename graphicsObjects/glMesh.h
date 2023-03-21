@@ -15,13 +15,17 @@ class glMesh {
     public:
         glMesh();
         glMesh( float * vertexArray, int count );
+        void addNormals( float * normals, unsigned int count);
+        void addTextureCoords( float * coords, unsigned int count );
         void computeNormals();
-        GLuint returnBuffer();
-        void loadBuffers();
+        void computeTangents();
+        void createBuffers();
+        void applyBuffers( unsigned int shaderProgram );
 
     private:
         std::vector<vertex> vertexData;
         GLuint vertexBuffer, normalBuffer, tangentBuffer, textureBuffer;
+        bool vertexNeedsUpdate, normalNeedsUpdate, tangentNeedsUpdate, textureNeedsUpdate;
 
 };
 

@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
 		return -1;
 	};
 
-	window = glfwCreateWindow(1000,1000, "Hello World", NULL,NULL);
+	window = glfwCreateWindow(width,height, "Hello World", NULL,NULL);
 
 	if( !window ) {
 		glfwTerminate();
@@ -101,14 +101,14 @@ int main(int argc, char** argv) {
 	};
 
 	std::string vertexShaderSource = "#version 330 core\n"
-    "attribute vec3 a_pos;\n"
+    "attribute vec3 pos;\n"
 	"uniform mat4 model;\n"
 	"uniform mat4 view;\n"
 	"uniform mat4 projection;\n"
 	"varying vec4 color;\n"
     "void main() {\n"
-	"	color = vec4(aPos.xyz, 1.0);\n"
-    "   gl_Position = projection * view * model * vec4(aPos, 1.0);\n"
+	"	color = vec4(pos.xyz, 1.0);\n"
+    "   gl_Position = projection * view * model * vec4(pos, 1.0);\n"
     "}\0";
 
 	std::string fragmentShaderSource = " #version 330 core\n"
@@ -120,7 +120,7 @@ int main(int argc, char** argv) {
 		"FragColor.a = 1.0;\n"
 	"}\0";
 
-	GLuint buffer = makeBuffer(12*3, vertices);
+	GLuint buffer = makeBuffer(3 * 36, vertices);
 
 	shader testShader = shader(vertexShaderSource, false, fragmentShaderSource, false);
 
@@ -138,14 +138,14 @@ int main(int argc, char** argv) {
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	unsigned int positionLoc = glGetAttribLocation(shaderProgram, "a_pos");
+	unsigned int positionLoc = glGetAttribLocation(shaderProgram, "pos");
 	printf("vertex location is: %d\n", positionLoc);
 	glEnableVertexAttribArray(positionLoc);
 
 
 	glBindVertexArray(buffer);
 
-	glViewport(0,0,1000,1000);
+	glViewport(0,0,width,height);
 	glfwSetFramebufferSizeCallback(window, size_callback);
 
 	int x = 0;
@@ -164,21 +164,8 @@ int main(int argc, char** argv) {
 		glClear(GL_COLOR_BUFFER_BIT);
 		test.applyVariables(shaderProgram);
 		model.rotateX(x);
-		/*
-		GLint loc = glGetUniformLocation( shaderProgram, "view");
-		float * cameraLook = camera.getViewMatrix().toArray();
-		glUniformMatrix4fv(loc,1,GL_FALSE, cameraLook);
 
-		loc = glGetUniformLocation(shaderProgram, "model");
-		float * modelMat = model.toArray();
-		glUniformMatrix4fv(loc,1,GL_FALSE, modelMat);
-
-		loc = glGetUniformLocation(shaderProgram, "projection");
-		float * projMat = camera.getPerspective().toArray();
-		glUniformMatrix4fv(loc,1,GL_FALSE, projMat);
-		*/
-
-		glDrawArrays(GL_TRIANGLES, 0, 12*3);
+		glDrawArrays(GL_TRIANGLES, 0, 36*3);
     	glfwSwapBuffers(window);
     	glfwPollEvents();    
 	}

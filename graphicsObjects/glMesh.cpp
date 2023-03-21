@@ -1,4 +1,5 @@
 #include "glMesh.h"
+#include "../helpers.h"
 
 /**
  * Creates a new mesh to be paired with a shader.
@@ -72,7 +73,7 @@ void glMesh::computeTangents() {
     
 }
 
-void glMesh::loadBuffers() {
+void glMesh::createBuffers() {
     int size = vertexData.size();
     float vertexes[size * 3];
     float normals[ size * 3];
@@ -89,11 +90,12 @@ void glMesh::loadBuffers() {
         normals[i * 3 + 2] = vertexData[i].normal.zVal();
     }
 
-    glCreateBuffers(1,&vertexBuffer);
-    glCreateBuffers(1,&normalBuffer);
-    glCreateBuffers(1,&tangentBuffer);
-    glCreateBuffers(1,&textureBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, size, vertexes,GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+    this->vertexBuffer = makeBuffer( vertexData.size() * 3, vertexes );
+    this->normalBuffer = makeBuffer( vertexData.size() * 3, normals );
+    this->tangentBuffer = makeBuffer( vertexData.size() * 3, tangents );
+    this->textureBuffer = makeBuffer( vertexData.size() * 2, texCoord );
+}
+
+void glMesh::updateBuffers() {
+
 }

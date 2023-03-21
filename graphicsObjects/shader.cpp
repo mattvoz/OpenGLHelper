@@ -27,7 +27,6 @@ void shaderVariables::addVariable( variableType type, std::string name, void * v
     newVar->next = NULL;
 
     if( variables[loc] == NULL ) {
-        printf("null var\n");
         variables[loc] = newVar;
         return;
     }

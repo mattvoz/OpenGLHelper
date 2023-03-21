@@ -12,3 +12,7 @@
 
 ## OpenGL 
 - While i dislike column major arrays it's the opengl standard so all math operations in this project use column major systems to do matrix operations.
+
+
+## Mesh Class
+- The mesh will contain 4 pre defined attributes always available that it will bind to the shader if they are present, pos, normal, tangent, arcTan
