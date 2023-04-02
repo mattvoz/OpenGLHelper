@@ -54,7 +54,7 @@ glMesh::glMesh() {
 
     computeNormals();
 
-    loadBuffers();
+    createBuffers();
 }
 
 void glMesh::computeNormals() {
@@ -77,7 +77,7 @@ void glMesh::createBuffers() {
     int size = vertexData.size();
     float vertexes[size * 3];
     float normals[ size * 3];
-    float tangents[ size * 3];
+    float tangents[ size * 4];
     float texCoord[size * 2];
 
     for(int i = 0; i < vertexData.size(); i ++) {
@@ -92,10 +92,27 @@ void glMesh::createBuffers() {
 
     this->vertexBuffer = makeBuffer( vertexData.size() * 3, vertexes );
     this->normalBuffer = makeBuffer( vertexData.size() * 3, normals );
-    this->tangentBuffer = makeBuffer( vertexData.size() * 3, tangents );
+    this->tangentBuffer = makeBuffer( vertexData.size() * 4, tangents );
     this->textureBuffer = makeBuffer( vertexData.size() * 2, texCoord );
 }
 
 void glMesh::updateBuffers() {
+    float vertexes[size * 3];
+    float normals[ size * 3];
+    float tangents[ size * 4];
+    float texCoord[size * 2];
 
+    for(int i = 0; i < vertexData.size(); i ++) {
+        vertexes[i * 3] = vertexData[i].position.xVal();
+        vertexes[i * 3 + 1] = vertexData[i].position.yVal();
+        vertexes[i * 3 + 2] = vertexData[i].position.zVal();
+
+        normals[i * 3] = vertexData[i].normal.xVal();
+        normals[i * 3 + 1] = vertexData[i].normal.yVal();
+        normals[i * 3 + 2] = vertexData[i].normal.zVal();
+    }
+}
+
+void glMesh::applyBuffers( unsigned int shaderProgram ) {
+    glBindBuffer(GL_ARRAY_BUFFER, vertexData);
 }

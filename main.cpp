@@ -134,16 +134,12 @@ int main(int argc, char** argv) {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_ALWAYS); 
 
-	glBindVertexArray(buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	unsigned int positionLoc = glGetAttribLocation(shaderProgram, "pos");
 	printf("vertex location is: %d\n", positionLoc);
 	glEnableVertexAttribArray(positionLoc);
-
-
-	glBindVertexArray(buffer);
 
 	glViewport(0,0,width,height);
 	glfwSetFramebufferSizeCallback(window, size_callback);

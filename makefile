@@ -29,8 +29,8 @@ main.o: main.cpp	helpers.h
 	$(CC) main.cpp	$(CFLAGS)	$(LIBS) -c
 
 #since helpers is a C program hard code in using gcc to compile
-helpers.o: helpers.c	helpers.h
-	gcc helpers.c $(CFLAGS) $(LIBS) -c
+helpers.o: helpers.c	./graphicsObjects/helpers.h
+	gcc ./graphicsObjects/helpers.c $(CFLAGS) $(LIBS) -c
 
 GLCamera.o:	graphicsObjects/GLCamera.cpp	graphicsObjects/GLCamera.h
 	$(CC) graphicsObjects/GLCamera.cpp $(CFLAGS) $(LIBS) -c

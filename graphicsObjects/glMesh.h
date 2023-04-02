@@ -23,6 +23,7 @@ class glMesh {
         void applyBuffers( unsigned int shaderProgram );
 
     private:
+        void updateBuffers();
         std::vector<vertex> vertexData;
         GLuint vertexBuffer, normalBuffer, tangentBuffer, textureBuffer;
         bool vertexNeedsUpdate, normalNeedsUpdate, tangentNeedsUpdate, textureNeedsUpdate;
