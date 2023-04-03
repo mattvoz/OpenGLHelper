@@ -11,16 +11,17 @@ typedef struct vertex {
     GLVector::vector2 texCoord;
 } vertex;
 
-class glMesh {
+class Mesh {
     public:
-        glMesh();
-        glMesh( float * vertexArray, int count );
+        Mesh();
+        Mesh( float * vertexArray, int count );
         void addNormals( float * normals, unsigned int count);
         void addTextureCoords( float * coords, unsigned int count );
         void computeNormals();
         void computeTangents();
         void createBuffers();
         void applyBuffers( unsigned int shaderProgram );
+        ~Mesh();
 
     private:
         void updateBuffers();

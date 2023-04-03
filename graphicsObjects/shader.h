@@ -34,12 +34,14 @@ class shaderVariables {
 
 };
 
-class shader{
+class Shader{
     public:
-        shader( std::string, bool, std::string, bool);
-        shader();
+        Shader( std::string, bool, std::string, bool);
+        Shader();
         void setVertexShader(std::string, bool);
         void setFragmentShader(std::string, bool);
+        void applyVariables();
+        void setVariable();
         void compile();
         unsigned int getProgram();
     private:
@@ -47,6 +49,7 @@ class shader{
         std::string fragmentShaderSource;
         unsigned int shaderProgram;
         shaderVariables variables;
+        bool needsCompile;
 
 };
 

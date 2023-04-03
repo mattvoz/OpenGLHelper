@@ -1,11 +1,11 @@
-#include "glMesh.h"
+#include "Mesh.h"
 #include "helpers.h"
 
 /**
  * Creates a new mesh to be paired with a shader.
  * Defaults to a cube
 */
-glMesh::glMesh() {
+Mesh::Mesh() {
     float tmp[] = {
 	-1.0f,-1.0f,-1.0f, // triangle 1 : begin
     -1.0f,-1.0f, 1.0f,
@@ -56,7 +56,7 @@ glMesh::glMesh() {
     createBuffers();
 }
 
-void glMesh::computeNormals() {
+void Mesh::computeNormals() {
     for( int i = 0; i < this->vertexData.size(); i+3 ) {
         GLVector::vector3 e1 = vertexData[i].position - vertexData[i+1].position;
         GLVector::vector3 e2 = vertexData[i+2].position - vertexData[i+1].position;
@@ -68,11 +68,11 @@ void glMesh::computeNormals() {
     }
 }
 
-void glMesh::computeTangents() {
+void Mesh::computeTangents() {
     
 }
 
-void glMesh::createBuffers() {
+void Mesh::createBuffers() {
     int size = vertexData.size();
     float vertexes[size * 3];
     float normals[ size * 3];
@@ -95,7 +95,7 @@ void glMesh::createBuffers() {
     this->textureBuffer = makeBuffer( vertexData.size() * 2, texCoord );
 }
 
-void glMesh::updateBuffers() {
+void Mesh::updateBuffers() {
     int size = vertexData.size();
     float vertexes[size * 3];
     float normals[ size * 3];
@@ -113,7 +113,7 @@ void glMesh::updateBuffers() {
     }
 }
 
-void glMesh::applyBuffers( unsigned int shaderProgram ) {
+void Mesh::applyBuffers( unsigned int shaderProgram ) {
     unsigned int positionLoc;
     //vertexes
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -138,4 +138,8 @@ void glMesh::applyBuffers( unsigned int shaderProgram ) {
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	positionLoc = glGetAttribLocation(shaderProgram, "a_texture");
 	glEnableVertexAttribArray(positionLoc);
+}
+
+Mesh::~Mesh() {
+    
 }

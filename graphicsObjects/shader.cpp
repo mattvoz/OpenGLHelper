@@ -113,7 +113,7 @@ void shaderVariables::applyVariables( unsigned int shaderProgram ) {
     }
 }
 
-shader::shader(){
+Shader::Shader(){
     vertexShaderSource = "#version 330 core\n"
     "attribute vec3 pos;\n"
 	"uniform mat4 model;\n"
@@ -133,15 +133,16 @@ shader::shader(){
     	"FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
 		"FragColor.a = 1.0;\n"
 	"}\0";
-    shaderProgram = NULL;
+    this->compile();
 }
 
-shader::shader(std::string vertex, bool vertexFile, std::string fragment, bool fragFile) {
+Shader::Shader(std::string vertex, bool vertexFile, std::string fragment, bool fragFile) {
     this->setVertexShader(vertex,vertexFile);
     this->setFragmentShader(fragment,fragFile);
+    this->compile();
 }
 
-void shader::setVertexShader(std::string vertex, bool file) {
+void Shader::setVertexShader(std::string vertex, bool file) {
     FILE * fp;
     if( file ) {
         fp = fopen( vertex.c_str(), "r");
@@ -157,7 +158,7 @@ void shader::setVertexShader(std::string vertex, bool file) {
     }
 }
 
-void shader::setFragmentShader(std::string fragment, bool file) {
+void Shader::setFragmentShader(std::string fragment, bool file) {
     FILE * fp;
     if(file) {
         fp = fopen( fragment.c_str(), "r");
@@ -173,7 +174,7 @@ void shader::setFragmentShader(std::string fragment, bool file) {
     }
 }
 
-void shader::compile() {
+void Shader::compile() {
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     const char * vertexCStr = vertexShaderSource.c_str();
     glShaderSource(vertexShader, 1, &vertexCStr, NULL);
@@ -190,6 +191,17 @@ void shader::compile() {
     glLinkProgram(shaderProgram);
 }
 
-unsigned int shader::getProgram() {
+unsigned int Shader::getProgram() {
+    if( needsCompile ) {
+        this->compile();
+    }
     return this->shaderProgram;
+}
+
+void Shader::applyVariables() {
+    this->variables.applyVariables(this->shaderProgram);
+}
+
+void Shader::setVariable() {
+
 }

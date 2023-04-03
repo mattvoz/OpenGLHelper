@@ -2,19 +2,20 @@
 #define __GL__SCENE__OBJECT__
 
 #include "graphicsInterface.h"
-#include "shader.h"
-#include "glMesh.h"
+#include "Shader.h"
+#include "Mesh.h"
 
-class glSceneObject : protected virtual graphicsInterface {
+class sceneObject : protected virtual graphicsInterface {
     public:
-        glSceneObject();
-        glSceneObject( glMesh * mesh, shader * shader );
-        void setMesh( glMesh * mesh );
-        void setShader( shader * shader );
-        ~glSceneObject();
+        sceneObject();
+        sceneObject( Mesh * mesh, Shader * shader );
+        virtual void render( GLMatrix::matrix4 & world );
+        void setMesh( Mesh * mesh );
+        void setShader( Shader * shader );
+        ~sceneObject();
     private:
-        glMesh * mesh;
-        shader * shader;
+        Mesh * mesh;
+        Shader * shader;
 
 };
 

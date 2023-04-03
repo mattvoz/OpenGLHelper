@@ -38,11 +38,11 @@ GLCamera.o:	graphicsObjects/GLCamera.cpp	graphicsObjects/GLCamera.h
 sceneObject.o:	graphicsObjects/sceneObject.h	graphicsObjects/sceneObject.cpp
 	$(CC)	graphicsObjects/sceneObject.cpp	$(CFLAGS) $(LIBS) -c
 
-shader.o:	graphicsObjects/shader.cpp	graphicsObjects/shader.h
-	$(CC) graphicsObjects/shader.cpp $(CFLAGS) $(LIBS) -c
+shader.o:	graphicsObjects/Shader.cpp	graphicsObjects/Shader.h
+	$(CC) graphicsObjects/Shader.cpp $(CFLAGS) $(LIBS) -c
 
-glMesh.o:	graphicsObjects/glMesh.cpp graphicsObjects/glMesh.h
-	$(CC) graphicsObjects/glMesh.cpp  $(CFLAGS) $(LIBS) -c
+Mesh.o:	graphicsObjects/Mesh.cpp graphicsObjects/Mesh.h
+	$(CC) graphicsObjects/Mesh.cpp  $(CFLAGS) $(LIBS) -c
 
 clean:
 	rm	*.o 

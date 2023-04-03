@@ -5,9 +5,10 @@
 #include <stdio.h>
 #include <GL/gl.h>
 #include <matrix.h>
-#include "graphicsObjects/shader.h"
+#include "graphicsObjects/Shader.h"
 #include "graphicsObjects/GLCamera.h"
 #include "graphicsObjects/helpers.h"
+#include "graphicsObjects/sceneObject.h"
 
 GLMatrix::matrix4 transform = GLMatrix::matrix4();
 
@@ -119,11 +120,13 @@ int main(int argc, char** argv) {
 
 	GLuint buffer = makeBuffer(3 * 36, vertices);
 
-	shader testShader = shader(vertexShaderSource, false, fragmentShaderSource, false);
+	Shader testShader = Shader(vertexShaderSource, false, fragmentShaderSource, false);
 
 	shaderVariables test = shaderVariables();
 
 	testShader.compile();
+
+	sceneObject objectTest = sceneObject();
 
 	unsigned int shaderProgram = testShader.getProgram();
 
@@ -160,7 +163,7 @@ int main(int argc, char** argv) {
 
 		glDrawArrays(GL_TRIANGLES, 0, 36*3);
     	glfwSwapBuffers(window);
-    	glfwPollEvents();    
+    	glfwPollEvents();
 	}
 
 	glfwTerminate();
