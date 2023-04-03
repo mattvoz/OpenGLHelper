@@ -22,21 +22,27 @@ else
 	LIBS = -L$(GLADLIB) -L$(MATHLIB) -lglad -lglfw -lGL -lglMath	-lglMath
 endif
 
-executable:	main.o	helpers.o	shader.o	GLCamera.o
+executable:	main.o	helpers.o	shader.o	GLCamera.o 
 	$(CC) main.o helpers.o	shader.o	GLCamera.o  $(CFLAGS) $(LIBS) -o main.exe
 
-main.o: main.cpp	helpers.h
+main.o: main.cpp	./graphicsObjects/helpers.h
 	$(CC) main.cpp	$(CFLAGS)	$(LIBS) -c
 
 #since helpers is a C program hard code in using gcc to compile
-helpers.o: helpers.c	./graphicsObjects/helpers.h
-	gcc ./graphicsObjects/helpers.c $(CFLAGS) $(LIBS) -c
+helpers.o: ./graphicsObjects/helpers.cpp	./graphicsObjects/helpers.h
+	gcc ./graphicsObjects/helpers.cpp $(CFLAGS) $(LIBS) -c
 
 GLCamera.o:	graphicsObjects/GLCamera.cpp	graphicsObjects/GLCamera.h
 	$(CC) graphicsObjects/GLCamera.cpp $(CFLAGS) $(LIBS) -c
 
+sceneObject.o:	graphicsObjects/sceneObject.h	graphicsObjects/sceneObject.cpp
+	$(CC)	graphicsObjects/sceneObject.cpp	$(CFLAGS) $(LIBS) -c
+
 shader.o:	graphicsObjects/shader.cpp	graphicsObjects/shader.h
 	$(CC) graphicsObjects/shader.cpp $(CFLAGS) $(LIBS) -c
+
+glMesh.o:	graphicsObjects/glMesh.cpp graphicsObjects/glMesh.h
+	$(CC) graphicsObjects/glMesh.cpp  $(CFLAGS) $(LIBS) -c
 
 clean:
 	rm	*.o 

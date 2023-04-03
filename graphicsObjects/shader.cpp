@@ -114,8 +114,25 @@ void shaderVariables::applyVariables( unsigned int shaderProgram ) {
 }
 
 shader::shader(){
-    vertexShaderSource = "";
-    fragmentShaderSource = "";
+    vertexShaderSource = "#version 330 core\n"
+    "attribute vec3 pos;\n"
+	"uniform mat4 model;\n"
+	"uniform mat4 view;\n"
+	"uniform mat4 projection;\n"
+	"varying vec4 color;\n"
+    "void main() {\n"
+	"	color = vec4(pos.xyz, 1.0);\n"
+    "   gl_Position = projection * view * model * vec4(pos, 1.0);\n"
+    "}\0";
+
+    fragmentShaderSource = " #version 330 core\n"
+	"out vec4 FragColor;\n"
+	"varying vec4 color;"
+	"void main()\n"
+	"{\n"
+    	"FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
+		"FragColor.a = 1.0;\n"
+	"}\0";
     shaderProgram = NULL;
 }
 

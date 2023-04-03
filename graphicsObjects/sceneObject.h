@@ -8,9 +8,9 @@
 class glSceneObject : protected virtual graphicsInterface {
     public:
         glSceneObject();
-        glSceneObject( mesh * mesh, shader * shader );
-        void setMesh();
-        void setShader();
+        glSceneObject( glMesh * mesh, shader * shader );
+        void setMesh( glMesh * mesh );
+        void setShader( shader * shader );
         ~glSceneObject();
     private:
         glMesh * mesh;

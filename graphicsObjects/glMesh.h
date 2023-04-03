@@ -9,7 +9,7 @@ typedef struct vertex {
     GLVector::vector3 normal;
     GLVector::vector3 tangent;
     GLVector::vector2 texCoord;
-}
+} vertex;
 
 class glMesh {
     public:

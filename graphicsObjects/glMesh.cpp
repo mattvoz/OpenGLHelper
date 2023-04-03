@@ -1,5 +1,5 @@
 #include "glMesh.h"
-#include "../helpers.h"
+#include "helpers.h"
 
 /**
  * Creates a new mesh to be paired with a shader.
@@ -50,7 +50,6 @@ glMesh::glMesh() {
         GLVector::vector3 pos = GLVector::vector3( tmp[i], tmp[i+1], tmp[i+2]);
         x.position = pos;
     }
-    verticeCount = 3 * 36;
 
     computeNormals();
 
@@ -97,6 +96,7 @@ void glMesh::createBuffers() {
 }
 
 void glMesh::updateBuffers() {
+    int size = vertexData.size();
     float vertexes[size * 3];
     float normals[ size * 3];
     float tangents[ size * 4];
@@ -114,5 +114,28 @@ void glMesh::updateBuffers() {
 }
 
 void glMesh::applyBuffers( unsigned int shaderProgram ) {
-    glBindBuffer(GL_ARRAY_BUFFER, vertexData);
+    unsigned int positionLoc;
+    //vertexes
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	positionLoc = glGetAttribLocation(shaderProgram, "a_pos");
+	glEnableVertexAttribArray(positionLoc);
+
+    //normals
+    glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	positionLoc = glGetAttribLocation(shaderProgram, "a_normal");
+	glEnableVertexAttribArray(positionLoc);
+
+    //Tangents
+    glBindBuffer(GL_ARRAY_BUFFER, tangentBuffer);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	positionLoc = glGetAttribLocation(shaderProgram, "a_tangent");
+	glEnableVertexAttribArray(positionLoc);
+
+    //Textures
+    glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	positionLoc = glGetAttribLocation(shaderProgram, "a_texture");
+	glEnableVertexAttribArray(positionLoc);
 }

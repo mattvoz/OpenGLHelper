@@ -7,6 +7,7 @@
 #include <matrix.h>
 #include "graphicsObjects/shader.h"
 #include "graphicsObjects/GLCamera.h"
+#include "graphicsObjects/helpers.h"
 
 GLMatrix::matrix4 transform = GLMatrix::matrix4();
 
@@ -14,10 +15,6 @@ int width = 1920;
 int height = 1080;
 
 glCamera camera;
-
-extern "C" {
-	#include "helpers.h"
-}
 
 
 void size_callback(GLFWwindow * window, int w, int h) {
