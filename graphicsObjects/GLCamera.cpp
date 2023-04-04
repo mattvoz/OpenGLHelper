@@ -1,5 +1,4 @@
 #include "glCamera.h"
-#include <matrix.h>
 #include <math.h>
 #include <stdio.h>
 
@@ -131,5 +130,7 @@ GLMatrix::matrix4& glCamera::getWolrdMatrix() {
 	localWorldMatrix = localWorld;
 
 	GLMatrix::matrix4 childWorld = localWorld * rotationMatrix * scale;
+
+	return childWorld;
 }
 	

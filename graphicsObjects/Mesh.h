@@ -2,6 +2,7 @@
 #define __GL_MeshObject__
 
 #include <glad/glad.h>
+#include <vector.h>
 #include "graphicsInterface.h"
 
 typedef struct vertex {

@@ -50,6 +50,10 @@ vector2 vector2::normalize() {
 	return GLVector::vector2( x / length, y / length );
 }
 
+vector2::~vector2() {
+
+}
+
 
 // Vector 3
 

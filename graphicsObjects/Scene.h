@@ -3,14 +3,18 @@
 
 #include "graphicsInterface.h"
 #include "glCamera.h"
+#include "matrix.h"
+#include "vector.h"
 
-class GLScene : virtual protected graphicsInterface {
+class Scene : virtual protected graphicsInterface {
     public: 
-        GLScene();
+        Scene();
         //Overide render since a scene has all the information needed for rendering
         void render(GLMatrix::matrix4 view, GLMatrix::matrix4 perspective );
+        void render();
         graphicsChildContainer * findChild(std::string childName);
         void setActiveCamera( glCamera * newCam );
+        ~Scene();
     protected:
         glCamera * activeCamera;
 };

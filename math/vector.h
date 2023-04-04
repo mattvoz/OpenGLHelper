@@ -1,5 +1,5 @@
 #ifndef __GL_VECTOR__
-#define __GL_VECOTR__
+#define __GL_VECTOR__
 
 namespace GLMatrix {
 	class matrix4;

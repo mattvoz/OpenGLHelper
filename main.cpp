@@ -9,6 +9,7 @@
 #include "graphicsObjects/GLCamera.h"
 #include "graphicsObjects/helpers.h"
 #include "graphicsObjects/sceneObject.h"
+#include "graphicsObjects/Scene.h"
 
 GLMatrix::matrix4 transform = GLMatrix::matrix4();
 
@@ -126,7 +127,7 @@ int main(int argc, char** argv) {
 
 	testShader.compile();
 
-	sceneObject objectTest = sceneObject();
+	Scene * testScene = new Scene();
 
 	unsigned int shaderProgram = testShader.getProgram();
 

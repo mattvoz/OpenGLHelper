@@ -2,9 +2,9 @@
 #define __GRAPHICS_INTERFACE__
 
 #include <string>
-#include <vector.h>
-#include <vector>
 #include <matrix.h>
+#include <vector.h>
+#include<vector>
 
 class graphicsInterface;
 
