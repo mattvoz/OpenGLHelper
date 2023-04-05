@@ -40,6 +40,7 @@ class Shader{
         Shader();
         void setVertexShader(std::string, bool);
         void setFragmentShader(std::string, bool);
+        void setVariables( shaderVariables * newVars );
         void applyVariables();
         void setVariable();
         void compile();
@@ -48,8 +49,10 @@ class Shader{
         std::string vertexShaderSource;
         std::string fragmentShaderSource;
         unsigned int shaderProgram;
-        shaderVariables variables;
+        shaderVariables * variables = new shaderVariables();
         bool needsCompile;
+        unsigned int fragmentShader;
+        unsigned int vertexShader;
 
 };
 

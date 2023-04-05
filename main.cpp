@@ -100,14 +100,14 @@ int main(int argc, char** argv) {
 	};
 
 	std::string vertexShaderSource = "#version 330 core\n"
-    "attribute vec3 pos;\n"
+    "attribute vec3 aPos;\n"
 	"uniform mat4 model;\n"
 	"uniform mat4 view;\n"
 	"uniform mat4 projection;\n"
 	"varying vec4 color;\n"
     "void main() {\n"
-	"	color = vec4(pos.xyz, 1.0);\n"
-    "   gl_Position = projection * view * model * vec4(pos, 1.0);\n"
+	"	color = vec4(aPos.xyz, 1.0);\n"
+    "   gl_Position = projection * view * model * vec4(aPos, 1.0);\n"
     "}\0";
 
 	std::string fragmentShaderSource = " #version 330 core\n"
@@ -129,6 +129,10 @@ int main(int argc, char** argv) {
 
 	Scene * testScene = new Scene();
 
+	Mesh testMesh = Mesh();
+
+	sceneObject testObject = sceneObject();
+
 	unsigned int shaderProgram = testShader.getProgram();
 
 	glUseProgram(shaderProgram);
@@ -149,20 +153,26 @@ int main(int argc, char** argv) {
 	float z = .01;
 	glClearColor(.1f,0.5f,0.5f,1.0f);
 
-	camera.getViewMatrix().print();
-	camera.getPerspective().print();
-
 	test.addVariable( mat4, "projection", &camera.getPerspective());
 	test.addVariable(mat4, "view", &camera.getViewMatrix());
 	test.addVariable(mat4, "model", &model);
+
+	testShader.setVariables( &test );
+	testObject.setShader( & testShader );
 	
 	while(!glfwWindowShouldClose(window)) {
+		glClear( GL_COLOR_BUFFER_BIT );
+		GLMatrix::matrix4 world = GLMatrix::matrix4();
+		testObject.render(world);
+
+        /*
 		x = (x-1) %360;
 		glClear(GL_COLOR_BUFFER_BIT);
 		test.applyVariables(shaderProgram);
 		model.rotateX(x);
+		*/
 
-		glDrawArrays(GL_TRIANGLES, 0, 36*3);
+		//glDrawArrays(GL_TRIANGLES, 0, 36*3);
     	glfwSwapBuffers(window);
     	glfwPollEvents();
 	}

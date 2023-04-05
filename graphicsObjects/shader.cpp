@@ -115,14 +115,17 @@ void shaderVariables::applyVariables( unsigned int shaderProgram ) {
 
 Shader::Shader(){
     vertexShaderSource = "#version 330 core\n"
-    "attribute vec3 pos;\n"
+    "attribute vec3 aPos;\n"
+    "attribute vec3 aNormal;\n"
+    "attribute vec4 aTangent;\n"
+    "attribute vec2 aTexture;\n"
 	"uniform mat4 model;\n"
 	"uniform mat4 view;\n"
 	"uniform mat4 projection;\n"
 	"varying vec4 color;\n"
     "void main() {\n"
-	"	color = vec4(pos.xyz, 1.0);\n"
-    "   gl_Position = projection * view * model * vec4(pos, 1.0);\n"
+	"	color = vec4(aPos.xyz, 1.0);\n"
+    "   gl_Position = projection * view * model * vec4(aPos, 1.0);\n"
     "}\0";
 
     fragmentShaderSource = " #version 330 core\n"
@@ -133,6 +136,7 @@ Shader::Shader(){
     	"FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
 		"FragColor.a = 1.0;\n"
 	"}\0";
+
     this->compile();
 }
 
@@ -175,14 +179,15 @@ void Shader::setFragmentShader(std::string fragment, bool file) {
 }
 
 void Shader::compile() {
-    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    vertexShader = glCreateShader(GL_VERTEX_SHADER);
     const char * vertexCStr = vertexShaderSource.c_str();
     glShaderSource(vertexShader, 1, &vertexCStr, NULL);
     glCompileShader(vertexShader);
 
-    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     const char * fragmentCStr = fragmentShaderSource.c_str();
     glShaderSource(fragmentShader, 1, &fragmentCStr, NULL);
+    glCompileShader(fragmentShader);
 
     shaderProgram = glCreateProgram();
     glAttachShader(shaderProgram, vertexShader);
@@ -194,14 +199,20 @@ void Shader::compile() {
 unsigned int Shader::getProgram() {
     if( needsCompile ) {
         this->compile();
+        needsCompile = false;
     }
     return this->shaderProgram;
 }
 
 void Shader::applyVariables() {
-    this->variables.applyVariables(this->shaderProgram);
+    this->variables->applyVariables(this->shaderProgram );
 }
 
 void Shader::setVariable() {
 
+}
+
+void Shader::setVariables( shaderVariables * newVars ) {
+    delete this->variables;
+    this->variables = newVars;
 }

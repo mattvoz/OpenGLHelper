@@ -45,13 +45,15 @@ Mesh::Mesh() {
     1.0f,-1.0f, 1.0f
 	};
 
-    for(int i = 0; i < 3*36 ; i+3) {
+    for(int i = 0; i < 3*36 ; i+=3) {
         vertex x;
         GLVector::vector3 pos = GLVector::vector3( tmp[i], tmp[i+1], tmp[i+2]);
         x.position = pos;
     }
 
     computeNormals();
+
+    printf("normals computed");
 
     createBuffers();
 }
@@ -70,6 +72,10 @@ void Mesh::computeNormals() {
 
 void Mesh::computeTangents() {
     
+}
+
+unsigned int Mesh::verticeCount() {
+    return vertexData.size() * 3;
 }
 
 void Mesh::createBuffers() {
@@ -115,29 +121,34 @@ void Mesh::updateBuffers() {
 
 void Mesh::applyBuffers( unsigned int shaderProgram ) {
     unsigned int positionLoc;
+    unsigned int vertexCount = vertexData.size();
     //vertexes
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	positionLoc = glGetAttribLocation(shaderProgram, "a_pos");
+	positionLoc = glGetAttribLocation(shaderProgram, "aPos");
+    printf("position is %d\n", positionLoc);
 	glEnableVertexAttribArray(positionLoc);
 
     //normals
     glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	positionLoc = glGetAttribLocation(shaderProgram, "a_normal");
-	glEnableVertexAttribArray(positionLoc);
+	positionLoc = glGetAttribLocation(shaderProgram, "aNormal");
+    glEnableVertexAttribArray(positionLoc);
+    glBindAttribLocation( shaderProgram, positionLoc, "normal");
 
+    /*
     //Tangents
     glBindBuffer(GL_ARRAY_BUFFER, tangentBuffer);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-	positionLoc = glGetAttribLocation(shaderProgram, "a_tangent");
+	positionLoc = glGetAttribLocation(shaderProgram, "aTangent");
 	glEnableVertexAttribArray(positionLoc);
 
     //Textures
     glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-	positionLoc = glGetAttribLocation(shaderProgram, "a_texture");
+	positionLoc = glGetAttribLocation(shaderProgram, "aTexture");
 	glEnableVertexAttribArray(positionLoc);
+    */
 }
 
 Mesh::~Mesh() {

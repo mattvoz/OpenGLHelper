@@ -15,4 +15,11 @@
 
 
 ## Mesh Class
-- The mesh will contain 4 pre defined attributes always available that it will bind to the shader if they are present, pos, normal, tangent, arcTan
+- The mesh will contain 3 pre defined attributes always available that it will bind to the shader if they are present, pos, normal, tangent
+
+### TODO
+- Look into quaternions and how to represent them in a graphics context
+
+
+### BUGS
+- scene Object causes program to not create cube on screen so debug sceneObject seems to be the mesh creating buffers most likely

@@ -22,6 +22,7 @@ class Mesh {
         void computeTangents();
         void createBuffers();
         void applyBuffers( unsigned int shaderProgram );
+        unsigned int verticeCount();
         ~Mesh();
 
     private:

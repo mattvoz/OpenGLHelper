@@ -15,3 +15,4 @@ for GLFW the structure should be
     /include
         glfw3.h
         glfw3native.h
+

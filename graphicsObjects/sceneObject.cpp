@@ -11,9 +11,14 @@ sceneObject::sceneObject( Mesh * mesh, Shader * shader ) {
 }
 
 void sceneObject::render( GLMatrix::matrix4 & world ) {
-    shader->applyVariables();
     unsigned int program = shader->getProgram();
+    glUseProgram( program );
+    printf("shader program %d", program);
     mesh->applyBuffers(program);
+    shader->applyVariables();
+    glDrawArrays(GL_TRIANGLES, 0, mesh->verticeCount() * 3 );
+
+    glUseProgram(NULL);
 }
 
 void sceneObject::setMesh( Mesh * newMesh ) {
