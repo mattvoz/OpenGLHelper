@@ -12,10 +12,17 @@ class sceneObject : protected virtual graphicsInterface {
         virtual void render( GLMatrix::matrix4 & world );
         void setMesh( Mesh * mesh );
         void setShader( Shader * shader );
+        void rotate(float x, float y, float z);
         ~sceneObject();
     private:
+        void computeTransformation();
         Mesh * mesh;
         Shader * shader;
+        bool needsTransformCompute = false;
+        GLMatrix::matrix4 rotation;
+        GLMatrix::matrix4 scale;
+        GLVector::vector3 position;
+        GLMatrix::matrix4 transformationMatrix;
 
 };
 

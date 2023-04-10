@@ -42,7 +42,7 @@ class Shader{
         void setFragmentShader(std::string, bool);
         void setVariables( shaderVariables * newVars );
         void applyVariables();
-        void setVariable();
+        void setVariable(variableType type, std::string name, void * value);
         void compile();
         unsigned int getProgram();
     private:

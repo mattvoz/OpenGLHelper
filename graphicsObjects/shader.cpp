@@ -17,7 +17,7 @@ unsigned int shaderVariables::hash( std::string key) {
 /**
  * Type is specified with an enum starting wtih an enum values can be found in shader.h
 */
-void shaderVariables::addVariable( variableType type, std::string name, void * value ) {
+void shaderVariables::setVariable( variableType type, std::string name, void * value ) {
     unsigned int loc = hash(name);
 
     shaderVar * newVar = new shaderVar();
@@ -208,7 +208,7 @@ void Shader::applyVariables() {
     this->variables->applyVariables(this->shaderProgram );
 }
 
-void Shader::setVariable() {
+void Shader::setVariable( variableType type, std::string name, void * value ) {
 
 }
 

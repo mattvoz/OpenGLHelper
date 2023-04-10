@@ -14,8 +14,8 @@ GLuint makeBuffer(int size, void * data) {
     GLuint buffer;
 	glCreateBuffers(1,&buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, size, data,GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, NULL);
     return buffer;
 }
 

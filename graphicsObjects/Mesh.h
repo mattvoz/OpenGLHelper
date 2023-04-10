@@ -23,11 +23,12 @@ class Mesh {
         void createBuffers();
         void applyBuffers( unsigned int shaderProgram );
         unsigned int verticeCount();
+        void printVertices();
         ~Mesh();
 
     private:
         void updateBuffers();
-        std::vector<vertex> vertexData;
+        std::vector<vertex*> vertexData = std::vector<vertex*>();
         GLuint vertexBuffer, normalBuffer, tangentBuffer, textureBuffer;
         bool vertexNeedsUpdate, normalNeedsUpdate, tangentNeedsUpdate, textureNeedsUpdate;
 
