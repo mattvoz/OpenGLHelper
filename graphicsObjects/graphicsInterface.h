@@ -15,7 +15,7 @@ typedef struct graphicsChildContainer {
 
 class graphicsInterface {
     public:
-        virtual void render( GLMatrix::matrix4 & world/*, GLMatrix::matrix4 view, GLMatrix::matrix4 perspective */ ) {};
+        virtual void render( GLMatrix::matrix4 & world, GLMatrix::matrix4 & view, GLMatrix::matrix4 & perspective  ) {};
         void addChild( graphicsChildContainer * child ) {
             children.push_back(child);
         }

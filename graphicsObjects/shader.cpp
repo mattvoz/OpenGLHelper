@@ -33,15 +33,13 @@ void shaderVariables::setVariable( variableType type, std::string name, void * v
 
     shaderVar * tmp = variables[loc];
 
-    if( tmp->name == name ) {
-        printf("this shader already has a value assigned to %s please check your shaders\n", name.c_str());
-        return;
-    }
 
     while( tmp->next != NULL ) {
-        if( tmp->name == name ) {
-            printf("this shader already has a value assigned to %s please check your shaders\n", name.c_str());
+        if(tmp->name == newVar->name && tmp->type == newVar->type ) {
+            tmp->value = value;
             return;
+        } else {
+            printf("type mismatch for variable %s, original is %d, new is %d", name.c_str(), tmp->type, type);
         }
         tmp = tmp->next;
     }
@@ -208,7 +206,8 @@ void Shader::applyVariables() {
     this->variables->applyVariables(this->shaderProgram );
 }
 
-void Shader::setVariable( variableType type, std::string name, void * value ) {
+void Shader::setVariable(variableType type, std::string name, void * value) {
+    this->variables->setVariable( type, name, value);
 
 }
 

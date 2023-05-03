@@ -6,7 +6,6 @@ sceneObject::sceneObject() {
     rotation = GLMatrix::matrix4();
     scale = GLMatrix::matrix4();
     position = GLVector::vector3();
-    forward = GLVector::vector3(1,0,0);
 }
 
 sceneObject::sceneObject( Mesh * mesh, Shader * shader ) {
@@ -14,10 +13,12 @@ sceneObject::sceneObject( Mesh * mesh, Shader * shader ) {
     this->shader = shader;
 }
 
-void sceneObject::render( GLMatrix::matrix4 & world ) {
+void sceneObject::render( GLMatrix::matrix4 & world, GLMatrix::matrix4 & view, GLMatrix::matrix4 & perspective ) {
     // Render current object
     unsigned int program = shader->getProgram();
-    this->shader->setVariable("world", world);
+    this->shader->setVariable(mat4 ,"world", &world);
+    this->shader->setVariable(mat4 ,"view", &view);
+    this->shader->setVariable(mat4, "projection", & perspective);
     glUseProgram( program );
     printf("shader program %d", program);
     mesh->applyBuffers(program);
@@ -30,7 +31,7 @@ void sceneObject::render( GLMatrix::matrix4 & world ) {
     //Render children
     for(int i = 0; i < children.size(); i++) {
         GLMatrix::matrix4 childWorld = world * this->transformationMatrix;
-        children[i]->object->render( childWorld );
+        children[i]->object->render( childWorld, view, perspective );
     }
 }
 
@@ -47,6 +48,9 @@ void sceneObject::setShader( Shader * newShader ) {
 }
 
 void sceneObject::rotate( float x, float y, float z) {
+}
+
+void sceneObject::computeTransformation() {
 }
 
 sceneObject::~sceneObject() {

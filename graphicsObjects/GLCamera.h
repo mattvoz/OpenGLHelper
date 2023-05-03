@@ -23,7 +23,7 @@ class glCamera : virtual protected graphicsInterface {
         void translate( float x, float y, float z);
         void moveTo( GLVector::vector3 );
         void lookAt( GLVector::vector3 & at );
-        virtual void render( GLMatrix::matrix4 & world );
+        virtual void render( GLMatrix::matrix4 & world, GLMatrix::matrix4 & view, GLMatrix::matrix4 & perspective );
         
 
         GLMatrix::matrix4& getPerspective();

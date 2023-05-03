@@ -26,7 +26,7 @@ class shaderVariables {
         */
         void * updateVariable( std::string name, void * newValue );
         void applyVariables(unsigned int shaderProgram);
-        void setVariable( std::string name, void * value);
+        void setVariable( variableType type, std::string name, void * value);
 
     private:
         unsigned int hash( std::string key );

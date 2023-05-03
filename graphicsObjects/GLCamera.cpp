@@ -75,17 +75,17 @@ GLMatrix::matrix4& glCamera::getViewMatrix() {
 }
 
 void glCamera::rotateX( float degrees ) {
-	viewMatrix.rotateX( degrees );
+	rotationMatrix.rotateX( degrees );
 	needsUpdate = true;
 }
 
 void glCamera::rotateY( float degrees ) {
-	viewMatrix.rotateY( degrees );
+	rotationMatrix.rotateY( degrees );
 	needsUpdate = true;
 }
 
 void glCamera::rotateZ( float degrees ) {
-	viewMatrix.rotateZ( degrees );
+	rotationMatrix.rotateZ( degrees );
 	needsUpdate = true;
 }
 
@@ -105,7 +105,7 @@ void glCamera::lookAt( GLVector::vector3 & at ) {
 	needsUpdate = true;
 }
 
-void glCamera::render( GLMatrix::matrix4 & world ) {
+void glCamera::render( GLMatrix::matrix4 & world, GLMatrix::matrix4 & view, GLMatrix::matrix4 & perspective ) {
 	GLMatrix::matrix4 localWorld = GLMatrix::matrix4();
 	localWorld.set( 0, 3, -position.xVal() );
 	localWorld.set( 1, 3, -position.yVal() );
@@ -114,7 +114,7 @@ void glCamera::render( GLMatrix::matrix4 & world ) {
 	GLMatrix::matrix4 childWorld = world * localWorld * rotationMatrix * scale;
 
 	for( int i = 0; i < children.size(); i++) {
-		children[i]->object->render(childWorld);
+		children[i]->object->render(childWorld, view, perspective);
 	}
 }
 

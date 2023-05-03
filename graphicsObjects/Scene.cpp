@@ -4,9 +4,10 @@ Scene::Scene() {
     activeCamera = new glCamera();
 };
 
-void Scene::render( GLMatrix::matrix4 world, GLMatrix::matrix4 perspective ) {
+void Scene::render( GLMatrix::matrix4 & view, GLMatrix::matrix4 & perspective ) {
+    GLMatrix::matrix4 world = GLMatrix::matrix4();
     for(int i = 0; i < children.size(); i++) {
-        children[i]->object->render( world );
+        children[i]->object->render( world, view, perspective );
     }  
 };
 

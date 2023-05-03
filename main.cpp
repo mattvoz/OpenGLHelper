@@ -153,9 +153,7 @@ int main(int argc, char** argv) {
 	float z = .01;
 	glClearColor(.1f,0.5f,0.5f,1.0f);
 
-	test.addVariable( mat4, "projection", &camera.getPerspective());
-	test.addVariable(mat4, "view", &camera.getViewMatrix());
-	test.addVariable(mat4, "model", &model);
+	test.setVariable(mat4, "model", &model);
 
 	testShader.setVariables( &test );
 	testObject.setShader( & testShader );
@@ -163,7 +161,11 @@ int main(int argc, char** argv) {
 	while(!glfwWindowShouldClose(window)) {
 		glClear( GL_COLOR_BUFFER_BIT );
 		GLMatrix::matrix4 world = GLMatrix::matrix4();
-		testObject.render(world);
+		testObject.render(world, camera.getViewMatrix(), camera.getPerspective() );
+		x += 1 % 360;
+		camera.rotateZ(x);
+		camera.rotateY(x);
+		camera.rotateX(x);
 
         /*
 		x = (x-1) %360;
