@@ -165,7 +165,7 @@ int main(int argc, char** argv) {
 		glClear( GL_COLOR_BUFFER_BIT );
 		GLMatrix::matrix4 world = GLMatrix::matrix4();
 		testObject.render(world, camera.getViewMatrix(), camera.getPerspective() );
-		x += 1 % 360;
+		z += .01;
 
         /*
 		x = (x-1) %360;
@@ -177,7 +177,6 @@ int main(int argc, char** argv) {
 		//glDrawArrays(GL_TRIANGLES, 0, 36*3);
     	glfwSwapBuffers(window);
     	glfwPollEvents();
-		_sleep(1000);
 	}
 
 	glfwTerminate();

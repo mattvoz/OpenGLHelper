@@ -83,7 +83,7 @@ void shaderVariables::applyVariables( unsigned int shaderProgram ) {
 
         while( currentVar != NULL) {
             GLint loc = glGetUniformLocation( shaderProgram, currentVar->name.c_str() );
-            printf("got var location %d", loc);
+            printf("got var location %d for variable with name %s\n", loc, currentVar->name.c_str() );
             switch (currentVar->type) {
                 case floatVal:
                     glUniform1f(loc,* ( (GLfloat *) currentVar->value) );
@@ -121,7 +121,7 @@ Shader::Shader(){
     "attribute vec4 aTangent;\n"
     "attribute vec2 aTexture;\n"
 	"uniform mat4 model;\n"
-    "uniform mat4 world\n"
+    "uniform mat4 world;\n"
 	"uniform mat4 view;\n"
 	"uniform mat4 projection;\n"
 	"varying vec4 color;\n"
@@ -187,14 +187,30 @@ void Shader::compile() {
     glShaderSource(vertexShader, 1, &vertexCStr, NULL);
     glCompileShader(vertexShader);
 
+    GLint success = 0;
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if( success == -1) {
+        printf("failed to compile shader");
+        exit(1);
+    }
+
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     const char * fragmentCStr = fragmentShaderSource.c_str();
     glShaderSource(fragmentShader, 1, &fragmentCStr, NULL);
     glCompileShader(fragmentShader);
+    
+    success = 0;
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if( success == -1) {
+        printf("failed to compile shader");
+        exit(1);
+    }
 
     shaderProgram = glCreateProgram();
     glAttachShader(shaderProgram, vertexShader);
     glAttachShader(shaderProgram, fragmentShader);
+
+    
 
     glLinkProgram(shaderProgram);
 }
