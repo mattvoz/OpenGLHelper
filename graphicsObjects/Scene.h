@@ -6,7 +6,7 @@
 #include "matrix.h"
 #include "vector.h"
 
-class Scene : virtual protected graphicsInterface {
+class Scene : virtual public graphicsInterface {
     public: 
         Scene();
         //Overide render since a scene has all the information needed for rendering

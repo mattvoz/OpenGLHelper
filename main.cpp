@@ -119,13 +119,14 @@ int main(int argc, char** argv) {
 		"FragColor.a = 1.0;\n"
 	"}\0";
 
-	GLuint buffer = makeBuffer(3 * 36, vertices);
-
-	Shader testShader = Shader(vertexShaderSource, false, fragmentShaderSource, false);
-
-	shaderVariables test = shaderVariables();
-
-	testShader.compile();
+	std::string fragmentShaderSourceBlue = " #version 330 core\n"
+	"out vec4 FragColor;\n"
+	"varying vec4 color;"
+	"void main()\n"
+	"{\n"
+    	"FragColor = vec4(0.0, 0.0, 1.0, 1.0);\n"
+		"FragColor.a = 1.0;\n"
+	"}\0";
 
 	Scene * testScene = new Scene();
 
@@ -133,39 +134,38 @@ int main(int argc, char** argv) {
 
 	sceneObject testObject = sceneObject();
 
-	unsigned int shaderProgram = testShader.getProgram();
+	sceneObject testChild = sceneObject();
 
-	glUseProgram(shaderProgram);
+	graphicsChildContainer child = { &testChild, "test" };
+
+	//testChild.scale(.2,.2,.2);
+
+	testObject.addChild(&child);
+
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_ALWAYS); 
 
+/*
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	unsigned int positionLoc = glGetAttribLocation(shaderProgram, "pos");
 	printf("vertex location is: %d\n", positionLoc);
 	glEnableVertexAttribArray(positionLoc);
+	*/
 
 	glViewport(0,0,width,height);
 	glfwSetFramebufferSizeCallback(window, size_callback);
 
 	int x = 0;
 	float z = .01;
-	glClearColor(.1f,0.5f,0.5f,1.0f);
-
-	test.setVariable(mat4, "model", &model);
-
-	testShader.setVariables( &test );
-	testObject.setShader( & testShader );
+	glClearColor(.5f,0.5f,0.5f,1.0f);
 	
 	while(!glfwWindowShouldClose(window)) {
 		glClear( GL_COLOR_BUFFER_BIT );
 		GLMatrix::matrix4 world = GLMatrix::matrix4();
 		testObject.render(world, camera.getViewMatrix(), camera.getPerspective() );
 		x += 1 % 360;
-		camera.rotateZ(x);
-		camera.rotateY(x);
-		camera.rotateX(x);
 
         /*
 		x = (x-1) %360;
@@ -177,6 +177,7 @@ int main(int argc, char** argv) {
 		//glDrawArrays(GL_TRIANGLES, 0, 36*3);
     	glfwSwapBuffers(window);
     	glfwPollEvents();
+		_sleep(1000);
 	}
 
 	glfwTerminate();

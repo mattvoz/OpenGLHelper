@@ -5,7 +5,7 @@
 #include "Shader.h"
 #include "Mesh.h"
 
-class sceneObject : protected virtual graphicsInterface {
+class sceneObject : public virtual graphicsInterface {
     public:
         sceneObject();
         sceneObject( Mesh * mesh, Shader * shader );
@@ -13,6 +13,9 @@ class sceneObject : protected virtual graphicsInterface {
         void setMesh( Mesh * mesh );
         void setShader( Shader * shader );
         void rotate(float x, float y, float z);
+        void scale( float x, float y, float z);
+        Mesh * getMesh();
+        Shader * getShader();
         ~sceneObject();
     private:
         void computeTransformation();
@@ -20,7 +23,7 @@ class sceneObject : protected virtual graphicsInterface {
         Shader * shader;
         bool needsTransformCompute = false;
         GLMatrix::matrix4 rotation;
-        GLMatrix::matrix4 scale;
+        GLMatrix::matrix4 scaleMatrix;
         GLVector::vector3 position;
         GLMatrix::matrix4 transformationMatrix;
 

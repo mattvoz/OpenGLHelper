@@ -46,7 +46,6 @@ Mesh::Mesh() {
 	};
 
     for(int i = 0; i < 36 ; i++) {
-        printf("%d", i);
         vertex* x = new vertex();
         GLVector::vector3 pos = GLVector::vector3( tmp[i*3], tmp[i*3+1], tmp[i*3+2]);
         x->position = pos;
@@ -54,8 +53,6 @@ Mesh::Mesh() {
     }
 
     computeNormals();
-
-    printf("normals computed");
 
     createBuffers();
 }
@@ -128,7 +125,6 @@ void Mesh::applyBuffers( unsigned int shaderProgram ) {
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	positionLoc = glGetAttribLocation(shaderProgram, "aPos");
-    printf("position is %d\n", positionLoc);
 	glEnableVertexAttribArray(positionLoc);
 
     //normals

@@ -35,11 +35,13 @@ void shaderVariables::setVariable( variableType type, std::string name, void * v
 
 
     while( tmp->next != NULL ) {
-        if(tmp->name == newVar->name && tmp->type == newVar->type ) {
+        if(tmp->name == newVar->name ) {
+            if( tmp->type != newVar->type ) {
+                printf("type mismatch for variable %s, original is %d, new is %d", name.c_str(), tmp->type, type);
+                return;
+            }
             tmp->value = value;
             return;
-        } else {
-            printf("type mismatch for variable %s, original is %d, new is %d", name.c_str(), tmp->type, type);
         }
         tmp = tmp->next;
     }
@@ -81,6 +83,7 @@ void shaderVariables::applyVariables( unsigned int shaderProgram ) {
 
         while( currentVar != NULL) {
             GLint loc = glGetUniformLocation( shaderProgram, currentVar->name.c_str() );
+            printf("got var location %d", loc);
             switch (currentVar->type) {
                 case floatVal:
                     glUniform1f(loc,* ( (GLfloat *) currentVar->value) );
@@ -118,12 +121,13 @@ Shader::Shader(){
     "attribute vec4 aTangent;\n"
     "attribute vec2 aTexture;\n"
 	"uniform mat4 model;\n"
+    "uniform mat4 world\n"
 	"uniform mat4 view;\n"
 	"uniform mat4 projection;\n"
 	"varying vec4 color;\n"
     "void main() {\n"
 	"	color = vec4(aPos.xyz, 1.0);\n"
-    "   gl_Position = projection * view * model * vec4(aPos, 1.0);\n"
+    "   gl_Position = projection * view * world * model * vec4(aPos, 1.0);\n"
     "}\0";
 
     fragmentShaderSource = " #version 330 core\n"
@@ -141,6 +145,7 @@ Shader::Shader(){
 Shader::Shader(std::string vertex, bool vertexFile, std::string fragment, bool fragFile) {
     this->setVertexShader(vertex,vertexFile);
     this->setFragmentShader(fragment,fragFile);
+    this->variables = new shaderVariables();
     this->compile();
 }
 

@@ -398,10 +398,6 @@ void matrix4::scale( float x, float y, float z ) {
 }
 
 void matrix4::print() {
-    for(int i = 0; i < 16; i++){
-        printf( "%f ", this->values[i]);
-    }
-    printf("\n");
     for(int i = 0; i < 4; i ++) {
         for(int j = 0; j < 4; j++) {
             printf(" %f", this->get(i,j));
