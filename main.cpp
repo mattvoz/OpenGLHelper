@@ -37,12 +37,9 @@ int main(int argc, char** argv) {
 	GLFWwindow * window;
 	camera = glCamera(60, width/height);
 	GLVector::vector3 origin = GLVector::vector3(0,0,0);
-	camera.moveTo(GLVector::vector3(1,3,3));
+	camera.moveTo(GLVector::vector3(5,0,0));
 	camera.lookAt(origin);
 
-	GLMatrix::matrix4 model = GLMatrix::matrix4();
-
-	GLMatrix::matrix4 world = GLMatrix::matrix4();
 	if(!glfwInit()) {
 		return -1;
 	};
@@ -59,45 +56,6 @@ int main(int argc, char** argv) {
 		printf("failed to load GL");
 		return -1;
 	}
-
-	float vertices[] =  {
-	-1.0f,-1.0f,-1.0f, // triangle 1 : begin
-    -1.0f,-1.0f, 1.0f,
-    -1.0f, 1.0f, 1.0f, // triangle 1 : end
-    1.0f, 1.0f,-1.0f, // triangle 2 : begin
-    -1.0f,-1.0f,-1.0f,
-    -1.0f, 1.0f,-1.0f, // triangle 2 : end
-    1.0f,-1.0f, 1.0f,
-    -1.0f,-1.0f,-1.0f,
-    1.0f,-1.0f,-1.0f,
-    1.0f, 1.0f,-1.0f,
-    1.0f,-1.0f,-1.0f,
-    -1.0f,-1.0f,-1.0f,
-    -1.0f,-1.0f,-1.0f,
-    -1.0f, 1.0f, 1.0f,
-    -1.0f, 1.0f,-1.0f,
-    1.0f,-1.0f, 1.0f,
-    -1.0f,-1.0f, 1.0f,
-    -1.0f,-1.0f,-1.0f,
-    -1.0f, 1.0f, 1.0f,
-    -1.0f,-1.0f, 1.0f,
-    1.0f,-1.0f, 1.0f,
-    1.0f, 1.0f, 1.0f,
-    1.0f,-1.0f,-1.0f,
-    1.0f, 1.0f,-1.0f,
-    1.0f,-1.0f,-1.0f,
-    1.0f, 1.0f, 1.0f,
-    1.0f,-1.0f, 1.0f,
-    1.0f, 1.0f, 1.0f,
-    1.0f, 1.0f,-1.0f,
-    -1.0f, 1.0f,-1.0f,
-    1.0f, 1.0f, 1.0f,
-    -1.0f, 1.0f,-1.0f,
-    -1.0f, 1.0f, 1.0f,
-    1.0f, 1.0f, 1.0f,
-    -1.0f, 1.0f, 1.0f,
-    1.0f,-1.0f, 1.0f
-	};
 
 	std::string vertexShaderSource = "#version 330 core\n"
     "attribute vec3 aPos;\n"
@@ -140,7 +98,7 @@ int main(int argc, char** argv) {
 
 	//testChild.scale(.2,.2,.2);
 
-	testObject.addChild(&child);
+	//testObject.addChild(&child);
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_ALWAYS); 
@@ -160,6 +118,8 @@ int main(int argc, char** argv) {
 	int x = 0;
 	float z = .01;
 	glClearColor(.5f,0.5f,0.5f,1.0f);
+	testObject.scale(1,1,1);
+
 	
 	while(!glfwWindowShouldClose(window)) {
 		glClear( GL_COLOR_BUFFER_BIT );

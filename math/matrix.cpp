@@ -184,7 +184,7 @@ matrix4::~matrix4() {
 
 }
 
-matrix4 matrix4::operator* ( matrix4& operand) {
+matrix4 matrix4::operator* ( matrix4& operand ) {
     float tmp[16];
     tmp[0] = ( values[0] * operand.get(0,0) ) + ( values[4] * operand.get(1,0) ) + ( values[8] * operand.get(2,0) ) + ( values[12] * operand.get(3,0) );
     tmp[4] = ( values[0] * operand.get(0,1) ) + ( values[4] * operand.get(1,1) ) + ( values[8] * operand.get(2,1) ) + ( values[12] * operand.get(3,1) );

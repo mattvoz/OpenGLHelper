@@ -58,9 +58,9 @@ vector2::~vector2() {
 // Vector 3
 
 vector3::vector3() {
-	x = 1.0f;
-	y = 1.0f;
-	z = 1.0f;
+	x = 0.0f;
+	y = 0.0f;
+	z = 0.0f;
 }
 
 vector3::vector3(float x) {
