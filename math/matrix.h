@@ -74,7 +74,7 @@ namespace GLMatrix {
 			void rotateY( float );
 			void rotateZ( float );
 			void scale( float, float, float );
-			void makePerspective(float, float, float, float, float, float);
+			void makePerspective(float fov, float aspect, float znear, float zFar );
 			matrix4 lookAt( GLVector::vector3 &, GLVector::vector3 &, GLVector::vector3 &);
 			void print();
 		private:

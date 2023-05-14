@@ -9,6 +9,8 @@ glCamera::glCamera() {
 	this->fov = 70;
 	this->position = GLVector::vector3(1,1,1);
 	this->rotationMatrix = GLMatrix::matrix4();
+
+	this->perspectiveMatrix = GLMatrix::matrix4();
 	this->viewMatrix = GLMatrix::matrix4();
 
 	this->updatePerspective();
@@ -22,6 +24,8 @@ glCamera::glCamera(float fov, float aspect) {
 	this->far = 1000;
 	this->position = GLVector::vector3(1,1,1);
 	this->rotationMatrix = GLMatrix::matrix4();
+
+	this->perspectiveMatrix = GLMatrix::matrix4();
 	this->viewMatrix = GLMatrix::matrix4();
 
 	this->updatePerspective();
@@ -29,11 +33,7 @@ glCamera::glCamera(float fov, float aspect) {
 }
 
 void glCamera::updatePerspective() {
-	float top = near * tan( toRadians(fov) / 2);
-	float bottom = -top;
-	float right = top * aspect;
-	float left = -right;
-	perspectiveMatrix.makePerspective(left, right, top, bottom, near, far);
+	perspectiveMatrix.makePerspective( fov, aspect, near, far);
 }
 
 void glCamera::updateView() {
@@ -106,12 +106,12 @@ void glCamera::lookAt( GLVector::vector3 & at ) {
 }
 
 void glCamera::render( GLMatrix::matrix4 & world, GLMatrix::matrix4 & view, GLMatrix::matrix4 & perspective ) {
-	GLMatrix::matrix4 localWorld = GLMatrix::matrix4();
-	localWorld.set( 0, 3, -position.xVal() );
-	localWorld.set( 1, 3, -position.yVal() );
-	localWorld.set( 2, 3, -position.zVal() );
+	GLMatrix::matrix4 translate = GLMatrix::matrix4();
+	translate.set( 0, 3, position.xVal() );
+	translate.set( 1, 3, position.yVal() );
+	translate.set( 2, 3, position.zVal() );
 
-	GLMatrix::matrix4 childWorld = world * localWorld * rotationMatrix * scale;
+	GLMatrix::matrix4 childWorld = world * translate * rotationMatrix * scale;
 
 	for( int i = 0; i < children.size(); i++) {
 		children[i]->object->render(childWorld, view, perspective);
@@ -130,6 +130,8 @@ GLMatrix::matrix4& glCamera::getWolrdMatrix() {
 	localWorldMatrix = localWorld;
 
 	GLMatrix::matrix4 childWorld = localWorld * rotationMatrix * scale;
+
+	worldNeedsUpdate = false;
 
 	return childWorld;
 }

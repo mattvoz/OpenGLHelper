@@ -406,23 +406,31 @@ void matrix4::print() {
     }
 }
 
-void matrix4::makePerspective(float left, float right, float top, float bottom, float near, float far) {
+void matrix4::makePerspective(float fov, float aspect, float zNear, float zFar) {
     this->makeIdentity();
-    float x = 2 * near / (right - left);
-    float y = 2 * near / (top - bottom);
-    float a = (right + left) / (right - left);
-    float b = (top + bottom) / (top - bottom);
-    float c = -(far + near) / (far - near);
-    float d = -2 * far * near / (far - near);
-    
-    values[0] = x;
-    values[5] = y;
-	values[8] = a;
-	values[9] = b;
-	values[10] = c;
-    values[11] = -1;
-	values[14] = d;
-    values[15] = 0;
+
+    float scale = 1 / tan( fov/2 );
+    float top = zNear * scale;
+    float bottom = -top;
+    float right = top * aspect;
+    float left = -top;
+
+    float x = 2 * zNear / ( right - left);
+    float y = 2 * zNear / ( top - bottom);
+    float z = - (zFar + zNear) / (zFar - zNear);
+
+    float tx = - zNear * ( left + right) / (right - left);
+    float ty = -zNear * (bottom + top) / (top - bottom);
+    float tz = 2 * zNear * zFar / (zNear - zFar);
+
+    this->values[0] = x;
+    this->values[5] = y;
+    this->values[10] = z;
+    this->values[11] = -1;
+    this->values[12] = tx;
+    this->values[13] = ty;
+    this->values[14] = tz;
+    this->values[15] = 0;
 }
 
 matrix4 matrix4::lookAt( GLVector::vector3 & eye, GLVector::vector3 & target, GLVector::vector3 & up) {

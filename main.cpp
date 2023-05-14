@@ -13,8 +13,8 @@
 
 GLMatrix::matrix4 transform = GLMatrix::matrix4();
 
-int width = 1920;
-int height = 1080;
+float width = 1920;
+float height = 1080;
 
 glCamera camera;
 
@@ -29,15 +29,11 @@ void size_callback(GLFWwindow * window, int w, int h) {
 	glViewport(0,0,width,height);
 }
 
-void draw( unsigned int vertexShader, unsigned int fragmentShader, void ** buffers, int bufferCount) {
-
-}
-
 int main(int argc, char** argv) {
 	GLFWwindow * window;
-	camera = glCamera(60, width/height);
+	camera = glCamera(120, width/height);
 	GLVector::vector3 origin = GLVector::vector3(0,0,0);
-	camera.moveTo(GLVector::vector3(5,0,0));
+	camera.moveTo(GLVector::vector3(10,10,10));
 	camera.lookAt(origin);
 
 	if(!glfwInit()) {
@@ -96,29 +92,17 @@ int main(int argc, char** argv) {
 
 	graphicsChildContainer child = { &testChild, "test" };
 
-	//testChild.scale(.2,.2,.2);
-
 	//testObject.addChild(&child);
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_ALWAYS); 
-
-/*
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	unsigned int positionLoc = glGetAttribLocation(shaderProgram, "pos");
-	printf("vertex location is: %d\n", positionLoc);
-	glEnableVertexAttribArray(positionLoc);
-	*/
 
 	glViewport(0,0,width,height);
 	glfwSetFramebufferSizeCallback(window, size_callback);
 
 	int x = 0;
 	float z = .01;
-	glClearColor(.5f,0.5f,0.5f,1.0f);
-	testObject.scale(1,1,1);
+	glClearColor(1.0f,1.0f,1.0f,0.0f);
 
 	
 	while(!glfwWindowShouldClose(window)) {
