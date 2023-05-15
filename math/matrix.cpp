@@ -406,52 +406,51 @@ void matrix4::print() {
     }
 }
 
+// calculation from http://www.songho.ca/opengl/gl_projectionmatrix.html
 void matrix4::makePerspective(float fov, float aspect, float zNear, float zFar) {
     this->makeIdentity();
 
-    float scale = 1 / tan( fov/2 );
+    // top and all values retrieved from here https://www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/opengl-perspective-projection-matrix.html
+
+    float scale = tan( toRadians(fov) / 2.0f );
     float top = zNear * scale;
     float bottom = -top;
     float right = top * aspect;
-    float left = -top;
+    float left = -right;
 
-    float x = 2 * zNear / ( right - left);
-    float y = 2 * zNear / ( top - bottom);
-    float z = - (zFar + zNear) / (zFar - zNear);
+    float x = (2.0f * zNear) / (right - left);
+    float y = (2.0f * zNear) / (top - bottom);
 
-    float tx = - zNear * ( left + right) / (right - left);
-    float ty = -zNear * (bottom + top) / (top - bottom);
-    float tz = 2 * zNear * zFar / (zNear - zFar);
+    float fn = ( -1.0f * (zFar + zNear) ) / (zFar - zNear);
+    float rl = (right + left) / (right - left);
+    float tb = (top + bottom) / (top - bottom);
+
+    float tz = (-2 * zNear * zFar) / (zFar - zNear);
 
     this->values[0] = x;
     this->values[5] = y;
-    this->values[10] = z;
+    this->values[8] = rl;
+    this->values[9] = tb;
+    this->values[10] = fn;
     this->values[11] = -1;
-    this->values[12] = tx;
-    this->values[13] = ty;
     this->values[14] = tz;
     this->values[15] = 0;
 }
 
 matrix4 matrix4::lookAt( GLVector::vector3 & eye, GLVector::vector3 & target, GLVector::vector3 & up) {
     GLVector::vector3 z = (eye - target);
-    if( z.length() == 0) {
-        z.setZ(1);
-    }
-    printf("z vector %d %d %d\n", z.xVal(), z.yVal(), z.zVal());
     z = z.normalize();
-    GLVector::vector3 x = (up.crossProduct(z)).normalize();
-    GLVector::vector3 y = (x.crossProduct(z)).normalize();
 
+    GLVector::vector3 x = (up.crossProduct(z));
     x.normalize();
-    y.normalize();
 
-    z = z * -1.0f;
+    GLVector::vector3 y = (z.crossProduct(x));
+    y.normalize();
 
     float xd = -1 * ( x.dot( eye ) );
     float yd = -1 * ( y.dot( eye ) );
     float zd = -1 * ( z.dot( eye ) );
 
-    float tmp[16] = { x.xVal(), x.yVal(), x.zVal(), xd, y.xVal(), y.yVal(), y.zVal(), yd, z.xVal(), z.yVal(), z.zVal(), zd, 0, 0, 0, 1 };
+    float tmp[16] = { x.xVal(), x.yVal(), x.zVal(), 0, y.xVal(), y.yVal(), y.zVal(), 0, z.xVal(), z.yVal(), z.zVal(), 0, 0, 0, 0, 1 };
     return matrix4( tmp );
 }

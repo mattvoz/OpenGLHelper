@@ -83,7 +83,6 @@ void shaderVariables::applyVariables( unsigned int shaderProgram ) {
 
         while( currentVar != NULL) {
             GLint loc = glGetUniformLocation( shaderProgram, currentVar->name.c_str() );
-            printf("got var location %d for variable with name %s\n", loc, currentVar->name.c_str() );
             switch (currentVar->type) {
                 case floatVal:
                     glUniform1f(loc,* ( (GLfloat *) currentVar->value) );

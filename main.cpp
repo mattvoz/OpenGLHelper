@@ -33,11 +33,11 @@ int main(int argc, char** argv) {
 	GLFWwindow * window;
 	camera = glCamera(120, width/height);
 	GLVector::vector3 origin = GLVector::vector3(0,0,0);
-	camera.moveTo(GLVector::vector3(0,10,0));
+	camera.moveTo(GLVector::vector3(5,5,0));
 	camera.lookAt(origin);
 
-	printf("view matrix");
-	camera.getViewMatrix().print();
+	printf("perspective matrix\n");
+	camera.getPerspective().print();
 	printf("\n");
 
 	if(!glfwInit()) {
@@ -106,15 +106,16 @@ int main(int argc, char** argv) {
 
 	int x = 0;
 	float z = .01;
-	glClearColor(1.0f,1.0f,1.0f,0.0f);
+	glClearColor(0.10f,1.0f,1.0f,0.0f);
 
 	
 	while(!glfwWindowShouldClose(window)) {
-		_sleep(5000);
 		glClear( GL_COLOR_BUFFER_BIT );
 		GLMatrix::matrix4 world = GLMatrix::matrix4();
 		testObject.render(world, camera.getViewMatrix(), camera.getPerspective() );
-		z += .01;
+		z += 1;
+
+		testObject.rotate(z,z,z);
 
         /*
 		x = (x-1) %360;

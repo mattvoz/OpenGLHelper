@@ -5,7 +5,6 @@ sceneObject::sceneObject() {
     shader = new Shader();
     rotation = GLMatrix::matrix4();
     scaleMatrix = GLMatrix::matrix4();
-    this->scaleMatrix.print();
     position = GLVector::vector3();
 }
 
@@ -20,6 +19,7 @@ sceneObject::sceneObject( Mesh * mesh, Shader * shader ) {
 void sceneObject::render( GLMatrix::matrix4 & world, GLMatrix::matrix4 & view, GLMatrix::matrix4 & perspective ) {
     if( needsTransformCompute ) {
         this->computeTransformation();
+        needsTransformCompute = false;
     }
     // Render current object
     unsigned int program = shader->getProgram();
@@ -31,7 +31,6 @@ void sceneObject::render( GLMatrix::matrix4 & world, GLMatrix::matrix4 & view, G
     mesh->applyBuffers(program);
     shader->applyVariables();
     glDrawArrays(GL_TRIANGLES, 0, mesh->verticeCount() * 3 );
-    //this->transformationMatrix.print();
     glUseProgram(NULL);
     //Render children
     for(int i = 0; i < children.size(); i++) {
@@ -62,9 +61,13 @@ void sceneObject::setShader( Shader * newShader ) {
 }
 
 void sceneObject::rotate( float x, float y, float z) {
-    this->rotationMatrix.rotateX(x);
-    this->rotationMatrix.rotateY(y);
-    this->rotationMatrix.rotateZ(z);
+    GLMatrix::matrix4 xMat = GLMatrix::matrix4();
+    xMat.rotateX(x);
+    GLMatrix::matrix4 yMat = GLMatrix::matrix4();
+    yMat.rotateY(y);
+    GLMatrix::matrix4 zMat = GLMatrix::matrix4();
+    zMat.rotateZ(z);
+    this->rotationMatrix = xMat * yMat * zMat;
     this->needsTransformCompute = true;
 }
 
@@ -79,7 +82,6 @@ void sceneObject::computeTransformation() {
     tranlsationMat.set( 0,3,this->position.yVal() );
     tranlsationMat.set( 2,3,this->position.zVal() );
     this->transformationMatrix = tranlsationMat * this->rotationMatrix * this->scaleMatrix;
-    this->transformationMatrix.print();
 }
 
 sceneObject::~sceneObject() {

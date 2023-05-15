@@ -103,6 +103,9 @@ float vector3::length() {
 
 vector3 vector3::normalize() {
 	float length = this->length();
+	if(length == 0) {
+		return vector3(0,0,0);
+	}
 	return vector3( x / length, y / length, z / length );
 }
 
