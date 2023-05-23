@@ -14,6 +14,7 @@ class sceneObject : public virtual graphicsInterface {
         void setShader( Shader * shader );
         void rotate(float x, float y, float z);
         void scale( float x, float y, float z);
+        void translate( float x, float y, float z);
         Mesh * getMesh();
         Shader * getShader();
         ~sceneObject();

@@ -34,7 +34,6 @@ void sceneObject::render( GLMatrix::matrix4 & world, GLMatrix::matrix4 & view, G
     glUseProgram(NULL);
     //Render children
     for(int i = 0; i < children.size(); i++) {
-        printf("rendering child");
         GLMatrix::matrix4 childWorld = world * this->transformationMatrix;
         children[i]->object->render( childWorld, view, perspective );
     }
@@ -71,6 +70,11 @@ void sceneObject::rotate( float x, float y, float z) {
     this->needsTransformCompute = true;
 }
 
+void sceneObject::translate( float x, float y, float z ) {
+    this->position = this->position + GLVector::vector3(x,y,z);
+    this->needsTransformCompute = true;
+}
+
 void sceneObject::scale( float x, float y, float z ) {
     scaleMatrix.scale(x,y,z);
     this->needsTransformCompute = true;
@@ -79,7 +83,7 @@ void sceneObject::scale( float x, float y, float z ) {
 void sceneObject::computeTransformation() {
     GLMatrix::matrix4 tranlsationMat =  GLMatrix::matrix4();
     tranlsationMat.set( 0,3,this->position.xVal() );
-    tranlsationMat.set( 0,3,this->position.yVal() );
+    tranlsationMat.set( 1,3,this->position.yVal() );
     tranlsationMat.set( 2,3,this->position.zVal() );
     this->transformationMatrix = tranlsationMat * this->rotationMatrix * this->scaleMatrix;
 }

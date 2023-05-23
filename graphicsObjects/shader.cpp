@@ -178,6 +178,7 @@ void Shader::setFragmentShader(std::string fragment, bool file) {
     } else {
         fragmentShaderSource = fragment.c_str();
     }
+    this->compile();
 }
 
 void Shader::compile() {
@@ -208,6 +209,9 @@ void Shader::compile() {
     shaderProgram = glCreateProgram();
     glAttachShader(shaderProgram, vertexShader);
     glAttachShader(shaderProgram, fragmentShader);
+
+    glDeleteShader( vertexShader );
+    glDeleteShader( fragmentShader );
 
     
 

@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
 	GLFWwindow * window;
 	camera = glCamera(120, width/height);
 	GLVector::vector3 origin = GLVector::vector3(0,0,0);
-	camera.moveTo(GLVector::vector3(5,5,0));
+	camera.moveTo(GLVector::vector3(0,0,5));
 	camera.lookAt(origin);
 
 	printf("perspective matrix\n");
@@ -94,12 +94,15 @@ int main(int argc, char** argv) {
 
 	sceneObject testChild = sceneObject();
 
+	testChild.getShader()->setFragmentShader( fragmentShaderSourceBlue, false );
+
 	graphicsChildContainer child = { &testChild, "test" };
 
-	//testObject.addChild(&child);
+	testObject.addChild(&child);
+
+	testChild.translate(5,0,-1);
 
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_ALWAYS); 
 
 	glViewport(0,0,width,height);
 	glfwSetFramebufferSizeCallback(window, size_callback);
@@ -110,12 +113,13 @@ int main(int argc, char** argv) {
 
 	
 	while(!glfwWindowShouldClose(window)) {
-		glClear( GL_COLOR_BUFFER_BIT );
+		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 		GLMatrix::matrix4 world = GLMatrix::matrix4();
 		testObject.render(world, camera.getViewMatrix(), camera.getPerspective() );
 		z += 1;
 
-		testObject.rotate(z,z,z);
+		testObject.rotate(0,z,0);
+		testChild.rotate(z,0,0);
 
         /*
 		x = (x-1) %360;
