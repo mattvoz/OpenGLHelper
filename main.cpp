@@ -18,7 +18,6 @@ float height = 1080;
 
 glCamera camera;
 
-
 void size_callback(GLFWwindow * window, int w, int h) {
 	width = w;
 	height = h;
@@ -30,15 +29,13 @@ void size_callback(GLFWwindow * window, int w, int h) {
 }
 
 int main(int argc, char** argv) {
+	float test = 0.00000001f;
+	double testTwo = 0.00000001;
 	GLFWwindow * window;
-	camera = glCamera(120, width/height);
+	camera = glCamera(90, width/height);
 	GLVector::vector3 origin = GLVector::vector3(0,0,0);
-	camera.moveTo(GLVector::vector3(0,0,5));
+	camera.moveTo(GLVector::vector3(0,10,0));
 	camera.lookAt(origin);
-
-	printf("perspective matrix\n");
-	camera.getPerspective().print();
-	printf("\n");
 
 	if(!glfwInit()) {
 		return -1;

@@ -103,9 +103,11 @@ float vector3::length() {
 
 vector3 vector3::normalize() {
 	float length = this->length();
-	if(length == 0) {
+	printf("length is %0.20lf", length);
+	if(length == 0.0f) {
 		return vector3(0,0,0);
 	}
+	printf("x is %0.20lf", x/length);
 	return vector3( x / length, y / length, z / length );
 }
 
@@ -165,6 +167,10 @@ void vector3::setY( float yNew ) {
 
 void vector3::setZ( float zNew ){
 	z = zNew;
+}
+
+void vector3::print(){
+	printf("vector: {%lf, %lf, %lf}\n", x, y , z);
 }
 
 //VECTOR 4

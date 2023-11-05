@@ -11,5 +11,4 @@ int main( int argc, char * argv[] ) {
 
     x = x.lookAt(posEye, lookAt, up);
 
-    x.print();
 }

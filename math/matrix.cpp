@@ -272,6 +272,14 @@ GLVector::vector4 matrix4::operator* (GLVector::vector4 & operand) {
 
 }
 
+GLMatrix::matrix4 matrix4::operator * (float scalar) {
+    GLMatrix::matrix4 tmp = matrix4(this->values);
+    for(int i = 0 ; i < 16 ; i ++ ) {
+        tmp.values[i] = this->values[i] * scalar;
+    }
+    return tmp;
+}
+
 void matrix4::transpose() {
     float tmp[16];
     for(int i = 0; i < 16; i++) {
@@ -420,12 +428,10 @@ void matrix4::makePerspective(float fov, float aspect, float zNear, float zFar) 
 
     float x = (2.0f * zNear) / (right - left);
     float y = (2.0f * zNear) / (top - bottom);
-
-    float fn = ( -1.0f * (zFar + zNear) ) / (zFar - zNear);
     float rl = (right + left) / (right - left);
     float tb = (top + bottom) / (top - bottom);
-
-    float tz = (-2 * zNear * zFar) / (zFar - zNear);
+    float fn =  -1.0f * ( (zFar + zNear)  / (zFar - zNear) );
+    float tz = -2.0f * zNear * zFar / (zFar - zNear);
 
     this->values[0] = x;
     this->values[5] = y;
@@ -439,18 +445,50 @@ void matrix4::makePerspective(float fov, float aspect, float zNear, float zFar) 
 
 matrix4 matrix4::lookAt( GLVector::vector3 & eye, GLVector::vector3 & target, GLVector::vector3 & up) {
     GLVector::vector3 z = (eye - target);
+    up.print();
+    printf("%lf\n", z.yVal());
+
+    //borrowed from 3js
+    if( z.length() == 0 ) {
+        z.setZ(1);
+    }
     z = z.normalize();
 
+    printf("z:");
+    z.print();
+
     GLVector::vector3 x = (up.crossProduct(z));
-    x.normalize();
+
+    if( x.length() == 0 ) {
+        printf("x length is 0");
+        if( up.zVal() == 1 || up.zVal() == -1) {
+            z.setX( z.xVal() + 0.001f);
+        }else{
+            z.setZ( z.zVal() + 0.001f );
+        }
+        z = z.normalize();
+        printf("new z");
+        z.print();
+        up.print();
+        x = up.crossProduct(z);
+    }
+    x = x.normalize();
+
+    x.print();
 
     GLVector::vector3 y = (z.crossProduct(x));
-    y.normalize();
 
-    float xd = -1 * ( x.dot( eye ) );
-    float yd = -1 * ( y.dot( eye ) );
-    float zd = -1 * ( z.dot( eye ) );
+    /*
+    float xd = -1.0f * ( x.dot( eye ) );
+    float yd = -1.0f * ( y.dot( eye ) );
+    float zd = -1.0f * ( z.dot( eye ) );
+    */
 
     float tmp[16] = { x.xVal(), x.yVal(), x.zVal(), 0, y.xVal(), y.yVal(), y.zVal(), 0, z.xVal(), z.yVal(), z.zVal(), 0, 0, 0, 0, 1 };
-    return matrix4( tmp );
+    GLMatrix::matrix4 tmpM = matrix4(tmp);
+
+    printf("In matrix lookat:\n");
+    tmpM.print();
+    return tmp;
+
 }

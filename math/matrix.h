@@ -61,6 +61,7 @@ namespace GLMatrix {
 			matrix4 operator - ( matrix4 & );
 			matrix4 operator + ( matrix4 & );
 			GLVector::vector4 operator * (GLVector::vector4 &);
+			matrix4 operator * (float);
 		
 		//Methods
 			void transpose();
