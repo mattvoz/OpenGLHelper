@@ -23,3 +23,4 @@
 
 ### BUGS
 - scene Object causes program to not create cube on screen so debug sceneObject seems to be the mesh creating buffers most likely
+- For now recompliling the math lib does not recompile all the changes in the actaul objects it must be done by doing make clean and make

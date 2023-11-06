@@ -103,11 +103,9 @@ float vector3::length() {
 
 vector3 vector3::normalize() {
 	float length = this->length();
-	printf("length is %0.20lf", length);
 	if(length == 0.0f) {
 		return vector3(0,0,0);
 	}
-	printf("x is %0.20lf", x/length);
 	return vector3( x / length, y / length, z / length );
 }
 
