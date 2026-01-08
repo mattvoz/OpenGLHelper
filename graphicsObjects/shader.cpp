@@ -213,8 +213,6 @@ void Shader::compile() {
     glDeleteShader( vertexShader );
     glDeleteShader( fragmentShader );
 
-    
-
     glLinkProgram(shaderProgram);
 }
 
@@ -238,4 +236,8 @@ void Shader::setVariable(variableType type, std::string name, void * value) {
 void Shader::setVariables( shaderVariables * newVars ) {
     delete this->variables;
     this->variables = newVars;
+}
+
+Shader::~Shader(){
+    
 }

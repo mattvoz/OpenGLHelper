@@ -12,6 +12,10 @@ typedef struct vertex {
     GLVector::vector2 texCoord;
 } vertex;
 
+typedef struct vertex2D {
+    GLVector::vector2 position;
+} vertex2D;
+
 class Mesh {
     public:
         Mesh();
@@ -32,6 +36,16 @@ class Mesh {
         GLuint vertexBuffer, normalBuffer, tangentBuffer, textureBuffer;
         bool vertexNeedsUpdate, normalNeedsUpdate, tangentNeedsUpdate, textureNeedsUpdate;
 
+};
+
+class Mesh2D{
+    public:
+        Mesh2D();
+        Mesh2D( float * vertexArray, int count );
+    private:
+        void updateBuffers();
+        bool verticesNeedUpdate;
+        std::vector<vertex2D*> vertexData = std::vector<vertex2D *>();
 };
 
 #endif

@@ -38,6 +38,7 @@ class Shader{
     public:
         Shader( std::string, bool, std::string, bool);
         Shader();
+        ~Shader();
         void setVertexShader(std::string source, bool filePath);
         void setFragmentShader(std::string source, bool filePath);
         void setVariables( shaderVariables * newVars );

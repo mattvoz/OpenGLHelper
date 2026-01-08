@@ -22,6 +22,8 @@ else
 	LIBS = -L$(GLADLIB) -L$(MATHLIB) -lglad -lglfw -lGL -lglMath	-lglMath
 endif
 
+clean:	executable
+	rm *.o
 executable:	main.o	helpers.o	glCamera.o Mesh.o	Shader.o	sceneObject.o	Scene.o
 	$(CC) *.o  $(CFLAGS) $(LIBS) -o main.exe
 

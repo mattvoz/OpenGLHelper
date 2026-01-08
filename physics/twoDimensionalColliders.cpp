@@ -1,27 +1,29 @@
-#ifndef __2D__COLLIDER__
-#define __2D__COLLIDER__
-
 #include <math.h>
 #include <vector.h>
+#include <string.h>
+#include "twoDimensionalColliders.h"
+#include <typeinfo>
 
 /**
  * This class will only check for collisions in the x and y planes around a box defined by params passed in
-*/
-class twoDimensionBoxCollider{
-    private:
-        GLVector::vector2 points[4];
-    public:
-        twoDimensionBoxCollider( GLVector::vector2 points[] );
-        
+ */
+twoDimensionMeshCollider::twoDimensionMeshCollider(){
+}
+
+twoDimensionCircleCollider::twoDimensionCircleCollider(){
+    center = GLVector::vector2(0, 0);
+    radius = 1.0;
 };
 
-class twoDimensionCircileCollider{
-    GLVector::vector2 center;
-    double radius;
-
+bool twoDimensionCircleCollider::checkCollisions(twoDimensionalCollider &toCheck)
+{
+    if (toCheck.type == CIRCLE_COLLIDER){
+        twoDimensionCircleCollider & c = static_cast<twoDimensionCircleCollider&>(toCheck);
+    }
+    else if (type == typeid(twoDimensionBoxCollider).hash_code()){
+    }
+    else{
+        return false;
+    }
+    return false;
 };
-
-class twoDimensionMeshCollider{
-};
-
-#endif

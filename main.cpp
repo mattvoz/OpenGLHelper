@@ -16,6 +16,9 @@ GLMatrix::matrix4 transform = GLMatrix::matrix4();
 float width = 1920;
 float height = 1080;
 
+float xPos = 0;
+float yPos = 0;
+
 glCamera camera;
 
 void size_callback(GLFWwindow * window, int w, int h) {
@@ -34,7 +37,7 @@ int main(int argc, char** argv) {
 	GLFWwindow * window;
 	camera = glCamera(90, width/height);
 	GLVector::vector3 origin = GLVector::vector3(0,0,0);
-	camera.moveTo(GLVector::vector3(0,10,0));
+	camera.moveTo(GLVector::vector3(10,10,0));
 	camera.lookAt(origin);
 
 	if(!glfwInit()) {
@@ -70,7 +73,7 @@ int main(int argc, char** argv) {
 	"varying vec4 color;"
 	"void main()\n"
 	"{\n"
-    	"FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
+    	"FragColor = color;\n"
 		"FragColor.a = 1.0;\n"
 	"}\0";
 
